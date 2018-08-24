@@ -17,31 +17,60 @@ class UserLogin extends Component {
         )
     }
 
+    renderForm() {
+        if (this.loggedIn()) {
+            return (
+                <div className="dropdown">
+                    <a className="dropdown-toggle text-light">
+                        Welcome User
+                    </a>
+
+                    <div className="dropdown-menu">
+                        <a className="dropdown-item" href="#"><i className="fa fa-user"></i> Edit Profile</a>
+                        <div className="dropdown-divider"></div>
+                        <a className="dropdown-item" href="#"><i className="fa fa-sign-out"></i> Logout</a>
+                    </div>
+                </div>
+            );
+        } else {
+            const { handleSubmit } = this.props;
+            return (
+                <form className="form-inline my-2 my-lg-0"
+                    onSubmit={handleSubmit(this.login.bind(this))}>
+                    <Field
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        component={this.renderField}
+                    />
+                    <Field
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        component={this.renderField}
+                    />
+                    <button className={`btn btn-success my-2 my-sm-0 ${this.props.invalid ? 'disabled': ''}`} type="submit">Login</button>
+                </form>
+            );
+        }
+    }
+
     login(values) {
         this.props.userLogin(values);
     }
 
-    render() {
-        const { handleSubmit } = this.props;
+    loggedIn() {
+        const token = localStorage.getItem('token');
+        return !!token;
+    }
 
+
+
+    render() {
         return (
-            <form className="form-inline my-2 my-lg-0"
-                onSubmit={handleSubmit(this.login.bind(this))}
-            >
-                <Field
-                    type="text"
-                    placeholder="Username"
-                    name="username"
-                    component={this.renderField}
-                />
-                <Field
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    component={this.renderField}
-                />
-                <button className={`btn btn-success my-2 my-sm-0 ${this.props.invalid ? 'disabled': ''}`} type="submit">Login</button>
-            </form>
+            <div>
+                { this.renderForm() }
+            </div>
         );
     }
 }

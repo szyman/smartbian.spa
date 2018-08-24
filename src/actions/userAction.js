@@ -8,11 +8,11 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 export function userLogin(values) {
     const request = axios.post(`${BASE_URL}/login`, values)
         .then((response) => {
-            //const user = response;
-            //if (user) {
-            //    localStorage.setItem('token', user.token);
-            //}
             console.log('Logged in successfully');
+            const user = response.data;
+            if (user) {
+                localStorage.setItem('token', user.token);
+            }
         })
         .catch(() => {
             console.warn('Failed to login');
