@@ -1,29 +1,32 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import createUser from '../../actions/userAction'
+import { userLogin } from '../../actions/userAction'
 import { connect } from 'react-redux';
 
 class UserLogin extends Component {
     renderField(field) {
         return (
-            <input 
-                className="form-control mr-sm-2"
-                type={field.type}
-                placeholder={field.placeholder}
-                {...field.input}
-            />            
+            <div>
+                <input
+                    className="form-control mr-sm-2"
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    {...field.input}
+                />
+            </div>
         )
     }
 
-    onSubmit(values) {
-        console.log(values)
+    login(values) {
+        this.props.userLogin(values);
     }
 
     render() {
         const { handleSubmit } = this.props;
+
         return (
             <form className="form-inline my-2 my-lg-0"
-                onSubmit={handleSubmit(this.onSubmit.bind(this))}
+                onSubmit={handleSubmit(this.login.bind(this))}
             >
                 <Field
                     type="text"
@@ -37,14 +40,27 @@ class UserLogin extends Component {
                     name="password"
                     component={this.renderField}
                 />
-                <button className="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+                <button className={`btn btn-success my-2 my-sm-0 ${this.props.invalid ? 'disabled': ''}`} type="submit">Login</button>
             </form>
         );
     }
 }
 
+function validate(values) {
+    const errors = {};
+    if (!values.username) {
+        errors.username = 'Empty field UserName';
+    }
+    if (!values.password) {
+        errors.password = 'Empty field Password';
+    }
+
+    return errors;
+}
+
 export default reduxForm({
+    validate,
     form: 'UserLoginForm'
 })(
-    connect(null, { createUser })(UserLogin)
+    connect(null, { userLogin })(UserLogin)
 );
