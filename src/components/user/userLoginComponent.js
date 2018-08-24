@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { userLogin } from '../../actions/userAction'
+import { userLogin } from '../../actions/userAction';
 import { connect } from 'react-redux';
 
 class UserLogin extends Component {
@@ -55,23 +55,23 @@ class UserLogin extends Component {
         }
     }
 
-    login(values) {
-        this.props.userLogin(values);
-    }
-
-    loggedIn() {
-        const token = localStorage.getItem('token');
-        return !!token;
-    }
-
-
-
     render() {
         return (
             <div>
                 { this.renderForm() }
             </div>
         );
+    }
+
+    login(values) {
+        this.props.userLogin(values);
+    }
+
+    loggedIn() {
+        if (this.props.user.token) {
+            return true;
+        }
+        return false;
     }
 }
 
@@ -87,9 +87,13 @@ function validate(values) {
     return errors;
 }
 
+function mapStateToProps({ user }) {
+    return { user };
+}
+
 export default reduxForm({
     validate,
     form: 'UserLoginForm'
 })(
-    connect(null, { userLogin })(UserLogin)
+    connect(mapStateToProps, { userLogin })(UserLogin)
 );

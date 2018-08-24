@@ -1,10 +1,23 @@
 import React, { Component } from 'react';
-import UserLogin from '../user/userLoginComponent'
+import UserLogin from '../user/userLoginComponent';
+import { userLogout, userRestore } from '../../actions/userAction';
+import { connect } from 'react-redux';
 
 class Navbar extends Component {
-    logout(e) {
-        e.preventDefault();
+    constructor(props) {
+        super(props);
+
+        this.logout = this.logout.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.userRestore();
+    }
+
+    logout(event) {
+        event.preventDefault();
         localStorage.removeItem('token');
+        this.props.userLogout();
         console.log('logged out');
     }
 
@@ -34,4 +47,4 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+export default connect(null, { userLogout, userRestore })(Navbar);
