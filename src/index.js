@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 
 import reducers from './reducers';
-import Navbar from './components/navbar/navbar'
+import Navbar from './components/navbar/navbarComponent'
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
