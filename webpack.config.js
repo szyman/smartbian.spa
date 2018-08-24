@@ -13,9 +13,9 @@ module.exports = {
     ]
   },
   devServer: {
-    compress: true,
+    //compress: true,
     port: 8080,
-    historyApiFallback: true,
+    //historyApiFallback: true,
     contentBase: './',
     watchOptions: {
       aggregateTimeout: 300,
