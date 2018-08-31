@@ -7,10 +7,7 @@ export const RESTORE_USER = 'restore_user';
 const BASE_URL = 'http://localhost:5000/api/auth';
 
 export function userRegister(values) {
-    const request = axios.post(`${BASE_URL}/register`, values)
-        .catch(() => {
-            console.warn('Failed register');
-        });
+    const request = axios.post(`${BASE_URL}/register`, values);
 
     return {
         type: REGISTER_USER,
@@ -19,10 +16,7 @@ export function userRegister(values) {
 }
 
 export function userLogin(values) {
-    const request = axios.post(`${BASE_URL}/login`, values)
-        .catch(() => {
-            console.warn('Failed to login');
-        });
+    const request = axios.post(`${BASE_URL}/login`, values);
 
     return {
         type: LOGIN_USER,

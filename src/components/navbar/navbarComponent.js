@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import UserLogin from '../user/userLoginComponent';
 import { userLogout, userRestore } from '../../actions/userAction';
 import { connect } from 'react-redux';
+import { ErrorInterceptor } from '../../helpers/errorInterceptorHelper';
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
 
         this.logout = this.logout.bind(this);
+        ErrorInterceptor();
     }
 
     componentDidMount() {

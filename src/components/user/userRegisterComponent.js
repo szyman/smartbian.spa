@@ -46,12 +46,7 @@ class UserRegister extends Component {
     }
 
     register(values) {
-        console.log('Register');
         this.props.userRegister(values);
-    }
-
-    cancel() {
-        console.log('cancelled');
     }
 }
 
