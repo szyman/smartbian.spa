@@ -22,7 +22,7 @@ class UserLogin extends Component {
             return (
                 <div className="dropdown">
                     <a className="dropdown-toggle text-light">
-                        Welcome User
+                        Welcome {this.props.user.username}
                     </a>
 
                     <div className="dropdown-menu">
@@ -68,7 +68,7 @@ class UserLogin extends Component {
     }
 
     loggedIn() {
-        if (this.props.user.token) {
+        if (this.props.user.username) {
             return true;
         }
         return false;
