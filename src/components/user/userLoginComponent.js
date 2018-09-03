@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { userLogin } from '../../actions/userAction';
+import { userLogin, userLogout, userRestore } from '../../actions/userAction';
 import { connect } from 'react-redux';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 class UserLogin extends Component {
+    constructor(props) {
+        super(props);
+
+        this.logout = this.logout.bind(this);
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            dropdownOpen: false
+        };
+    }
+
+    componentDidMount() {
+        this.props.userRestore();
+    }
+
     renderField(field) {
         return (
             <div>
@@ -20,17 +35,18 @@ class UserLogin extends Component {
     renderForm() {
         if (this.loggedIn()) {
             return (
-                <div className="dropdown">
-                    <a className="dropdown-toggle text-light">
-                        Welcome {this.props.user.username}
-                    </a>
+                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <DropdownToggle className="text-light" caret>
+                        Welcome
+                        <a className="capitalize-label"> {this.props.user.username}</a>
+                    </DropdownToggle>
 
-                    <div className="dropdown-menu">
-                        <a className="dropdown-item" href="#"><i className="fa fa-user"></i> Edit Profile</a>
+                    <DropdownMenu className="mt-3">
+                        <DropdownItem href="#"><i className="fa fa-user"></i> Edit Profile</DropdownItem>
                         <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="#"><i className="fa fa-sign-out"></i> Logout</a>
-                    </div>
-                </div>
+                        <DropdownItem onClick={this.logout}><i className="fa fa-sign-out-alt"></i> Logout</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
             );
         } else {
             const { handleSubmit } = this.props;
@@ -64,7 +80,10 @@ class UserLogin extends Component {
     }
 
     login(values) {
-        this.props.userLogin(values);
+        const { userLogin, reset } = this.props;
+        userLogin(values).then(() => {
+            reset();
+          });;
     }
 
     loggedIn() {
@@ -73,6 +92,20 @@ class UserLogin extends Component {
         }
         return false;
     }
+
+    logout(event) {
+        event.preventDefault();
+        localStorage.removeItem('token');
+        this.props.userLogout();
+        console.log('logged out');
+    }
+
+    toggle() {
+        this.setState(prevState => ({
+            dropdownOpen: !prevState.dropdownOpen
+        }));
+    }
+
 }
 
 function validate(values) {
@@ -95,5 +128,5 @@ export default reduxForm({
     validate,
     form: 'UserLoginForm'
 })(
-    connect(mapStateToProps, { userLogin })(UserLogin)
+    connect(mapStateToProps, { userLogin, userLogout, userRestore })(UserLogin)
 );

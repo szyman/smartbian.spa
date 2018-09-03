@@ -9,8 +9,11 @@ import reducers from './reducers';
 import App from './components/appComponent';
 import UserRegister from './components/user/userRegisterComponent';
 import Home from './components/home/homeComponent';
+import { ErrorInterceptor } from './helpers/errorInterceptorHelper';
+
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
+ErrorInterceptor();
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
