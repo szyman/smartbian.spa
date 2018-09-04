@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { userLogin, userLogout, userRestore } from '../../actions/userAction';
 import { connect } from 'react-redux';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { withRouter } from 'react-router-dom';
 
 class UserLogin extends Component {
     constructor(props) {
@@ -97,6 +98,7 @@ class UserLogin extends Component {
         event.preventDefault();
         localStorage.removeItem('token');
         this.props.userLogout();
+        this.props.history.push('/');
         console.log('logged out');
     }
 
@@ -124,9 +126,9 @@ function mapStateToProps({ user }) {
     return { user };
 }
 
-export default reduxForm({
+export default withRouter(reduxForm({
     validate,
     form: 'UserLoginForm'
 })(
     connect(mapStateToProps, { userLogin, userLogout, userRestore })(UserLogin)
-);
+));

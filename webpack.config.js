@@ -5,7 +5,8 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'bundle.js',
-    path: __dirname
+    path: __dirname,
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -15,7 +16,7 @@ module.exports = {
   devServer: {
     //compress: true,
     port: 8080,
-    //historyApiFallback: true,
+    historyApiFallback: true,
     contentBase: './',
     watchOptions: {
       aggregateTimeout: 300,

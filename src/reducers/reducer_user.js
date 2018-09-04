@@ -22,7 +22,7 @@ export default function(state = {}, action) {
             localStorage.setItem('token', action.payload.data.token);
             return { username: username };
         case LOGOUT_USER:
-            return { token: null };
+            return { };
         case RESTORE_USER:
             if (!action.token) {
                 return state;
@@ -32,9 +32,10 @@ export default function(state = {}, action) {
 
             if (decodedToken && !_isTokenExpired(decodedToken)) {
                 username = decodedToken.unique_name;
+                return { username: username };
             }
 
-            return { username: username };
+            return state;
     }
     return state;
 }

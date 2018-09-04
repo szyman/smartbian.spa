@@ -9,8 +9,11 @@ import reducers from './reducers';
 import App from './components/appComponent';
 import UserRegister from './components/user/userRegisterComponent';
 import Home from './components/home/homeComponent';
-import { ErrorInterceptor } from './helpers/errorInterceptorHelper';
+import Setup from './components/setup/setupComponent';
+import ControlPanel from './components/controlPanel/controlPanelComponent';
 
+import { ErrorInterceptor } from './helpers/errorInterceptorHelper';
+import PrivateRoute from './helpers/privateRouteHelper';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 ErrorInterceptor();
@@ -21,8 +24,10 @@ ReactDOM.render(
         <div>
           <App></App>
           <Switch>
-            <Route path="/user/register" component={UserRegister} />
-            <Route path="/" component={Home}/>
+            <PrivateRoute path='/setup' component={Setup}/>
+            <PrivateRoute path='/controlPanel' component={ControlPanel} />
+            <Route path='/user/register' component={UserRegister} />
+            <Route path='/' component={Home}/>
           </Switch>
         </div>
       </BrowserRouter>

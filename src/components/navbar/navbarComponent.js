@@ -1,28 +1,37 @@
 import React, { Component } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import UserLogin from '../user/userLoginComponent';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
     }
 
+    renderUserMenu() {
+        if (!_.isEmpty(this.props.user)) {
+            return (
+                <ul className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                        <NavLink className="nav-link" activeClassName='active' to='/setup'>Setup</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink className="nav-link" activeClassName='active' to='/controlPanel'>Control Panel</NavLink>
+                    </li>
+                </ul>
+            );
+        }
+    }
+
     render() {
         return (
             <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
                 <div className="container">
-                    <a className="navbar-brand" href="#">SmartRooms App</a>
+                    <Link className="navbar-brand" to="/">SmartRooms App</Link>
 
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="#">Matches</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Lists</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Messages</a>
-                        </li>
-                    </ul>
+                    {this.renderUserMenu()}
+
                     <UserLogin></UserLogin>
                 </div>
             </nav>
@@ -30,4 +39,8 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+function mapStateToProps({ user }){
+    return { user };
+}
+
+export default connect(mapStateToProps)(Navbar);
