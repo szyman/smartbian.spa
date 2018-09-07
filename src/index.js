@@ -11,6 +11,8 @@ import UserRegister from './components/user/userRegisterComponent';
 import Home from './components/home/homeComponent';
 import Setup from './components/setup/setupComponent';
 import ControlPanel from './components/controlPanel/controlPanelComponent';
+import UserList from './components/user/userListComponent';
+import UserDetail from './components/user/userDetailComponent';
 
 import { ErrorInterceptor } from './helpers/errorInterceptorHelper';
 import PrivateRoute from './helpers/privateRouteHelper';
@@ -26,6 +28,8 @@ ReactDOM.render(
           <Switch>
             <PrivateRoute path='/setup' component={Setup}/>
             <PrivateRoute path='/controlPanel' component={ControlPanel} />
+            <PrivateRoute path='/users/:id' component={UserDetail} />
+            <PrivateRoute path='/users' component={UserList} />
             <Route path='/user/register' component={UserRegister} />
             <Route path='/' component={Home}/>
           </Switch>

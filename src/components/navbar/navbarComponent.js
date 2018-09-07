@@ -10,7 +10,7 @@ class Navbar extends Component {
     }
 
     renderUserMenu() {
-        if (!_.isEmpty(this.props.user)) {
+        if (!_.isEmpty(this.props.userAuth)) {
             return (
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
@@ -18,6 +18,9 @@ class Navbar extends Component {
                     </li>
                     <li className="nav-item">
                         <NavLink className="nav-link" activeClassName='active' to='/controlPanel'>Control Panel</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink className="nav-link" activeClassName='active' to='/users'>Users</NavLink>
                     </li>
                 </ul>
             );
@@ -39,8 +42,8 @@ class Navbar extends Component {
     }
 }
 
-function mapStateToProps({ user }){
-    return { user };
+function mapStateToProps({ userAuth }){
+    return { userAuth };
 }
 
 export default connect(mapStateToProps)(Navbar);

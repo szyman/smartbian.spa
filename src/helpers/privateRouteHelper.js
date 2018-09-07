@@ -7,7 +7,7 @@ import Home from '../components/home/homeComponent';
 
 class PrivateRoute extends Component {
     render() {
-        if (_.isEmpty(this.props.user)) {
+        if (_.isEmpty(this.props.userAuth)) {
             return(
                 <Route path='/' component={Home}/>
             );
@@ -19,8 +19,8 @@ class PrivateRoute extends Component {
     }
 }
 
-function mapStateToProps({ user }){
-    return { user };
+function mapStateToProps({ userAuth }){
+    return { userAuth };
 }
 
 export default connect(mapStateToProps)(PrivateRoute);

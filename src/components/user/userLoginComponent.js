@@ -39,7 +39,7 @@ class UserLogin extends Component {
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle className="text-light" caret>
                         Welcome
-                        <a className="capitalize-label"> {this.props.user.username}</a>
+                        <a className="text-capitalize"> {this.props.userAuth.username}</a>
                     </DropdownToggle>
 
                     <DropdownMenu className="mt-3">
@@ -88,7 +88,7 @@ class UserLogin extends Component {
     }
 
     loggedIn() {
-        if (this.props.user.username) {
+        if (this.props.userAuth.username) {
             return true;
         }
         return false;
@@ -107,7 +107,6 @@ class UserLogin extends Component {
             dropdownOpen: !prevState.dropdownOpen
         }));
     }
-
 }
 
 function validate(values) {
@@ -122,8 +121,8 @@ function validate(values) {
     return errors;
 }
 
-function mapStateToProps({ user }) {
-    return { user };
+function mapStateToProps({ userAuth }) {
+    return { userAuth };
 }
 
 export default withRouter(reduxForm({
