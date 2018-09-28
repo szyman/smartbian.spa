@@ -25,13 +25,10 @@ class UserList extends Component {
 
     render() {
         return(
-            <div className="container mt-5">
-                <div className="row"></div>
-                    <div className="col-lg-2 col-md-3 col-sm-6">
-                        <ul className="list-group">
-                            {this.renderUsers()}
-                        </ul>
-                    </div>
+            <div className="row justify-content-md-center text-center">
+                <ul className="list-group">
+                    {this.renderUsers()}
+                </ul>
             </div>
         );
     }

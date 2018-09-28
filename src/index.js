@@ -13,6 +13,7 @@ import Setup from './components/setup/setupComponent';
 import ControlPanel from './components/controlPanel/controlPanelComponent';
 import UserList from './components/user/userListComponent';
 import UserDetail from './components/user/userDetailComponent';
+import UserEdit from './components/user/userEditComponent';
 
 import { ErrorInterceptor } from './helpers/errorInterceptorHelper';
 import PrivateRoute from './helpers/privateRouteHelper';
@@ -25,14 +26,17 @@ ReactDOM.render(
       <BrowserRouter>
         <div>
           <App></App>
-          <Switch>
-            <PrivateRoute path='/setup' component={Setup}/>
-            <PrivateRoute path='/controlPanel' component={ControlPanel} />
-            <PrivateRoute path='/users/:id' component={UserDetail} />
-            <PrivateRoute path='/users' component={UserList} />
-            <Route path='/user/register' component={UserRegister} />
-            <Route path='/' component={Home}/>
-          </Switch>
+          <div className="container mt-5">
+            <Switch>
+              <PrivateRoute path='/setup' component={Setup}/>
+              <PrivateRoute path='/controlPanel' component={ControlPanel} />
+              <PrivateRoute path='/users/edit' component={UserEdit} />
+              <PrivateRoute path='/users/:id' component={UserDetail} />
+              <PrivateRoute path='/users' component={UserList} />
+              <Route path='/user/register' component={UserRegister} />
+              <Route path='/' component={Home}/>
+            </Switch>
+          </div>
         </div>
       </BrowserRouter>
     </Provider>

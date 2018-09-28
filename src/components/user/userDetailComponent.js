@@ -36,8 +36,8 @@ class UserDetail extends Component {
 
     render() {
         return(
-            <div className="container text-center">
-                <h1 className="mt-5">User details</h1>
+            <div className="text-center">
+                <h1>User details</h1>
                 {this.renderUsers()}
             </div>
         );

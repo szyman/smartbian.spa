@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { userLogin, userLogout, userRestore } from '../../actions/userAction';
 import { connect } from 'react-redux';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 class UserLogin extends Component {
     constructor(props) {
@@ -41,9 +41,13 @@ class UserLogin extends Component {
                         Welcome
                         <a className="text-capitalize"> {this.props.userAuth.username}</a>
                     </DropdownToggle>
-
                     <DropdownMenu className="mt-3">
-                        <DropdownItem href="#"><i className="fa fa-user"></i> Edit Profile</DropdownItem>
+                        <Link to='/users/edit'>
+                            <DropdownItem>
+                                <i className="fa fa-user"></i>
+                                Edit Profile
+                            </DropdownItem>
+                        </Link>
                         <div className="dropdown-divider"></div>
                         <DropdownItem onClick={this.logout}><i className="fa fa-sign-out-alt"></i> Logout</DropdownItem>
                     </DropdownMenu>
