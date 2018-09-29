@@ -4,9 +4,7 @@ import Navbar from './navbar/navbarComponent'
 class App extends Component {
     render() {
         return (
-            <div>
-                <Navbar></Navbar>
-            </div>
+            <Navbar></Navbar>
         );
     }
 }

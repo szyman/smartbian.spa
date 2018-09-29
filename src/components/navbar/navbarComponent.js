@@ -2,11 +2,23 @@ import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import UserLogin from '../user/userLoginComponent';
 import { connect } from 'react-redux';
+import { Collapse, NavbarToggler } from 'reactstrap';
 import _ from 'lodash';
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
+
+        this.toggleNavbar = this.toggleNavbar.bind(this);
+        this.state = {
+            collapsed: true
+        };
+    }
+
+    toggleNavbar() {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
     }
 
     renderUserMenu() {
@@ -23,6 +35,7 @@ class Navbar extends Component {
                         <NavLink className="nav-link" activeClassName='active' to='/users'>Users</NavLink>
                     </li>
                 </ul>
+
             );
         }
     }
@@ -30,19 +43,18 @@ class Navbar extends Component {
     render() {
         return (
             <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
-                <div className="container">
-                    <Link className="navbar-brand" to="/">SmartRooms App</Link>
-
+                <Link className="navbar-brand" to="/">SmartRooms App</Link>
+                <NavbarToggler onClick={this.toggleNavbar} />
+                <Collapse isOpen={!this.state.collapsed} navbar>
                     {this.renderUserMenu()}
-
                     <UserLogin></UserLogin>
-                </div>
+                </Collapse>
             </nav>
         );
     }
 }
 
-function mapStateToProps({ userAuth }){
+function mapStateToProps({ userAuth }) {
     return { userAuth };
 }
 
