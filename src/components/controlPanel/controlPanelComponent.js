@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import Item from '../item/itemComponent';
 
 class ControlPanel extends Component {
     render() {
         return (
-            <div className="home-content">
-                <h3>ControlPanel Component</h3>
+            <div>
+                <Item></Item>
             </div>
         );
     }
