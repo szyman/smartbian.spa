@@ -2,18 +2,23 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import {userRegister} from '../../actions/userAction';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class UserRegister extends Component {
     renderField(field) {
+        let { touched, error, invalid} = field.meta;
         return (
-            <div className="form-group">
+            <div className={`form-group row justify-content-md-center ${touched && invalid? 'has-danger' : ''}`}>
+                <label className="col-md-2 text-right">{field.placeholder}</label>
                 <input
-                    className="form-control"
+                    className="form-control col-md-5"
                     type={field.type}
                     placeholder={field.placeholder}
                     {...field.input}
                 />
+                <div className="text-help col-md-2">
+                    {touched ? error : ''}
+                </div>
             </div>
         )
     }
@@ -32,7 +37,7 @@ class UserRegister extends Component {
                     component={this.renderField}
                 />
                 <Field
-                    type="text"
+                    type="password"
                     placeholder="Password"
                     name="password"
                     component={this.renderField}
@@ -46,7 +51,9 @@ class UserRegister extends Component {
     }
 
     register(values) {
-        this.props.userRegister(values);
+        this.props.userRegister(values).then(() => {
+            this.props.history.push('/');
+        });
     }
 }
 
@@ -54,6 +61,9 @@ function validate(values) {
     const errors = {};
     if (!values.username) {
         errors.username = 'Empty field UserName';
+    }
+    if (_.size(values.username) < 3) {
+        errors.username = "Must include at leat 3 characters";
     }
     if (!values.password) {
         errors.password = 'Empty field Password';
@@ -63,9 +73,9 @@ function validate(values) {
 }
 
 
-export default reduxForm({
+export default withRouter(reduxForm({
     validate,
     form: 'UserRegisterForm'
 })(
     connect(null, { userRegister })(UserRegister)
-);
+));
