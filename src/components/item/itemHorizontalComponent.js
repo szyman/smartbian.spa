@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'reactstrap';
 import { removeItem } from '../../actions/itemAction';
+import Interact from '../../wrappers/interactWrapper';
 
 class ItemHorizontal extends Component {
     constructor(props) {
@@ -17,14 +17,14 @@ class ItemHorizontal extends Component {
 
         return _.map(this.props.itemList, item => {
             return (
-                <Button key={item.id} color="secondary" onClick={() => this.removeItem(item.id)}>Horizontal</Button>
+                <Interact key={item.id} className="drag-1" onTap={() => this.removeItem(item.id)}></Interact>
             );
         });
     }
 
     render() {
         return (
-            <div>
+            <div className="playground">
                 {this.renderItems()}
             </div>
         )

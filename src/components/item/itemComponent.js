@@ -15,11 +15,13 @@ class Item extends Component {
     render() {
         return (
             <div>
-                <Button color="secondary" onClick={() => this.addItem(0)}>Horizontal</Button><br />
-                <Button color="secondary" className="mt-1">Vertical</Button><br />
-                <Button color="warning" className="mt-1">
-                    <i className="fas fa-lightbulb"></i>
-                </Button><br />
+                <div className="mb-5">
+                    <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
+                    <Button color="secondary" className="mr-1">Vertical</Button>
+                    <Button color="warning" className="mr-1">
+                        <i className="fas fa-lightbulb"></i>
+                    </Button><br />
+                </div>
                 <ItemHorizontal></ItemHorizontal>
             </div>
         );

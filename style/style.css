@@ -6,3 +6,22 @@
     top: 88px;
     position: relative;
 }
+
+.drag-1 {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    min-width: 50px;
+    background-color: #29e;
+    color: white;
+    border-radius: 0.75em;
+    user-select: none;
+    -webkit-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
+  }
+
+.playground {
+    width: 1000px;
+    height: 500px;
+    background-color: #556b2f;
+}
