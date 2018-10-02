@@ -1,32 +1,97 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
 import { connect } from 'react-redux';
+import { removeItem } from '../../actions/itemAction';
+import Interact, { RESIZE_HORIZONTAL, RESIZE_VERTICAL } from '../../wrappers/interactWrapper';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-import { addItem } from '../../actions/itemAction';
-import ItemHorizontal from './itemHorizontalComponent';
+const NOT_SELECTED_ITEM = -1;
+const ITEM_TYPE = {
+    HORIZONTAL_WALL: 0,
+    VERTICALL_WALL: 1
+}
 
 class Item extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modal: false,
+            selectedItem: NOT_SELECTED_ITEM
+        };
 
-    addItem(type) {
-        this.props.addItem(type);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.removeItem = this.removeItem.bind(this);
+    }
+
+    renderItems() {
+        if (_.isEmpty(this.props.itemList)) {
+            return <div></div>;
+        }
+
+        return _.map(this.props.itemList, item => {
+            if (item.type === ITEM_TYPE.HORIZONTAL_WALL) {
+                return (
+                    <Interact key={item.id}
+                        classNameItem="drag-wall-horizontal"
+                        onTap={() => this.toggleModal(item.id)}
+                        resizeConfig={RESIZE_HORIZONTAL}>
+                    </Interact>
+                );
+            } else if (item.type === ITEM_TYPE.VERTICALL_WALL) {
+                return (
+                    <Interact key={item.id}
+                        classNameItem="drag-wall-vertical"
+                        onTap={() => this.toggleModal(item.id)}
+                        resizeConfig={RESIZE_VERTICAL}>
+                    </Interact>
+                );
+            }
+
+            return (
+                <Interact key={item.id}
+                    classNameItem="drag-element text-center fas fa-lightbulb"
+                    onTap={() => this.toggleModal(item.id)}>
+                </Interact>
+            );
+        });
     }
 
     render() {
         return (
             <div>
-                <div className="mb-5">
-                    <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
-                    <Button color="secondary" className="mr-1" onClick={() => this.addItem(1)}>Vertical</Button>
-                    <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
-                        <i className="fas fa-lightbulb"></i>
-                    </Button><br />
-                </div>
-                <div className="playground">
-                    <ItemHorizontal></ItemHorizontal>
-                </div>
+                {this.renderItems()}
+                <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                    <ModalBody>
+                        <Button className="w-100" color="primary" onClick={this.removeItem}>Remove</Button><br />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button className="w-100" color="secondary" onClick={this.toggleModal}>Cancel</Button><br />
+                    </ModalFooter>
+                </Modal>
             </div>
         );
     }
+
+    toggleModal(id) {
+        if (!_.isNumber(id)) {
+            id = NOT_SELECTED_ITEM;
+        }
+
+        this.setState({
+            modal: !this.state.modal,
+            selectedItem: id
+        });
+    }
+
+    removeItem() {
+        this.props.removeItem(this.state.selectedItem);
+        this.toggleModal(NOT_SELECTED_ITEM);
+    }
 }
 
-export default connect(null, { addItem })(Item);
+function mapStateToProps({ itemList }) {
+    return { itemList };
+}
+
+export default connect(mapStateToProps, { removeItem })(Item);
