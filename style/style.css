@@ -9,19 +9,44 @@
 
 .drag-1 {
     position: absolute;
+    user-select: none;
+    -webkit-transform: translate(0px, 0px);
+            transform: translate(0px, 0px);
+    border-radius: 0.75em;
+}
+
+.drag-wall-horizontal {
     width: 100px;
     height: 50px;
     min-width: 50px;
     background-color: #29e;
-    color: white;
     border-radius: 0.75em;
-    user-select: none;
-    -webkit-transform: translate(0px, 0px);
-            transform: translate(0px, 0px);
-  }
+}
+
+.drag-wall-vertical {
+    width: 50px;
+    height: 100px;
+    min-height: 50px;
+    background-color: #29e;
+    border-radius: 0.75em;
+}
+
+.drag-element {
+    width: 25px;
+    height: 25px;
+    background-color: #ffff00;
+    z-index: 1;
+}
 
 .playground {
     width: 1000px;
     height: 500px;
     background-color: #556b2f;
+}
+
+/* Fix for Chrome mobile simulator */
+.playground,
+.playground * {
+  -ms-touch-action: none;
+  touch-action: none;
 }

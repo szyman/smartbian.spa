@@ -9,7 +9,6 @@ class Item extends Component {
 
     addItem(type) {
         this.props.addItem(type);
-        console.log(type);
     }
 
     render() {
@@ -17,8 +16,8 @@ class Item extends Component {
             <div>
                 <div className="mb-5">
                     <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
-                    <Button color="secondary" className="mr-1">Vertical</Button>
-                    <Button color="warning" className="mr-1">
+                    <Button color="secondary" className="mr-1" onClick={() => this.addItem(1)}>Vertical</Button>
+                    <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
                         <i className="fas fa-lightbulb"></i>
                     </Button><br />
                 </div>

@@ -2,10 +2,14 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { removeItem } from '../../actions/itemAction';
-import Interact, { RESIZE_HORIZONTAL } from '../../wrappers/interactWrapper';
+import Interact, { RESIZE_HORIZONTAL, RESIZE_VERTICAL } from '../../wrappers/interactWrapper';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const NOT_SELECTED_ITEM = -1;
+const ITEM_TYPE = {
+    HORIZONTAL_WALL: 0,
+    VERTICALL_WALL: 1
+}
 
 class ItemHorizontal extends Component {
     constructor(props) {
@@ -25,10 +29,28 @@ class ItemHorizontal extends Component {
         }
 
         return _.map(this.props.itemList, item => {
+            if (item.type === ITEM_TYPE.HORIZONTAL_WALL) {
+                return (
+                    <Interact key={item.id}
+                        classNameItem="drag-wall-horizontal"
+                        onTap={() => this.toggleModal(item.id)}
+                        resizeConfig={RESIZE_HORIZONTAL}>
+                    </Interact>
+                );
+            } else if (item.type === ITEM_TYPE.VERTICALL_WALL) {
+                return (
+                    <Interact key={item.id}
+                        classNameItem="drag-wall-vertical"
+                        onTap={() => this.toggleModal(item.id)}
+                        resizeConfig={RESIZE_VERTICAL}>
+                    </Interact>
+                );
+            }
+
             return (
-                <Interact key={item.id} className="drag-1"
-                    onTap={() => this.toggleModal(item.id)}
-                    resizeConfig={RESIZE_HORIZONTAL}>
+                <Interact key={item.id}
+                    classNameItem="drag-element text-center fas fa-lightbulb"
+                    onTap={() => this.toggleModal(item.id)}>
                 </Interact>
             );
         });
@@ -48,7 +70,7 @@ class ItemHorizontal extends Component {
                     </ModalFooter>
                 </Modal>
             </div>
-        )
+        );
     }
 
     toggleModal(id) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import interact from 'interactjs';
 
 export const RESIZE_HORIZONTAL = 0;
-
+export const RESIZE_VERTICAL = 1;
 class Interact extends Component {
     shouldComponentUpdate() {
         return false;
@@ -32,7 +32,7 @@ class Interact extends Component {
 
     render() {
         return (
-            <div className="drag-1" ref="draggable"></div>
+            <div className={`drag-1 ${this.props.classNameItem}`} ref="draggable"></div>
         );
     }
 
@@ -45,6 +45,16 @@ class Interact extends Component {
                     right: true,
                     bottom: false,
                     top: false
+                }
+            }
+        } else if (this.props.resizeConfig === RESIZE_VERTICAL) {
+            return {
+                preserveAspectRatio: false,
+                edges: {
+                    left: false,
+                    right: false,
+                    bottom: true,
+                    top: true
                 }
             }
         }
