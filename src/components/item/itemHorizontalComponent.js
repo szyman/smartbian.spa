@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { removeItem } from '../../actions/itemAction';
-import Interact from '../../wrappers/interactWrapper';
+import Interact, { RESIZE_HORIZONTAL } from '../../wrappers/interactWrapper';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const NOT_SELECTED_ITEM = -1;
@@ -26,7 +26,10 @@ class ItemHorizontal extends Component {
 
         return _.map(this.props.itemList, item => {
             return (
-                <Interact key={item.id} className="drag-1" onTap={() => this.toggleModal(item.id)}></Interact>
+                <Interact key={item.id} className="drag-1"
+                    onTap={() => this.toggleModal(item.id)}
+                    resizeConfig={RESIZE_HORIZONTAL}>
+                </Interact>
             );
         });
     }
