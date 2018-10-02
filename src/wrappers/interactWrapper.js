@@ -3,6 +3,7 @@ import interact from 'interactjs';
 
 export const RESIZE_HORIZONTAL = 0;
 export const RESIZE_VERTICAL = 1;
+
 class Interact extends Component {
     shouldComponentUpdate() {
         return false;
@@ -27,6 +28,7 @@ class Interact extends Component {
             })
             .on('resizemove', resizemove)
             .on('tap', this.props.onTap)
+            .on(['dragend', 'resizeend'], this.props.updateItem)
             .resizable(this.resizeConfig());
     }
 

@@ -21,6 +21,7 @@ class Item extends Component {
 
         this.toggleModal = this.toggleModal.bind(this);
         this.removeItem = this.removeItem.bind(this);
+        this.updateItem = this.updateItem.bind(this);
     }
 
     renderItems() {
@@ -34,7 +35,8 @@ class Item extends Component {
                     <Interact key={item.id}
                         classNameItem="drag-wall-horizontal"
                         onTap={() => this.toggleModal(item.id)}
-                        resizeConfig={RESIZE_HORIZONTAL}>
+                        resizeConfig={RESIZE_HORIZONTAL}
+                        updateItem={(arg) => this.updateItem(item.id, arg)}>
                     </Interact>
                 );
             } else if (item.type === ITEM_TYPE.VERTICALL_WALL) {
@@ -42,7 +44,8 @@ class Item extends Component {
                     <Interact key={item.id}
                         classNameItem="drag-wall-vertical"
                         onTap={() => this.toggleModal(item.id)}
-                        resizeConfig={RESIZE_VERTICAL}>
+                        resizeConfig={RESIZE_VERTICAL}
+                        updateItem={(arg) => this.updateItem(item.id, arg)}>
                     </Interact>
                 );
             }
@@ -50,7 +53,8 @@ class Item extends Component {
             return (
                 <Interact key={item.id}
                     classNameItem="drag-element text-center fas fa-lightbulb"
-                    onTap={() => this.toggleModal(item.id)}>
+                    onTap={() => this.toggleModal(item.id)}
+                    updateItem={(arg) => this.updateItem(item.id, arg)}>
                 </Interact>
             );
         });
@@ -87,6 +91,10 @@ class Item extends Component {
     removeItem() {
         this.props.removeItem(this.state.selectedItem);
         this.toggleModal(NOT_SELECTED_ITEM);
+    }
+
+    updateItem(id, {target}) {
+        console.log(id, target.dataset.x, target.dataset.y, target.style.cssText);
     }
 }
 
