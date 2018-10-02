@@ -22,7 +22,9 @@ class Item extends Component {
                         <i className="fas fa-lightbulb"></i>
                     </Button><br />
                 </div>
-                <ItemHorizontal></ItemHorizontal>
+                <div className="playground">
+                    <ItemHorizontal></ItemHorizontal>
+                </div>
             </div>
         );
     }
