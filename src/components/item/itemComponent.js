@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeItem } from '../../actions/itemAction';
+import { removeItem, updateItem } from '../../actions/itemAction';
 import Interact, { RESIZE_HORIZONTAL, RESIZE_VERTICAL } from '../../wrappers/interactWrapper';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
@@ -33,6 +33,7 @@ class Item extends Component {
             if (item.type === ITEM_TYPE.HORIZONTAL_WALL) {
                 return (
                     <Interact key={item.id}
+                        itemData={item}
                         classNameItem="drag-wall-horizontal"
                         onTap={() => this.toggleModal(item.id)}
                         resizeConfig={RESIZE_HORIZONTAL}
@@ -42,6 +43,7 @@ class Item extends Component {
             } else if (item.type === ITEM_TYPE.VERTICALL_WALL) {
                 return (
                     <Interact key={item.id}
+                        itemData={item}
                         classNameItem="drag-wall-vertical"
                         onTap={() => this.toggleModal(item.id)}
                         resizeConfig={RESIZE_VERTICAL}
@@ -52,6 +54,7 @@ class Item extends Component {
 
             return (
                 <Interact key={item.id}
+                    itemData={item}
                     classNameItem="drag-element text-center fas fa-lightbulb"
                     onTap={() => this.toggleModal(item.id)}
                     updateItem={(arg) => this.updateItem(item.id, arg)}>
@@ -93,8 +96,15 @@ class Item extends Component {
         this.toggleModal(NOT_SELECTED_ITEM);
     }
 
-    updateItem(id, {target}) {
-        console.log(id, target.dataset.x, target.dataset.y, target.style.cssText);
+    updateItem(id, { target }) {
+        const dataToUpdate = {
+            id: id,
+            dataX: parseInt(target.dataset.x),
+            dataY: parseInt(target.dataset.y),
+            width: target.style.cssText
+        }
+
+        this.props.updateItem(dataToUpdate);
     }
 }
 
@@ -102,4 +112,4 @@ function mapStateToProps({ itemList }) {
     return { itemList };
 }
 
-export default connect(mapStateToProps, { removeItem })(Item);
+export default connect(mapStateToProps, { removeItem, updateItem })(Item);
