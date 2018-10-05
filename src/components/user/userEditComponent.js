@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { userGetDetails } from '../../actions/userAction';
+import { userGetDetails, userUpdate } from '../../actions/userAction';
 
 class UserEdit extends Component {
     constructor(props) {
@@ -28,17 +28,12 @@ class UserEdit extends Component {
     }
 
     validateForm(value, property) {
-        if (property.raspHost) {
-            if (this.props.userDetails.raspHost !== value) {
+        if (property.raspHost !== this.props.userDetails.raspHost ||
+            property.raspUsername !== this.props.userDetails.raspUsername ) {
                 return false;
-            }
-        } else if (property.raspUsername) {
-            if (this.props.userDetails.raspUsername !== value) {
-                return false;
-            }
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     renderValidationError() {
@@ -59,6 +54,7 @@ class UserEdit extends Component {
         }
 
         const { handleSubmit } = this.props;
+        const { userDetails } = this.props;
 
         return (
             <div>
@@ -68,7 +64,7 @@ class UserEdit extends Component {
                     <div className="">
                         <h1>Edit profile</h1>
                         <form onSubmit={handleSubmit(this.updateUser.bind(this))}>
-                            <h4>Raspberry PI host name:</h4>
+                            <h4>Raspberry PI host name: {userDetails.raspHost}</h4>
                             <Field
                                 type="text"
                                 placeholder="host name"
@@ -76,7 +72,7 @@ class UserEdit extends Component {
                                 component={this.renderField}
                                 validate={this.validateForm}
                             />
-                            <h4>Raspberry PI User name:</h4>
+                            <h4>Raspberry PI User name: {userDetails.raspUsername}</h4>
                             <Field
                                 type="text"
                                 placeholder="user name"
@@ -94,8 +90,9 @@ class UserEdit extends Component {
     }
 
     updateUser(values) {
-        this.props.reset();
-        console.log(values);
+        this.props.userUpdate(this.props.userAuth.id, values).then(() => {
+            console.log('User updated');
+        });
     }
 }
 
@@ -105,4 +102,4 @@ function mapStateToProps({ userAuth, userList }) {
 
 export default reduxForm({
     form: 'UserEditForm'
-})(connect(mapStateToProps, { userGetDetails })(UserEdit))
+})(connect(mapStateToProps, { userGetDetails, userUpdate })(UserEdit))

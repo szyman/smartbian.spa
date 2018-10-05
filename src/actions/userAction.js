@@ -6,6 +6,7 @@ export const LOGOUT_USER = 'logout_user';
 export const RESTORE_USER = 'restore_user';
 export const USER_DETAILS = 'user_details';
 export const USER_LIST = 'user_list';
+export const USER_UPDATE = 'user_update';
 const BASE_URL = 'http://localhost:5000/api';
 
 export function userRegister(values) {
@@ -54,6 +55,15 @@ export function userGetList() {
         type: USER_LIST,
         payload: request
     };
+}
+
+export function userUpdate(id, updatedValues) {
+    const request = axios.put(`${BASE_URL}/users/${id}`, updatedValues, _getAuthHeader());
+
+    return {
+        type: USER_UPDATE,
+        payload: request
+    }
 }
 
 function _getAuthHeader() {
