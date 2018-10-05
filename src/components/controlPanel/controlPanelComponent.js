@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
 import { connect } from 'react-redux';
+import { Button } from 'reactstrap';
 
 import { addItem } from '../../actions/itemAction';
 import Item from '../item/itemComponent';
+import ModalConnection from '../modal/modalConnectionComponent';
 
 class ControlPanel extends Component {
+
+
 
     addItem(type) {
         this.props.addItem(type);
@@ -14,7 +17,10 @@ class ControlPanel extends Component {
     render() {
         return (
             <div>
-                <div className="mb-5">
+                <div className="row mb-1">
+                    <ModalConnection />
+                </div>
+                <div className="row mb-5">
                     <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
                     <Button color="secondary" className="mr-1" onClick={() => this.addItem(1)}>Vertical</Button>
                     <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
