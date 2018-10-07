@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { removeItem, updateItem } from '../../actions/itemAction';
 import Interact, { RESIZE_HORIZONTAL, RESIZE_VERTICAL } from '../../wrappers/interactWrapper';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import ModalItem from '../modal/modalItemComponent';
 
 const NOT_SELECTED_ITEM = -1;
-const ITEM_TYPE = {
+export const ITEM_TYPE = {
     HORIZONTAL_WALL: 0,
-    VERTICALL_WALL: 1
+    VERTICALL_WALL: 1,
+    ELEMENT: 2
 }
 
 class Item extends Component {
@@ -16,11 +17,13 @@ class Item extends Component {
         super(props);
         this.state = {
             modal: false,
+            type: ITEM_TYPE.HORIZONTAL_WALL,
             selectedItem: NOT_SELECTED_ITEM
         };
 
         this.toggleModal = this.toggleModal.bind(this);
         this.removeItem = this.removeItem.bind(this);
+        this.switchItem = this.switchItem.bind(this);
         this.updateItem = this.updateItem.bind(this);
     }
 
@@ -56,7 +59,7 @@ class Item extends Component {
                 <Interact key={item.id}
                     itemData={item}
                     classNameItem="drag-element text-center fas fa-lightbulb"
-                    onTap={() => this.toggleModal(item.id)}
+                    onTap={() => this.toggleModal(item.id, ITEM_TYPE.ELEMENT)}
                     updateItem={(arg) => this.updateItem(item.id, arg)}>
                 </Interact>
             );
@@ -67,26 +70,25 @@ class Item extends Component {
         return (
             <div>
                 {this.renderItems()}
-                <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
-                    <ModalBody>
-                        <Button className="w-100" color="primary" onClick={this.removeItem}>Remove</Button><br />
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button className="w-100" color="secondary" onClick={this.toggleModal}>Cancel</Button><br />
-                    </ModalFooter>
-                </Modal>
+                <ModalItem
+                    modal={this.state.modal}
+                    type={this.state.type}
+                    toggleModal={this.toggleModal}
+                    removeItem={this.removeItem}
+                    switchItem={this.switchItem}>
+                </ModalItem>
             </div>
         );
     }
 
-    toggleModal(id) {
+    toggleModal(id, type) {
         if (!_.isNumber(id)) {
             id = NOT_SELECTED_ITEM;
         }
 
         this.setState({
             modal: !this.state.modal,
+            type: type,
             selectedItem: id
         });
     }
@@ -94,6 +96,11 @@ class Item extends Component {
     removeItem() {
         this.props.removeItem(this.state.selectedItem);
         this.toggleModal(NOT_SELECTED_ITEM);
+    }
+
+    switchItem() {
+        this.toggleModal(NOT_SELECTED_ITEM);
+        console.log('Item switched');
     }
 
     updateItem(id, { target }) {
