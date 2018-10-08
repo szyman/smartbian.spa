@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { Field, reduxForm } from 'redux-form';
 
 import { userGetDetails } from '../../actions/userAction';
@@ -33,10 +33,9 @@ class ModalConnection extends Component {
                                 <label>Password</label>
                                 <Field name="password" component="input" type="password" className="form-control" placeholder="Password" />
                             </div>
+                            <button className="btn btn-success btn-block mb-2" onClick={this.toggle}>OK</button>
                         </ModalBody>
-                        <button className="btn btn-success btn-block mb-2" onClick={this.toggle}>OK</button>
                     </form>
-                    <button className="btn btn-secondary btn-block" onClick={this.toggle}>Cancel</button>
                 </Modal>
             </div>
         );
