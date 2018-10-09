@@ -3,22 +3,26 @@ import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 
 import { addItem } from '../../actions/itemAction';
+import { controlPanelTest } from '../../actions/controlPanelAction';
 import Item from '../item/itemComponent';
 import ModalConnection from '../modal/modalConnectionComponent';
 
 class ControlPanel extends Component {
-
-
-
-    addItem(type) {
-        this.props.addItem(type);
+    constructor(props) {
+        super(props);
+        this.testConnection = this.testConnection.bind(this);
     }
 
     render() {
         return (
             <div>
                 <div className="row mb-1">
-                    <ModalConnection />
+                    <ModalConnection
+                        buttonClassName={"mr-1"}
+                        buttonTitle={"Test connection"}
+                        headerTitle={"Test connection"}
+                        submitAction={this.testConnection}
+                    />
                 </div>
                 <div className="row mb-5">
                     <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
@@ -32,6 +36,18 @@ class ControlPanel extends Component {
             </div>
         );
     }
+
+    addItem(type) {
+        this.props.addItem(type);
+    }
+
+    testConnection(formValues, connectionValues) {
+        const dataConnection = _.assignIn(connectionValues, formValues)
+
+        this.props.controlPanelTest(dataConnection).then(({ payload }) => {
+            console.log(`Test connetion result: ${payload.data}`);
+        });
+    }
 }
 
-export default connect(null, { addItem })(ControlPanel);
+export default connect(null, { addItem, controlPanelTest })(ControlPanel);
