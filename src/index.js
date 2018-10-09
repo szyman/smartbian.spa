@@ -26,7 +26,7 @@ ReactDOM.render(
       <BrowserRouter>
         <div>
           <App></App>
-          <div className="container main-context">
+          <div className="container-fluid main-context">
             <Switch>
               <PrivateRoute path='/setup' component={Setup}/>
               <PrivateRoute path='/controlPanel' component={ControlPanel} />

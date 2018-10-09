@@ -16,7 +16,7 @@ class ControlPanel extends Component {
     render() {
         return (
             <div>
-                <div className="row mb-1">
+                <div className="row mb-1 ml-2">
                     <ModalConnection
                         buttonClassName={"mr-1"}
                         buttonTitle={"Test connection"}
@@ -24,7 +24,7 @@ class ControlPanel extends Component {
                         submitAction={this.testConnection}
                     />
                 </div>
-                <div className="row mb-5">
+                <div className="row mb-5 ml-2">
                     <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
                     <Button color="secondary" className="mr-1" onClick={() => this.addItem(1)}>Vertical</Button>
                     <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
