@@ -5,7 +5,7 @@ import { ITEM_TYPE } from '../item/itemComponent';
 class ModalItem extends Component {
     render() {
         return (
-            <Modal isOpen={this.props.modal} toggle={this.props.toggleModal}>
+            <Modal isOpen={this.props.modal}>
                 <ModalHeader>Modal title</ModalHeader>
                 <ModalBody>
                     <Button className="w-100 mb-2" color="primary" onClick={this.props.removeItem}>Remove</Button>

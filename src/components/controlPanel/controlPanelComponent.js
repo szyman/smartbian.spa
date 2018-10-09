@@ -26,10 +26,9 @@ class ControlPanel extends Component {
                     <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
                         <i className="fas fa-lightbulb"></i>
                     </Button><br />
+
                 </div>
-                <div className="playground">
-                    <Item></Item>
-                </div>
+                <Item></Item>
             </div>
         );
     }

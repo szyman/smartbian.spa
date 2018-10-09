@@ -66,17 +66,40 @@ class Item extends Component {
         });
     }
 
+    renderListItems() {
+        if (_.isEmpty(this.props.itemList)) {
+            return;
+        }
+
+        return _.map(this.props.itemList, item => {
+            return (
+                <li className="list-group-item" key={item.id}>
+                    {item.type}
+                    <a onClick={() => this.toggleModal(item.id)}>Show</a>
+                </li>
+            );
+        });
+    }
+
     render() {
         return (
-            <div>
-                {this.renderItems()}
-                <ModalItem
-                    modal={this.state.modal}
-                    type={this.state.type}
-                    toggleModal={this.toggleModal}
-                    removeItem={this.removeItem}
-                    switchItem={this.switchItem}>
-                </ModalItem>
+            <div className="row mt-2">
+                <div className="playground">
+                    {this.renderItems()}
+                    <ModalItem
+                        modal={this.state.modal}
+                        type={this.state.type}
+                        toggleModal={this.toggleModal}
+                        removeItem={this.removeItem}
+                        switchItem={this.switchItem}>
+                    </ModalItem>
+                </div>
+
+                <div className="items-list mx-auto">
+                    <ul className="list-group">
+                        {this.renderListItems()}
+                    </ul>
+                </div>
             </div>
         );
     }
