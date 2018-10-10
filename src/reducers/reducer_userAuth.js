@@ -8,7 +8,7 @@ export default function(state = {}, action) {
         case REGISTER_USER:
             return state;
         case LOGIN_USER:
-            if (!action.payload) {
+            if (!_.isObject(action.payload) || action.error) {
                 return state;
             }
 

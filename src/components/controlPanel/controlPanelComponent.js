@@ -6,11 +6,18 @@ import { addItem } from '../../actions/itemAction';
 import { controlPanelTest } from '../../actions/controlPanelAction';
 import Item from '../item/itemComponent';
 import ModalConnection from '../modal/modalConnectionComponent';
+import ModalMessage from '../modal/modalMessageComponent';
 
 class ControlPanel extends Component {
     constructor(props) {
         super(props);
         this.testConnection = this.testConnection.bind(this);
+        this.hideModal = this.hideModal.bind(this);
+
+        this.state = {
+            showConnectionModal: false,
+            message: ''
+        };
     }
 
     render() {
@@ -33,6 +40,12 @@ class ControlPanel extends Component {
 
                 </div>
                 <Item></Item>
+                <ModalMessage
+                    modal={this.state.showConnectionModal}
+                    toggle={this.hideModal}
+                    title={"Connection info"}
+                    message={this.state.message}>
+                </ModalMessage>
             </div>
         );
     }
@@ -45,8 +58,25 @@ class ControlPanel extends Component {
         const dataConnection = _.assignIn(connectionValues, formValues)
 
         this.props.controlPanelTest(dataConnection).then(({ payload }) => {
-            console.log(`Test connetion result: ${payload.data}`);
+            this.setState({
+                showConnectionModal: true,
+                message: `Test connetion result: ${payload.data}`
+            });
+        })
+        .catch((error) => {
+            this.setState({
+                showConnectionModal: true,
+                message: error
+            });
         });
+    }
+
+    hideModal() {
+        this.setState({
+            showConnectionModal: false,
+            message: ''
+        }
+      );
     }
 }
 

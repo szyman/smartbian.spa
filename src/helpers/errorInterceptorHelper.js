@@ -3,12 +3,17 @@ import axios from 'axios';
 export function ErrorInterceptor() {
     axios.interceptors.response.use((response) => {
         return response;
-    }, (error) => {
-        if (error.response.status === 401) {
-            console.log(error.response.statusText)
-            return;
+    }, ({response, message}) => {
+        if (!response) {
+            console.log('ErrorInterceptor', message)
+            return Promise.reject(message);
         }
-        const serverError = error.response.data;
+        if (response.status === 401) {
+            console.log('ErrorInterceptor', response.statusText)
+            return Promise.reject(response.statusText);
+        }
+
+        const serverError = response.data;
         let modalStateErrors = '';
         if (typeof serverError === 'object') {
             for (const key in serverError) {
@@ -17,7 +22,7 @@ export function ErrorInterceptor() {
                 }
             }
         }
-        console.log(modalStateErrors || serverError || 'Server Error');
-        return;
+        console.log('ErrorInterceptor', modalStateErrors || serverError || 'Server Error');
+        return Promise.reject(modalStateErrors || serverError || 'Server Error');
     });
 }

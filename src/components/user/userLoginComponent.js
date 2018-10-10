@@ -4,6 +4,7 @@ import { userLogin, userLogout, userRestore } from '../../actions/userAction';
 import { connect } from 'react-redux';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { withRouter, Link } from 'react-router-dom';
+import ModalMessage from '../modal/modalMessageComponent';
 
 class UserLogin extends Component {
     constructor(props) {
@@ -11,8 +12,11 @@ class UserLogin extends Component {
 
         this.logout = this.logout.bind(this);
         this.toggle = this.toggle.bind(this);
+        this.hideModal = this.hideModal.bind(this);
         this.state = {
-            dropdownOpen: false
+            dropdownOpen: false,
+            showLoginModal: false,
+            errorMessage: ''
         };
     }
 
@@ -80,15 +84,37 @@ class UserLogin extends Component {
         return (
             <div>
                 { this.renderForm() }
+                <ModalMessage
+                    modal={this.state.showLoginModal}
+                    toggle={this.hideModal}
+                    title={'Login error'}
+                    message={this.state.errorMessage}>
+                </ModalMessage>
             </div>
         );
+    }
+
+    hideModal() {
+        this.setState({
+            dropdownOpen: false,
+            showLoginModal: false,
+            errorMessage: ''
+        }
+      );
     }
 
     login(values) {
         const { userLogin, reset } = this.props;
         userLogin(values).then(() => {
             reset();
-          });;
+          }).catch((error) => {
+              this.setState({
+                    dropdownOpen: false,
+                    showLoginModal: true,
+                    errorMessage: error
+                }
+              );
+          });
     }
 
     loggedIn() {
@@ -108,7 +134,9 @@ class UserLogin extends Component {
 
     toggle() {
         this.setState(prevState => ({
-            dropdownOpen: !prevState.dropdownOpen
+            dropdownOpen: !prevState.dropdownOpen,
+            showLoginModal: false,
+            errorMessage: ''
         }));
     }
 }
