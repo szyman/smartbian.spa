@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 
 import { addItem } from '../../actions/itemAction';
-import { controlPanelTest } from '../../actions/controlPanelAction';
+import { controlPanelTest, COMMAND_TYPES } from '../../actions/controlPanelAction';
 import Item from '../item/itemComponent';
 import ModalConnection from '../modal/modalConnectionComponent';
 import ModalMessage from '../modal/modalMessageComponent';
@@ -55,15 +55,14 @@ class ControlPanel extends Component {
     }
 
     testConnection(formValues, connectionValues) {
-        const dataConnection = _.assignIn(connectionValues, formValues)
+        const dataConnection = _.assignIn(connectionValues, formValues, { commandType: COMMAND_TYPES.TEST_CONNECTION });
 
         this.props.controlPanelTest(dataConnection).then(({ payload }) => {
             this.setState({
                 showConnectionModal: true,
                 message: `Test connetion result: ${payload.data}`
             });
-        })
-        .catch((error) => {
+        }).catch((error) => {
             this.setState({
                 showConnectionModal: true,
                 message: error
@@ -75,8 +74,7 @@ class ControlPanel extends Component {
         this.setState({
             showConnectionModal: false,
             message: ''
-        }
-      );
+        });
     }
 }
 
