@@ -65,5 +65,8 @@ function mapStateToProps({ userAuth, userList }) {
 }
 
 export default reduxForm({
-    form: 'ModalConnectionForm'
+    form: 'ModalConnectionForm',
+    initialValues: {
+        password: ''
+    }
 })(connect(mapStateToProps, { userGetDetails })(ModalConnection));
