@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 export const TEST_CONNECTION = 'test_connection';
-const BASE_URL = 'http://localhost:5000/api';
-export const COMMAND_TYPES = {
-    TEST_CONNECTION: 'test_connection'
-};
+export const COMMAND_TEST_CONNECTION = 'test_connection';
+export const COMMAND_RUN_SWITCH = 'run_switch';
 
-export function controlPanelTest(values) {
+const BASE_URL = 'http://localhost:5000/api';
+
+export function controlPanelExecuteCommand(values) {
     const request = axios.post(`${BASE_URL}/controlpanel/executeCommand`, values, _getAuthHeader());
 
     return {
-        type: TEST_CONNECTION,
+        type: values.commandType,
         payload: request
     }
 }

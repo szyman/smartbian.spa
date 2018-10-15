@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { removeItem, updateItem } from '../../actions/itemAction';
 import Interact, { RESIZE_HORIZONTAL, RESIZE_VERTICAL } from '../../wrappers/interactWrapper';
 import ModalItem from '../modal/modalItemComponent';
+import ModalMessage from '../modal/modalMessageComponent';
+import { controlPanelExecuteCommand, COMMAND_RUN_SWITCH } from '../../actions/controlPanelAction';
 
 const NOT_SELECTED_ITEM = -1;
 export const ITEM_TYPE = {
@@ -18,7 +20,9 @@ class Item extends Component {
         this.state = {
             modal: false,
             type: ITEM_TYPE.HORIZONTAL_WALL,
-            selectedItem: NOT_SELECTED_ITEM
+            selectedItem: NOT_SELECTED_ITEM,
+            showConnectionModal: false,
+            message: ''
         };
 
         this.toggleModal = this.toggleModal.bind(this);
@@ -86,20 +90,25 @@ class Item extends Component {
             <div className="row mt-2">
                 <div className="playground">
                     {this.renderItems()}
-                    <ModalItem
-                        modal={this.state.modal}
-                        type={this.state.type}
-                        toggleModal={this.toggleModal}
-                        removeItem={this.removeItem}
-                        switchItem={this.switchItem}>
-                    </ModalItem>
                 </div>
-
                 <div className="items-list mx-auto">
                     <ul className="list-group">
                         {this.renderListItems()}
                     </ul>
                 </div>
+                <ModalItem
+                    modal={this.state.modal}
+                    type={this.state.type}
+                    toggleModal={this.toggleModal}
+                    removeItem={this.removeItem}
+                    switchItem={this.switchItem}>
+                </ModalItem>
+                <ModalMessage
+                    modal={this.state.showConnectionModal}
+                    toggle={this.toggleModal}
+                    title={"Switching error"}
+                    message={this.state.message}>
+                </ModalMessage>
             </div>
         );
     }
@@ -112,7 +121,9 @@ class Item extends Component {
         this.setState({
             modal: !this.state.modal,
             type: type,
-            selectedItem: id
+            selectedItem: id,
+            showConnectionModal: false,
+            message: ''
         });
     }
 
@@ -121,9 +132,19 @@ class Item extends Component {
         this.toggleModal(NOT_SELECTED_ITEM);
     }
 
-    switchItem() {
-        this.toggleModal(NOT_SELECTED_ITEM);
-        console.log('Item switched');
+    switchItem(formValues, connectionValues) {
+        const dataConnection = _.assignIn(connectionValues, formValues, {
+            commandType: COMMAND_RUN_SWITCH,
+            itemId: this.state.selectedItem
+        });
+        this.props.controlPanelExecuteCommand(dataConnection).then(() => {
+            this.toggleModal(NOT_SELECTED_ITEM);
+        }).catch((error) => {
+            this.setState({
+                showConnectionModal: true,
+                message: error
+            });
+        });
     }
 
     updateItem(id, { target }) {
@@ -142,4 +163,4 @@ function mapStateToProps({ itemList }) {
     return { itemList };
 }
 
-export default connect(mapStateToProps, { removeItem, updateItem })(Item);
+export default connect(mapStateToProps, { removeItem, updateItem, controlPanelExecuteCommand })(Item);
