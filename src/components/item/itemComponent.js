@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeItem, updateItem } from '../../actions/itemAction';
+import { Button } from 'reactstrap';
+import { removeItem, updateItem, getItems, saveItems } from '../../actions/itemAction';
 import Interact, { RESIZE_HORIZONTAL, RESIZE_VERTICAL } from '../../wrappers/interactWrapper';
 import ModalItem from '../modal/modalItemComponent';
 import ModalMessage from '../modal/modalMessageComponent';
@@ -22,13 +23,19 @@ class Item extends Component {
             type: ITEM_TYPE.HORIZONTAL_WALL,
             selectedItem: NOT_SELECTED_ITEM,
             showConnectionModal: false,
-            message: ''
+            message: '',
+            showSaveButton: false
         };
 
         this.toggleModal = this.toggleModal.bind(this);
         this.removeItem = this.removeItem.bind(this);
         this.switchItem = this.switchItem.bind(this);
         this.updateItem = this.updateItem.bind(this);
+        this.saveChanges = this.saveChanges.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.getItems(this.props.userAuth.id);
     }
 
     renderItems() {
@@ -87,7 +94,10 @@ class Item extends Component {
 
     render() {
         return (
-            <div className="row mt-2">
+            <div>
+                <div className={`mb-2 ml-2 ${this.state.showSaveButton? 'visible' : 'invisible'}`}>
+                    <Button color="primary" className="mt-1" onClick={this.saveChanges}>Save changes</Button>
+                </div>
                 <div className="playground">
                     {this.renderItems()}
                 </div>
@@ -152,15 +162,31 @@ class Item extends Component {
             id: id,
             dataX: parseInt(target.dataset.x),
             dataY: parseInt(target.dataset.y),
-            width: target.style.cssText
+            style: target.style.cssText
         }
 
         this.props.updateItem(dataToUpdate);
+        this.setState({
+            showSaveButton: true
+        });
+    }
+
+    saveChanges() {
+        this.props.saveItems(this.props.userAuth.id, this.props.itemList).then(() => {
+            this.setState({
+                showSaveButton: false
+            });
+        }).catch((error) => {
+            this.setState({
+                showConnectionModal: true,
+                message: error
+            })
+        });
     }
 }
 
-function mapStateToProps({ itemList }) {
-    return { itemList };
+function mapStateToProps({ itemList, userAuth }) {
+    return { itemList, userAuth };
 }
 
-export default connect(mapStateToProps, { removeItem, updateItem, controlPanelExecuteCommand })(Item);
+export default connect(mapStateToProps, { removeItem, updateItem, getItems, saveItems, controlPanelExecuteCommand })(Item);

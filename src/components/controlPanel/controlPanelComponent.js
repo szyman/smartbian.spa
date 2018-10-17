@@ -31,13 +31,12 @@ class ControlPanel extends Component {
                         submitAction={this.testConnection}
                     />
                 </div>
-                <div className="row mb-5 ml-2">
+                <div className="row mb-1 ml-2">
                     <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
                     <Button color="secondary" className="mr-1" onClick={() => this.addItem(1)}>Vertical</Button>
                     <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
                         <i className="fas fa-lightbulb"></i>
                     </Button><br />
-
                 </div>
                 <Item></Item>
                 <ModalMessage

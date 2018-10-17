@@ -12,7 +12,7 @@ class Interact extends Component {
     componentDidMount() {
         this.refs.draggable.setAttribute('data-x', this.props.itemData.dataX);
         this.refs.draggable.setAttribute('data-y', this.props.itemData.dataY);
-        this.refs.draggable.setAttribute('style', this.props.itemData.width);
+        this.refs.draggable.setAttribute('style', this.props.itemData.style);
 
         interact(this.refs.draggable)
             .draggable({
