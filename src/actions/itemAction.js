@@ -4,8 +4,10 @@ import _ from 'lodash';
 export const ADD_ITEM = 'add_item';
 export const REMOVE_ITEM = 'remove_item';
 export const UPDATE_ITEM = 'update_item';
+export const GET_ITEM = 'get_item';
 export const GET_ITEMS = 'get_items';
 export const SAVE_ITEMS = 'save_items';
+export const SAVE_ITEM = 'save_item';
 
 const BASE_URL = 'http://localhost:5000/api';
 
@@ -30,8 +32,17 @@ export function updateItem(data) {
     }
 }
 
+export function getItem(itemId) {
+    const request = axios.get(`${BASE_URL}/blocks/${itemId}`, _getAuthHeader());
+
+    return {
+        type: GET_ITEM,
+        payload: request
+    }
+}
+
 export function getItems(id) {
-    const request = axios.get(`${BASE_URL}/blocks/${id}`, _getAuthHeader());
+    const request = axios.get(`${BASE_URL}/blocks/all/${id}`, _getAuthHeader());
 
     return {
         type: GET_ITEMS,
@@ -52,6 +63,15 @@ export function saveItems(id, items) {
 
     return {
         type: SAVE_ITEMS,
+        payload: request
+    }
+}
+
+export function saveItem(itemId, item) {
+    const request = axios.put(`${BASE_URL}/blocks/${itemId}`, item, _getAuthHeader());
+
+    return {
+        type: SAVE_ITEM,
         payload: request
     }
 }

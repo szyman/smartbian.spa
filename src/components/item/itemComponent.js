@@ -107,6 +107,7 @@ class Item extends Component {
                     </ul>
                 </div>
                 <ModalItem
+                    itemId={this.state.selectedItem}
                     modal={this.state.modal}
                     type={this.state.type}
                     toggleModal={this.toggleModal}

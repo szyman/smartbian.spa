@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { ADD_ITEM, REMOVE_ITEM, UPDATE_ITEM, GET_ITEMS } from '../actions/itemAction';
+import { ADD_ITEM, REMOVE_ITEM, UPDATE_ITEM, GET_ITEM, GET_ITEMS, SAVE_ITEM } from '../actions/itemAction';
 
 export default function(state={}, action) {
     switch (action.type) {
@@ -19,12 +19,25 @@ export default function(state={}, action) {
         case UPDATE_ITEM:
             _.assignIn(state[action.itemData.id], action.itemData)
             return state;
+        case GET_ITEM:
+            if (!action.payload) {
+                return state;
+            }
+
+            return action.payload.data;
         case GET_ITEMS:
             if (!action.payload) {
                 return state;
             }
 
             return _.mapKeys(action.payload.data, 'id');
+        case SAVE_ITEM:
+            if (!action.payload) {
+                return state;
+            }
+
+            return { ...state, [action.payload.data.id]: action.payload.data }
+
     };
 
     return state;

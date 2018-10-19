@@ -18,7 +18,7 @@ class UserEdit extends Component {
         return (
             <div>
                 <input
-                    className="form-control mr-sm-2"
+                    className="form-control"
                     type={field.type}
                     placeholder={field.placeholder}
                     {...field.input}
@@ -59,8 +59,7 @@ class UserEdit extends Component {
         return (
             <div>
                 { this.renderValidationError() }
-
-                <div className="row justify-content-md-center text-center">
+                <div className="align-self-center text-center">
                     <div className="">
                         <h1>Edit profile</h1>
                         <form onSubmit={handleSubmit(this.updateUser.bind(this))}>
