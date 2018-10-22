@@ -143,12 +143,8 @@ class Item extends Component {
         this.toggleModal(NOT_SELECTED_ITEM);
     }
 
-    switchItem(formValues, connectionValues) {
-        const dataConnection = _.assignIn(connectionValues, formValues, {
-            commandType: COMMAND_RUN_SWITCH,
-            itemId: this.state.selectedItem
-        });
-        this.props.controlPanelExecuteCommand(dataConnection).then(() => {
+    switchItem() {
+        this.props.controlPanelExecuteCommand(COMMAND_RUN_SWITCH, this.props.userAuth.id).then(() => {
             this.toggleModal(NOT_SELECTED_ITEM);
         }).catch((error) => {
             this.setState({

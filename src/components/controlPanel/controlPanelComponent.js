@@ -5,7 +5,6 @@ import { Button } from 'reactstrap';
 import { addItem } from '../../actions/itemAction';
 import { controlPanelExecuteCommand, COMMAND_TEST_CONNECTION } from '../../actions/controlPanelAction';
 import Item from '../item/itemComponent';
-import ModalConnection from '../modal/modalConnectionComponent';
 import ModalMessage from '../modal/modalMessageComponent';
 
 class ControlPanel extends Component {
@@ -24,12 +23,7 @@ class ControlPanel extends Component {
         return (
             <div>
                 <div className="row mb-1 ml-2">
-                    <ModalConnection
-                        buttonClassName={"mr-1"}
-                        buttonTitle={"Test connection"}
-                        headerTitle={"Test connection"}
-                        submitAction={this.testConnection}
-                    />
+                    <Button color="primary" className="mr-1" onClick={this.testConnection}>Test connection</Button>
                 </div>
                 <div className="row mb-1 ml-2">
                     <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
@@ -53,10 +47,8 @@ class ControlPanel extends Component {
         this.props.addItem(type);
     }
 
-    testConnection(formValues, connectionValues) {
-        const dataConnection = _.assignIn(connectionValues, formValues, { commandType: COMMAND_TEST_CONNECTION });
-
-        this.props.controlPanelExecuteCommand(dataConnection).then(({ payload }) => {
+    testConnection() {
+        this.props.controlPanelExecuteCommand(COMMAND_TEST_CONNECTION, this.props.userAuth.id).then(({ payload }) => {
             this.setState({
                 showConnectionModal: true,
                 message: `Test connetion result: ${payload.data}`
@@ -77,4 +69,8 @@ class ControlPanel extends Component {
     }
 }
 
-export default connect(null, { addItem, controlPanelExecuteCommand })(ControlPanel);
+function mapStateToProps({ userAuth }) {
+    return { userAuth };
+}
+
+export default connect(mapStateToProps, { addItem, controlPanelExecuteCommand })(ControlPanel);

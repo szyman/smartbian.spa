@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ITEM_TYPE } from '../item/itemComponent';
-import ModalConnection from '../modal/modalConnectionComponent';
 
 class ModalItem extends Component {
     render() {
@@ -24,12 +23,7 @@ class ModalItem extends Component {
         if (this.props.type === ITEM_TYPE.ELEMENT) {
             return (
                 <div>
-                    <ModalConnection
-                        buttonClassName="w-100 mb-2"
-                        buttonTitle={"Switch"}
-                        headerTitle={"Switch item"}
-                        submitAction={this.props.switchItem}
-                    />
+                    <Button className="w-100 mb-2" color="primary" onClick={this.props.switchItem}>Switch</Button>
                     <Link to={`/controlPanel/items/${this.props.itemId}`}>
                         <Button className="w-100 mb-2" color="primary">Edit</Button>
                     </Link>
