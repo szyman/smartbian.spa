@@ -1,8 +1,9 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { getItem, saveItem } from '../../actions/itemAction';
+import { getItems, saveItem } from '../../actions/itemAction';
 
 class ItemEdit extends Component {
     constructor(props) {
@@ -12,12 +13,12 @@ class ItemEdit extends Component {
     }
 
     componentDidMount() {
-        this.props.getItem(this.props.match.params.id);
+        this.props.getItems(this.props.userAuth.id);
     }
 
     render() {
-        const { handleSubmit } = this.props;
-        if (!this.props.item) {
+        const { handleSubmit, initialValues } = this.props;
+        if (!this.props.initialValues) {
             return <div></div>;
         } else {
             return (
@@ -25,15 +26,15 @@ class ItemEdit extends Component {
                     <h1>Edit Item</h1>
                     <form onSubmit={handleSubmit(this.updateItem)}>
                         <div>
-                            <h4>Title: {this.props.item.title}</h4>
+                            <h4>Title: { initialValues.title }</h4>
                             <Field className="form-control" name="title" component="input" type="text" />
                         </div>
                         <div>
-                            <h4>Gpio: {this.props.item.gpio}</h4>
-                            <Field className="form-control" name="gpio" component="input" type="text" />
+                            <h4>Gpio: { initialValues.gpio }</h4>
+                            <Field className="form-control" name="gpio" component="input" type="number" />
                         </div>
                         <div>
-                            <h4>Script file name: {this.props.item.scriptFileName}</h4>
+                            <h4>Script file name: { initialValues.scriptFileName }</h4>
                             <Field className="form-control" name="scriptFileName" component="input" type="text" />
                         </div>
                         <button className="btn btn-success btn-block mt-2" type="submit">Submit</button>
@@ -44,24 +45,27 @@ class ItemEdit extends Component {
     }
 
     updateItem(values) {
-        for (var value in values) {
-            if (!values[value]) {
-                values[value] = this.props.item[value];
-            }
-        }
-        this.props.saveItem(this.props.match.params.id, values);
+        var itemValues = this.props.initialValues;
+        _.assignIn(itemValues, values);
+
+        this.props.saveItem(this.props.match.params.id, itemValues);
     }
 }
 
-function mapStateToProps({ itemList }, ownProps) {
-    return { item: itemList[ownProps.match.params.id] }
+function mapStateToProps({ itemList, userAuth }, ownProps) {
+    var values;
+    var item = itemList[ownProps.match.params.id];
+    if (item) {
+        values = {
+            title: item.title,
+            gpio: item.gpio,
+            scriptFileName: item.scriptFileName
+        }
+    }
+    return { initialValues: values, userAuth }
 }
 
 export default reduxForm({
     form: 'UserEditForm',
-    initialValues: {
-        gpio: "",
-        scriptFileName: "",
-        title: ""
-    }
-})(connect(mapStateToProps, { getItem, saveItem })(ItemEdit))
+    enableReinitialize: true
+})(connect(mapStateToProps, { getItems, saveItem })(ItemEdit))
