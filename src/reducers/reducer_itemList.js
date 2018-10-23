@@ -1,10 +1,13 @@
 import _ from 'lodash';
-import { ADD_ITEM, REMOVE_ITEM, UPDATE_ITEM, GET_ITEM, GET_ITEMS, SAVE_ITEM } from '../actions/itemAction';
+import { ADD_ITEM, REMOVE_ITEM, UPDATE_ITEM, GET_ITEM, GET_ITEMS, SAVE_ITEM, SAVE_NEW_ITEMS } from '../actions/itemAction';
 
 export default function(state={}, action) {
     switch (action.type) {
         case ADD_ITEM:
-            return { ...state, [_.size(state)]: {
+            var randomId = _.random(-100);
+
+            return { ...state, [randomId]: {
+                    id: randomId,
                     dataX: 0,
                     dataY: 0,
                     style: '',
@@ -36,8 +39,13 @@ export default function(state={}, action) {
                 return state;
             }
 
-            return { ...state, [action.payload.data.id]: action.payload.data }
+            return { ...state, [action.payload.data.id]: action.payload.data };
+        case SAVE_NEW_ITEMS:
+            if (!action.payload) {
+                return state;
+            }
 
+            return _.mapKeys(action.payload.data, 'id');
     };
 
     return state;

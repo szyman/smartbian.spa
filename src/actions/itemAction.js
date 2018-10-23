@@ -7,6 +7,7 @@ export const UPDATE_ITEM = 'update_item';
 export const GET_ITEM = 'get_item';
 export const GET_ITEMS = 'get_items';
 export const SAVE_ITEMS = 'save_items';
+export const SAVE_NEW_ITEMS = 'save_new_items';
 export const SAVE_ITEM = 'save_item';
 
 const BASE_URL = 'http://localhost:5000/api';
@@ -50,19 +51,22 @@ export function getItems(id) {
     }
 }
 
-export function saveItems(id, items) {
-    var itemsArray = [];
-    var itemToSend;
-    for (var item in items) {
-        //TODO: Always creating new items
-        itemToSend = _.omit(items[item], 'id');
-        itemsArray.push(itemToSend);
-    }
-
-    const request = axios.post(`${BASE_URL}/blocks/${id}`, itemsArray, _getAuthHeader());
+export function saveItems(userId, filteredItems) {
+    const request = axios.post(`${BASE_URL}/blocks/${userId}`, filteredItems, _getAuthHeader());
 
     return {
         type: SAVE_ITEMS,
+        payload: request
+    }
+}
+
+export function saveNewItems(userId, filteredItems) {
+    let itemsWithNoId = [];
+    _.forEach(filteredItems, (item) => itemsWithNoId.push(_.omit(item, ['id'])));
+    const request = axios.post(`${BASE_URL}/blocks/addNewItems/${userId}`, itemsWithNoId, _getAuthHeader());
+
+    return {
+        type: SAVE_NEW_ITEMS,
         payload: request
     }
 }

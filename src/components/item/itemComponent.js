@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
-import { removeItem, updateItem, getItems, saveItems } from '../../actions/itemAction';
+import { removeItem, updateItem, getItems, saveItems, saveNewItems } from '../../actions/itemAction';
 import Interact, { RESIZE_HORIZONTAL, RESIZE_VERTICAL } from '../../wrappers/interactWrapper';
 import ModalItem from '../modal/modalItemComponent';
 import ModalMessage from '../modal/modalMessageComponent';
@@ -169,16 +169,34 @@ class Item extends Component {
     }
 
     saveChanges() {
-        this.props.saveItems(this.props.userAuth.id, this.props.itemList).then(() => {
-            this.setState({
-                showSaveButton: false
+        const filteredExistItems = _.filter(this.props.itemList, ((i) => i.id >= 0));
+        const filteredNewItems = _.filter(this.props.itemList, ((i) => i.id < 0));
+
+        if (filteredExistItems.length > 0) {
+            this.props.saveItems(this.props.userAuth.id, filteredExistItems).then(() => {
+                this.setState({
+                    showSaveButton: false
+                });
+            }).catch((error) => {
+                this.setState({
+                    showConnectionModal: true,
+                    message: error
+                })
             });
-        }).catch((error) => {
-            this.setState({
-                showConnectionModal: true,
-                message: error
-            })
-        });
+        }
+
+        if (filteredNewItems.length > 0) {
+            this.props.saveNewItems(this.props.userAuth.id, filteredNewItems).then(() => {
+                this.setState({
+                    showSaveButton: false
+                });
+            }).catch((error) => {
+                this.setState({
+                    showConnectionModal: true,
+                    message: error
+                })
+            });
+        }
     }
 }
 
@@ -186,4 +204,4 @@ function mapStateToProps({ itemList, userAuth }) {
     return { itemList, userAuth };
 }
 
-export default connect(mapStateToProps, { removeItem, updateItem, getItems, saveItems, controlPanelExecuteCommand })(Item);
+export default connect(mapStateToProps, { removeItem, updateItem, getItems, saveItems, saveNewItems, controlPanelExecuteCommand })(Item);
