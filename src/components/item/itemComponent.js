@@ -95,7 +95,7 @@ class Item extends Component {
     render() {
         return (
             <div>
-                <div className={`mb-2 ml-2 ${this.state.showSaveButton? 'visible' : 'invisible'}`}>
+                <div className={`mb-2 ml-2 ${this.state.showSaveButton ? 'visible' : 'invisible'}`}>
                     <Button color="primary" className="mt-1" onClick={this.saveChanges}>Save changes</Button>
                 </div>
                 <div className="playground">
@@ -144,8 +144,15 @@ class Item extends Component {
     }
 
     switchItem() {
-        this.props.controlPanelExecuteCommand(COMMAND_RUN_SWITCH, this.props.userAuth.id).then(() => {
-            this.toggleModal(NOT_SELECTED_ITEM);
+        this.props.controlPanelExecuteCommand(COMMAND_RUN_SWITCH, this.props.userAuth.id, this.state.selectedItem).then(({ payload }) => {
+            //this.toggleModal(NOT_SELECTED_ITEM);
+            if (!payload.data) {
+                return;
+            }
+            this.setState({
+                showConnectionModal: true,
+                message: payload.data
+            });
         }).catch((error) => {
             this.setState({
                 showConnectionModal: true,

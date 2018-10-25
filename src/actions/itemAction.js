@@ -80,10 +80,24 @@ export function saveItem(itemId, item) {
     }
 }
 
+export function readScriptItem(itemId) {
+    const request = axios.get(`${BASE_URL}/blocks/getScript/${itemId}`, _getAuthHeader());
+
+    return request;
+}
+
+export function saveScriptItem(itemId, script) {
+    script = script.replace(/"/g, "'");
+    const request = axios.put(`${BASE_URL}/blocks/uploadScript/${itemId}`, `"${script}"`, _getAuthHeader());
+
+    return request;
+}
+
 function _getAuthHeader() {
     return {
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json'
         }
     };
 }
