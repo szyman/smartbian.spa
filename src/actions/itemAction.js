@@ -19,11 +19,20 @@ export function addItem(itemType) {
     }
 }
 
-export function removeItem(id) {
-    return {
-        type: REMOVE_ITEM,
-        id: id
+export function removeItem(itemId) {
+    if (itemId >= 0) {
+        const request = axios.delete(`${BASE_URL}/blocks/${itemId}`, _getAuthHeader());
+        return {
+            type: REMOVE_ITEM,
+            payload: request
+        }
+    } else {
+        return {
+            type: REMOVE_ITEM,
+            id: itemId
+        }
     }
+
 }
 
 export function updateItem(data) {

@@ -41,6 +41,9 @@ class ItemScript extends Component {
 
     saveChanges() {
         saveScriptItem(this.props.match.params.id, this.state.script).then(() => {
+            this.setState({
+                showSaveButton: false
+            });
             console.log('Script saved');
         }).catch((error) => {
             console.error(error);

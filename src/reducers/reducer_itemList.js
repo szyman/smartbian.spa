@@ -18,6 +18,9 @@ export default function(state={}, action) {
                 }
             }
         case REMOVE_ITEM:
+            if (action.payload) {
+                return _.omit(state, action.payload.data);
+            }
             return _.omit(state, action.id);
         case UPDATE_ITEM:
             _.assignIn(state[action.itemData.id], action.itemData)
