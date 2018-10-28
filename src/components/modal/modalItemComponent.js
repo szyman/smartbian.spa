@@ -7,14 +7,11 @@ class ModalItem extends Component {
     render() {
         return (
             <Modal isOpen={this.props.modal}>
-                <ModalHeader>Modal title</ModalHeader>
+                <ModalHeader toggle={this.props.toggleModal}>Modal title</ModalHeader>
                 <ModalBody>
                     <Button className="w-100 mb-2" color="primary" onClick={this.props.removeItem}>Remove</Button>
                     {this.renderButtons()}
                 </ModalBody>
-                <ModalFooter>
-                    <Button className="w-100" color="secondary" onClick={this.props.toggleModal}>Cancel</Button><br />
-                </ModalFooter>
             </Modal>
         );
     }

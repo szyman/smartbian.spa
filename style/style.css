@@ -1,10 +1,45 @@
-.home-content {
-    text-align: center;
+body {
+    margin: 0;
+    padding: 0;
 }
 
-.main-context {
-    top: 88px;
-    position: relative;
+.home {
+    min-height: 100vh;
+	color: #fff;
+}
+
+.home .background-image {
+    position: absolute;
+    background-image: url('/assets/background.jpg');
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	z-index: -1;
+}
+
+.home .background-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #414a4f;
+    opacity: 0.5;
+}
+
+.home .home-content-area {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-family: 'Open Sans';
+    height: 80vh;
+    justify-content: center;
+    font-size: 25px;
 }
 
 .drag-1 {

@@ -42,8 +42,8 @@ class Navbar extends Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-sm navbar-dark fixed-top bg-primary">
-                <Link className="navbar-brand" to="/">Test App</Link>
+            <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+                <Link className="navbar-brand" to="/">Smartbian</Link>
                 <NavbarToggler onClick={this.toggleNavbar} />
                 <Collapse isOpen={!this.state.collapsed} navbar>
                     {this.renderUserMenu()}
