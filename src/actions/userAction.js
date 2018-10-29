@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getApiUrl } from '../helpers/apiHelper';
 
 export const REGISTER_USER = 'register_user';
 export const LOGIN_USER = 'login_user';
@@ -7,7 +8,8 @@ export const RESTORE_USER = 'restore_user';
 export const USER_DETAILS = 'user_details';
 export const USER_LIST = 'user_list';
 export const USER_UPDATE = 'user_update';
-const BASE_URL = 'http://localhost:5000/api';
+
+const BASE_URL = getApiUrl();
 
 export function userRegister(values) {
     const request = axios.post(`${BASE_URL}/auth/register`, values);

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
+import { getApiUrl } from '../helpers/apiHelper';
 
 export const ADD_ITEM = 'add_item';
 export const REMOVE_ITEM = 'remove_item';
@@ -10,7 +11,7 @@ export const SAVE_ITEMS = 'save_items';
 export const SAVE_NEW_ITEMS = 'save_new_items';
 export const SAVE_ITEM = 'save_item';
 
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = getApiUrl();
 
 export function addItem(itemType) {
     return {

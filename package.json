@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "build": "webpack -p --define process.env.NODE_ENV='\"production\"' --progress --colors",
+    "dev-ip": "webpack-dev-server --host 0.0.0.0 --define process.env.NODE_ENV='\"production\"'"
   },
   "keywords": [],
   "author": {

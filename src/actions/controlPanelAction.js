@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { getApiUrl } from '../helpers/apiHelper';
 
 export const TEST_CONNECTION = 'test_connection';
 export const COMMAND_TEST_CONNECTION = 'test_connection';
 export const COMMAND_RUN_SWITCH = 'run_switch';
 
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = getApiUrl();
 
 export function controlPanelExecuteCommand(command, userId, itemId) {
     var values = {
