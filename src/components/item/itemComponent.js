@@ -69,7 +69,8 @@ class Item extends Component {
             return (
                 <Interact key={item.id}
                     itemData={item}
-                    classNameItem="drag-element text-center fas fa-lightbulb"
+                    classNameItem="drag-element"
+                    classNameIcon="fas fa-lightbulb fa-2x"
                     onTap={() => this.toggleModal(item.id, ITEM_TYPE.ELEMENT)}
                     updateItem={(arg) => this.updateItem(item.id, arg)}>
                 </Interact>

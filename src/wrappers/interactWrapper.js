@@ -38,7 +38,9 @@ class Interact extends Component {
 
     render() {
         return (
-            <div className={`drag-1 ${this.props.classNameItem}`} ref="draggable"></div>
+            <div className={`drag-1 ${this.props.classNameItem}`} ref="draggable">
+                <i className={this.props.classNameIcon}></i>
+            </div>
         );
     }
 
