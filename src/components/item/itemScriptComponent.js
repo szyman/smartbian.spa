@@ -24,7 +24,7 @@ class ItemScript extends Component {
         return (
             <div className="align-self-center text-center">
                 <div>Item Script</div>
-                <textarea cols='60' rows='8' value={this.state.script} onChange={this.handleChange}></textarea>
+                <textarea className="editScriptArea" value={this.state.script} onChange={this.handleChange}></textarea>
                 <button className={`btn btn-success btn-block ${this.state.showSaveButton ? 'visible' : 'invisible'}`} onClick={this.saveChanges}>
                     Save Changes
                 </button>

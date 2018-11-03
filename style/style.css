@@ -92,6 +92,11 @@ body {
     width: 90px;
 }
 
+.editScriptArea {
+    height: 10em;
+    width: 30em;
+}
+
 @media all and (orientation:portrait) and (min-width: 700px) {
     .playground {
         display: block;
@@ -109,6 +114,10 @@ body {
 
     .items-list {
         display: block;
+    }
+
+    .editScriptArea {
+        width: 20em;
     }
 }
 

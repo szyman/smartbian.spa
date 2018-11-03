@@ -20,12 +20,12 @@ class ModalItem extends Component {
         if (this.props.type === ITEM_TYPE.ELEMENT) {
             return (
                 <div>
-                    <Link to={`/controlPanel/items/${this.props.itemId}`}>
-                        <Button className="w-100 mb-2" color="primary">Edit</Button>
+                    <Link to={`/controlPanel/items/${this.props.itemId}`} className="btn btn-primary w-100 mb-2">
+                        Edit
                     </Link>
                     <Button className="w-100 mb-2" color="info" onClick={this.props.switchItem}>Run Script</Button>
-                    <Link to={`/controlPanel/items/${this.props.itemId}/script`}>
-                        <Button className="w-100 mb-2" color="info">Edit Script</Button>
+                    <Link to={`/controlPanel/items/${this.props.itemId}/script`} className="btn btn-info w-100 mb-2">
+                        Edit Script
                     </Link>
                 </div>
             );
