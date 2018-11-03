@@ -70,10 +70,11 @@ class Interact extends Component {
 }
 
 function dragMoveListener(event) {
+    var playgroundSize = event.target.parentElement.getBoundingClientRect();
     var target = event.target,
         // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+        x = (parseFloat(target.getAttribute('data-x')) || 0) + getScaledSize(playgroundSize, event.dx),
+        y = (parseFloat(target.getAttribute('data-y')) || 0) + getScaledSize(playgroundSize, event.dy);
 
     // translate the element
     target.style.webkitTransform =
@@ -90,19 +91,33 @@ function resizemove(event) {
         x = (parseFloat(target.getAttribute('data-x')) || 0),
         y = (parseFloat(target.getAttribute('data-y')) || 0);
 
+    var playgroundSize = event.target.parentElement.getBoundingClientRect();
+
     // update the element's style
-    target.style.width = event.rect.width + 'px';
-    target.style.height = event.rect.height + 'px';
+    if (event.deltaRect.width) {
+        target.style.width = getScaledSize(playgroundSize, event.rect.width) + 'px';
+    }
+    if (event.deltaRect.height) {
+        target.style.height = getScaledSize(playgroundSize, event.rect.height) + 'px';
+    }
 
     // translate when resizing from top or left edges
-    x += event.deltaRect.left;
-    y += event.deltaRect.top;
+    x += getScaledSize(playgroundSize, event.deltaRect.left);
+    y += getScaledSize(playgroundSize, event.deltaRect.top);
 
     target.style.webkitTransform = target.style.transform =
         'translate(' + x + 'px,' + y + 'px)';
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+}
+
+function getScaledSize(playgroundSize, sizeToScale) {
+    if (playgroundSize.width < 700) {
+        return sizeToScale + sizeToScale * 0.25;
+    }
+
+    return sizeToScale;
 }
 
 export default Interact;
