@@ -5,6 +5,7 @@ const app = express();
 
 app.use(express.static(__dirname));
 
+//BrowserHistory fix - whenewer user types any path, always show index.html
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'index.html'));
 });
