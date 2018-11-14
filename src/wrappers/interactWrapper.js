@@ -5,6 +5,13 @@ export const RESIZE_HORIZONTAL = 0;
 export const RESIZE_VERTICAL = 1;
 
 class Interact extends Component {
+    constructor(props) {
+        super(props);
+
+        this.dragMoveListener = this.dragMoveListener.bind(this);
+        this.resizemove = this.resizemove.bind(this);
+    }
+
     shouldComponentUpdate() {
         return false;
     }
@@ -28,9 +35,9 @@ class Interact extends Component {
                 autoScroll: true,
 
                 // call this function on every dragmove event
-                onmove: dragMoveListener
+                onmove: this.dragMoveListener
             })
-            .on('resizemove', resizemove)
+            .on('resizemove', this.resizemove)
             .on('tap', this.props.onTap)
             .on(['dragend', 'resizeend'], this.props.updateItem)
             .resizable(this.resizeConfig());
@@ -67,57 +74,65 @@ class Interact extends Component {
             }
         }
     }
-}
 
-function dragMoveListener(event) {
-    var playgroundSize = event.target.parentElement.getBoundingClientRect();
-    var target = event.target,
-        // keep the dragged position in the data-x/data-y attributes
-        x = (parseFloat(target.getAttribute('data-x')) || 0) + getScaledSize(playgroundSize, event.dx),
-        y = (parseFloat(target.getAttribute('data-y')) || 0) + getScaledSize(playgroundSize, event.dy);
+    dragMoveListener(event) {
+        if (!this.props.isEditable) {
+            return;
+        }
 
-    // translate the element
-    target.style.webkitTransform =
-        target.style.transform =
-        'translate(' + x + 'px, ' + y + 'px)';
+        var playgroundSize = event.target.parentElement.getBoundingClientRect();
+        var target = event.target,
+            // keep the dragged position in the data-x/data-y attributes
+            x = (parseFloat(target.getAttribute('data-x')) || 0) + this._getScaledSize(playgroundSize, event.dx),
+            y = (parseFloat(target.getAttribute('data-y')) || 0) + this._getScaledSize(playgroundSize, event.dy);
 
-    // update the posiion attributes
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
-}
+        // translate the element
+        target.style.webkitTransform =
+            target.style.transform =
+            'translate(' + x + 'px, ' + y + 'px)';
 
-function resizemove(event) {
-    var target = event.target,
-        x = (parseFloat(target.getAttribute('data-x')) || 0),
-        y = (parseFloat(target.getAttribute('data-y')) || 0);
-
-    var playgroundSize = event.target.parentElement.getBoundingClientRect();
-
-    // update the element's style
-    if (event.deltaRect.width) {
-        target.style.width = getScaledSize(playgroundSize, event.rect.width) + 'px';
-    }
-    if (event.deltaRect.height) {
-        target.style.height = getScaledSize(playgroundSize, event.rect.height) + 'px';
+        // update the posiion attributes
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
     }
 
-    // translate when resizing from top or left edges
-    x += getScaledSize(playgroundSize, event.deltaRect.left);
-    y += getScaledSize(playgroundSize, event.deltaRect.top);
+    resizemove(event) {
+        if (!this.props.isEditable) {
+            return;
+        }
 
-    target.style.webkitTransform = target.style.transform =
-        'translate(' + x + 'px,' + y + 'px)';
+        var target = event.target,
+            x = (parseFloat(target.getAttribute('data-x')) || 0),
+            y = (parseFloat(target.getAttribute('data-y')) || 0);
 
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
-}
+        var playgroundSize = event.target.parentElement.getBoundingClientRect();
 
-function getScaledSize(playgroundSize, sizeToScale) {
-    if (playgroundSize.width < 700) {
-        return sizeToScale + sizeToScale * 0.25;
+        // update the element's style
+        if (event.deltaRect.width) {
+            target.style.width = this._getScaledSize(playgroundSize, event.rect.width) + 'px';
+        }
+        if (event.deltaRect.height) {
+            target.style.height = this._getScaledSize(playgroundSize, event.rect.height) + 'px';
+        }
+
+        // translate when resizing from top or left edges
+        x += this._getScaledSize(playgroundSize, event.deltaRect.left);
+        y += this._getScaledSize(playgroundSize, event.deltaRect.top);
+
+        target.style.webkitTransform = target.style.transform =
+            'translate(' + x + 'px,' + y + 'px)';
+
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
     }
 
-    return sizeToScale;
+    _getScaledSize(playgroundSize, sizeToScale) {
+        if (playgroundSize.width < 700) {
+            return sizeToScale + sizeToScale * 0.25;
+        }
+
+        return sizeToScale;
+    }
 }
 
 export default Interact;

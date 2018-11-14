@@ -51,7 +51,8 @@ class Item extends Component {
                         classNameItem="drag-wall-horizontal"
                         onTap={() => this.toggleModal(item.id)}
                         resizeConfig={RESIZE_HORIZONTAL}
-                        updateItem={(arg) => this.updateItem(item.id, arg)}>
+                        updateItem={(arg) => this.updateItem(item.id, arg)}
+                        isEditable={this.props.isEditable}>
                     </Interact>
                 );
             } else if (item.type === ITEM_TYPE.VERTICALL_WALL) {
@@ -61,7 +62,8 @@ class Item extends Component {
                         classNameItem="drag-wall-vertical"
                         onTap={() => this.toggleModal(item.id)}
                         resizeConfig={RESIZE_VERTICAL}
-                        updateItem={(arg) => this.updateItem(item.id, arg)}>
+                        updateItem={(arg) => this.updateItem(item.id, arg)}
+                        isEditable={this.props.isEditable}>
                     </Interact>
                 );
             }
@@ -72,7 +74,8 @@ class Item extends Component {
                     classNameItem="drag-element"
                     classNameIcon="fas fa-lightbulb fa-2x"
                     onTap={() => this.toggleModal(item.id, ITEM_TYPE.ELEMENT)}
-                    updateItem={(arg) => this.updateItem(item.id, arg)}>
+                    updateItem={(arg) => this.updateItem(item.id, arg)}
+                    isEditable={this.props.isEditable}>
                 </Interact>
             );
         });
@@ -96,7 +99,7 @@ class Item extends Component {
     render() {
         return (
             <div>
-                <div className={`mb-2 ml-2 ${this.state.showSaveButton ? 'visible' : 'invisible'}`}>
+                <div className={`mb-2 ml-2 ${this.state.showSaveButton && this.props.isEditable ? 'visible' : 'invisible'}`}>
                     <Button color="primary" className="mt-1" onClick={this.saveChanges}>Save changes</Button>
                 </div>
                 <div className="playground">
