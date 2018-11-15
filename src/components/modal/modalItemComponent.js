@@ -8,10 +8,10 @@ class ModalItem extends Component {
         return (
             <Modal isOpen={this.props.modal}>
                 <ModalHeader toggle={this.props.toggleModal}>Modal title</ModalHeader>
-                <ModalBody>
-                    <Button className="w-100 mb-2" color="primary" onClick={this.props.removeItem}>Remove</Button>
+                <ModalBody>Press any action</ModalBody>
+                <ModalFooter>
                     {this.renderButtons()}
-                </ModalBody>
+                </ModalFooter>
             </Modal>
         );
     }
@@ -20,13 +20,18 @@ class ModalItem extends Component {
         if (this.props.type === ITEM_TYPE.ELEMENT) {
             return (
                 <div>
-                    <Link to={`/controlPanel/items/${this.props.itemId}`} className="btn btn-primary w-100 mb-2">
-                        Edit
-                    </Link>
-                    <Button className="w-100 mb-2" color="info" onClick={this.props.switchItem}>Run Script</Button>
-                    <Link to={`/controlPanel/items/${this.props.itemId}/script`} className="btn btn-info w-100 mb-2">
-                        Edit Script
-                    </Link>
+                    <div className="d-block mb-2">
+                        <Button color="primary" onClick={this.props.removeItem}>Remove</Button>
+                        <Link to={`/controlPanel/items/${this.props.itemId}`} className="btn btn-primary ml-2">
+                            Edit
+                        </Link>
+                    </div>
+                    <div className="d-block">
+                        <Button color="info" onClick={this.props.switchItem}>Run Script</Button>
+                        <Link to={`/controlPanel/items/${this.props.itemId}/script`} className="btn btn-info ml-2">
+                            Edit Script
+                        </Link>
+                    </div>
                 </div>
             );
         }
