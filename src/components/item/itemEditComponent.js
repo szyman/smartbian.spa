@@ -22,23 +22,28 @@ class ItemEdit extends Component {
             return <div></div>;
         } else {
             return (
-                <div className="align-self-center text-center mb-2">
-                    <h1>Edit Item</h1>
-                    <form onSubmit={handleSubmit(this.updateItem)}>
-                        <div>
-                            <h4>Title: { initialValues.title }</h4>
-                            <Field className="form-control" name="title" component="input" type="text" />
+                <div className="background-content">
+                    <div className="container content-background">
+                        <div className="align-self-center text-center mb-2">
+                            <h1>Edit Item</h1>
+                            <form onSubmit={handleSubmit(this.updateItem)}>
+                                <div>
+                                    <h4>Title: {initialValues.title}</h4>
+                                    <Field className="form-control" name="title" component="input" type="text" />
+                                </div>
+                                <div>
+                                    <h4>Gpio: {initialValues.gpio}</h4>
+                                    <Field className="form-control" name="gpio" component="input" type="number" />
+                                </div>
+                                <div>
+                                    <h4>Script file name: {initialValues.scriptFileName}</h4>
+                                    <Field className="form-control" name="scriptFileName" component="input" type="text" />
+                                </div>
+                                <button className="btn btn-success btn-block mt-2 mx-auto w-50" type="submit">Submit</button>
+                                <br/>
+                            </form>
                         </div>
-                        <div>
-                            <h4>Gpio: { initialValues.gpio }</h4>
-                            <Field className="form-control" name="gpio" component="input" type="number" />
-                        </div>
-                        <div>
-                            <h4>Script file name: { initialValues.scriptFileName }</h4>
-                            <Field className="form-control" name="scriptFileName" component="input" type="text" />
-                        </div>
-                        <button className="btn btn-success btn-block mt-2" type="submit">Submit</button>
-                    </form>
+                    </div>
                 </div>
             );
         }

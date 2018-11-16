@@ -29,8 +29,8 @@ class UserEdit extends Component {
 
     validateForm(value, property) {
         if (property.raspHost !== this.props.userDetails.raspHost ||
-            property.raspUsername !== this.props.userDetails.raspUsername ) {
-                return false;
+            property.raspUsername !== this.props.userDetails.raspUsername) {
+            return false;
         }
 
         return true;
@@ -57,31 +57,33 @@ class UserEdit extends Component {
         const { userDetails } = this.props;
 
         return (
-            <div>
-                { this.renderValidationError() }
-                <div className="align-self-center text-center">
-                    <div className="">
-                        <h1>Edit profile</h1>
-                        <form onSubmit={handleSubmit(this.updateUser.bind(this))}>
-                            <h4>Raspberry PI host name: {userDetails.raspHost}</h4>
-                            <Field
-                                type="text"
-                                placeholder="host name"
-                                name="raspHost"
-                                component={this.renderField}
-                                validate={this.validateForm}
-                            />
-                            <h4>Raspberry PI User name: {userDetails.raspUsername}</h4>
-                            <Field
-                                type="text"
-                                placeholder="user name"
-                                name="raspUsername"
-                                component={this.renderField}
-                                validate={this.validateForm}
-                            />
-                            <br/>
-                            <button className={`btn btn-success btn-block ${this.props.invalid ? 'disabled': ''}`}>Save Changes</button>
-                        </form>
+            <div className="background-content">
+                <div className="container content-background">
+                    {this.renderValidationError()}
+                    <div className="align-self-center text-center">
+                        <div className="">
+                            <h1>Edit profile</h1>
+                            <form onSubmit={handleSubmit(this.updateUser.bind(this))}>
+                                <h4>Raspberry PI host name: {userDetails.raspHost}</h4>
+                                <Field
+                                    type="text"
+                                    placeholder="host name"
+                                    name="raspHost"
+                                    component={this.renderField}
+                                    validate={this.validateForm}
+                                />
+                                <h4>Raspberry PI User name: {userDetails.raspUsername}</h4>
+                                <Field
+                                    type="text"
+                                    placeholder="user name"
+                                    name="raspUsername"
+                                    component={this.renderField}
+                                    validate={this.validateForm}
+                                />
+                                <button className={`btn btn-success btn-block mt-2 mx-auto w-50 ${this.props.invalid ? 'disabled' : ''}`}>Save Changes</button>
+                                <br />
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

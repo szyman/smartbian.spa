@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import {userRegister} from '../../actions/userAction';
+import { userRegister } from '../../actions/userAction';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
 class UserRegister extends Component {
     renderField(field) {
-        let { touched, error, invalid} = field.meta;
+        let { touched, error, invalid } = field.meta;
         return (
-            <div className={`form-group row justify-content-md-center ${touched && invalid? 'has-danger' : ''}`}>
+            <div className={`form-group row justify-content-md-center ${touched && invalid ? 'has-danger' : ''}`}>
                 <label className="col-md-2 text-right">{field.placeholder}</label>
                 <input
                     className="form-control col-md-5"
@@ -26,27 +26,32 @@ class UserRegister extends Component {
     render() {
         const { handleSubmit } = this.props;
         return (
-            <form onSubmit={ handleSubmit(this.register.bind(this)) }>
-                <h2 className="text-center text-primary">Sign Up</h2>
-                <hr/>
+            <div className="background-content">
+                <div className="container content-background">
+                    <form onSubmit={handleSubmit(this.register.bind(this))}>
+                        <h2 className="text-center text-primary">Sign Up</h2>
+                        <hr />
 
-                <Field
-                    type="text"
-                    placeholder="Username"
-                    name="username"
-                    component={this.renderField}
-                />
-                <Field
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    component={this.renderField}
-                />
-                <div className="form-group text-center">
-                    <button className="btn btn-success" type="submit">Register</button>
-                    <Link to="/" className="btn btn-default" type="button">Cancel</Link>
+                        <Field
+                            type="text"
+                            placeholder="Username"
+                            name="username"
+                            component={this.renderField}
+                        />
+                        <Field
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                            component={this.renderField}
+                        />
+                        <div className="form-group text-center">
+                            <button className="btn btn-success" type="submit">Register</button>
+                            <Link to="/" className="btn btn-default" type="button">Cancel</Link>
+                        </div>
+                        <br />
+                    </form>
                 </div>
-            </form>
+            </div>
         );
     }
 

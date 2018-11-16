@@ -8,6 +8,16 @@ body {
 	color: #fff;
 }
 
+.background-content {
+    background-image: url('/assets/background.jpg');
+    min-height: 100vh;
+}
+
+.content-background {
+    background-color: #fff;
+    opacity: 0.8;
+}
+
 .home .background-image {
     position: absolute;
     background-image: url('/assets/background.jpg');
@@ -78,11 +88,12 @@ body {
 }
 
 .playground {
-    position: absolute;
+    position: relative;
     width: 700px;
     height: 700px;
-    background-color: #556b2f;
-    left: 0;
+    background-color: #808080;
+    /* Center in the container */
+    left: -6px;
     right: 0;
     margin: auto;
 }
@@ -114,7 +125,7 @@ body {
     transition: all 300ms 0s ease-in-out;
 }
 
-@media all and (orientation:portrait) and (min-width: 700px) {
+/* @media all and (orientation:portrait) and (min-width: 700px) {
     .playground {
         display: block;
     }
@@ -122,9 +133,9 @@ body {
     .items-list {
         display: none;
     }
-}
+} */
 
-@media all and (orientation:portrait) and (max-width: 699px) {
+@media all and (max-width: 700px) {
     .playground {
         display: none;
     }
@@ -149,11 +160,11 @@ body {
 }
 
 /* https://github.com/taye/interact.js/issues/137 */
-@media all and (orientation:landscape) and (max-width: 699px) {
+@media all and (min-width: 701px) and (max-width: 768px) {
     .playground {
         display: block;
         transform: scale(0.75, 0.75);
-        transform-origin: 15% top;
+        transform-origin: 0 top;
     }
 
     .items-list {

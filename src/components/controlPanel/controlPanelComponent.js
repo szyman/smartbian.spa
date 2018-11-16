@@ -23,27 +23,29 @@ class ControlPanel extends Component {
 
     render() {
         return (
-            <div>
-                <Button color="info" className="mr-1" onClick={this.toggleEditable}>Editable {`${this.state.isEditable ? 'On' : 'Off'}`}</Button>
-                <div className={`${this.state.isEditable ? 'show-control-buttons' : 'hide-control-buttons'}`}>
-                    <div className="row mb-1 ml-2">
-                        <Button color="primary" className="mr-1" onClick={this.testConnection}>Test connection</Button>
+            <div className="background-content">
+                <div className="container content-background">
+                    <Button color="info" className="mr-1" onClick={this.toggleEditable}>Editable {`${this.state.isEditable ? 'On' : 'Off'}`}</Button>
+                    <div className={`${this.state.isEditable ? 'show-control-buttons' : 'hide-control-buttons'}`}>
+                        <div className="row mb-1 ml-2">
+                            <Button color="primary" className="mr-1" onClick={this.testConnection}>Test connection</Button>
+                        </div>
+                        <div className="row mb-1 ml-2">
+                            <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
+                            <Button color="secondary" className="mr-1" onClick={() => this.addItem(1)}>Vertical</Button>
+                            <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
+                                <i className="fas fa-lightbulb"></i>
+                            </Button><br />
+                        </div>
                     </div>
-                    <div className="row mb-1 ml-2">
-                        <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
-                        <Button color="secondary" className="mr-1" onClick={() => this.addItem(1)}>Vertical</Button>
-                        <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
-                            <i className="fas fa-lightbulb"></i>
-                        </Button><br />
-                    </div>
+                    <Item isEditable={this.state.isEditable}></Item>
+                    <ModalMessage
+                        modal={this.state.showConnectionModal}
+                        toggle={this.hideModal}
+                        title={"Connection info"}
+                        message={this.state.message}>
+                    </ModalMessage>
                 </div>
-                <Item isEditable={this.state.isEditable}></Item>
-                <ModalMessage
-                    modal={this.state.showConnectionModal}
-                    toggle={this.hideModal}
-                    title={"Connection info"}
-                    message={this.state.message}>
-                </ModalMessage>
             </div>
         );
     }

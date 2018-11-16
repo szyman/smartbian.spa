@@ -22,12 +22,17 @@ class ItemScript extends Component {
 
     render() {
         return (
-            <div className="align-self-center text-center">
-                <div>Item Script</div>
-                <textarea className="editScriptArea" value={this.state.script} onChange={this.handleChange}></textarea>
-                <button className={`btn btn-success btn-block ${this.state.showSaveButton ? 'visible' : 'invisible'}`} onClick={this.saveChanges}>
-                    Save Changes
-                </button>
+            <div className="background-content">
+                <div className="container content-background">
+                    <div className="align-self-center text-center">
+                        <div>Item Script</div>
+                        <textarea className="editScriptArea" value={this.state.script} onChange={this.handleChange}></textarea>
+                        <button className={`btn btn-success btn-block mx-auto w-50 ${this.state.showSaveButton ? 'visible' : 'invisible'}`} onClick={this.saveChanges}>
+                            Save Changes
+                        </button>
+                        <br />
+                    </div>
+                </div>
             </div>
         );
     }

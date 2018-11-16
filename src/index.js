@@ -28,7 +28,7 @@ ReactDOM.render(
       <BrowserRouter>
         <div>
           <App></App>
-          <div className="container">
+          <div>
             <Switch>
               <PrivateRoute path='/setup' component={Setup}/>
               <PrivateRoute path='/controlPanel/items/:id/script' component={ItemScript} />
