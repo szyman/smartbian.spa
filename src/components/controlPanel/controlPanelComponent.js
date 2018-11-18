@@ -36,6 +36,9 @@ class ControlPanel extends Component {
                             <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
                                 <i className="fas fa-lightbulb"></i>
                             </Button><br />
+                            <Button color="warning" className="mr-1" onClick={() => this.addItem(3)}>
+                                <i className="fas fa-temperature-high"></i>
+                            </Button><br />
                         </div>
                     </div>
                     <Item isEditable={this.state.isEditable}></Item>

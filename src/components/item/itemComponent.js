@@ -12,7 +12,8 @@ const NOT_SELECTED_ITEM = -1;
 export const ITEM_TYPE = {
     HORIZONTAL_WALL: 0,
     VERTICALL_WALL: 1,
-    ELEMENT: 2
+    ELEMENT: 2,
+    TEMPERATURE: 3
 }
 
 class Item extends Component {
@@ -24,7 +25,8 @@ class Item extends Component {
             selectedItem: NOT_SELECTED_ITEM,
             showConnectionModal: false,
             message: '',
-            showSaveButton: false
+            showSaveButton: false,
+            textItem: '--'
         };
 
         this.toggleModal = this.toggleModal.bind(this);
@@ -66,6 +68,18 @@ class Item extends Component {
                         isEditable={this.props.isEditable}>
                     </Interact>
                 );
+            } else if (item.type === ITEM_TYPE.TEMPERATURE) {
+                return (
+                    <Interact key={item.id}
+                        itemType={ITEM_TYPE.TEMPERATURE}
+                        itemData={item}
+                        classNameItem="drag-element"
+                        onTap={() => this.toggleModal(item.id, ITEM_TYPE.ELEMENT)}
+                        updateItem={(arg) => this.updateItem(item.id, arg)}
+                        isEditable={this.props.isEditable}
+                        text={this.state.textItem}>
+                    </Interact>
+                )
             }
 
             return (
@@ -157,6 +171,7 @@ class Item extends Component {
                 showConnectionModal: true,
                 message: payload.data
             });
+            this.notifyItem();
         }).catch((error) => {
             this.setState({
                 showConnectionModal: true,
@@ -177,6 +192,23 @@ class Item extends Component {
         this.setState({
             showSaveButton: true
         });
+    }
+
+    notifyItem() {
+        var itemSocket = new WebSocket("ws://192.168.100.10:8765/");
+        var that = this;
+
+        itemSocket.onmessage = function (event) {
+            console.log(event.data);
+            that.setState({
+                textItem: event.data
+            })
+        }
+
+        itemSocket.onopen = function (event) {
+            itemSocket.send("Here's some text that the server is urgently awaiting!");
+        };
+
     }
 
     saveChanges() {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import interact from 'interactjs';
+import { ITEM_TYPE } from '../components/item/itemComponent';
 
 export const RESIZE_HORIZONTAL = 0;
 export const RESIZE_VERTICAL = 1;
@@ -13,6 +14,10 @@ class Interact extends Component {
     }
 
     shouldComponentUpdate() {
+        if (this.props.itemType === ITEM_TYPE.TEMPERATURE) {
+            return true;
+        }
+
         return false;
     }
 
@@ -47,6 +52,7 @@ class Interact extends Component {
         return (
             <div className={`drag-1 ${this.props.classNameItem}`} ref="draggable">
                 <i className={this.props.classNameIcon}></i>
+                {this.props.text}
             </div>
         );
     }
