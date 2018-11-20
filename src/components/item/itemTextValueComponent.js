@@ -11,9 +11,9 @@ class ItemTextValue extends Component {
     }
 
     componentWillReceiveProps({ip, socketPort}) {
-        if (ip && socketPort) {
+        if (!this._itemSocket && ip && socketPort) {
             try {
-                this._itemSocket = new WebSocket(`wss://${ip}:${socketPort}`);
+                this._itemSocket = new WebSocket(`ws://${ip}:${socketPort}/`);
                 this._openItemNotify();
             } catch(error) {
                 console.warn('Websocket new', error);
@@ -22,8 +22,10 @@ class ItemTextValue extends Component {
     }
 
     componentWillUnmount() {
-        if (this._itemSocket) {
+        //1 - Open
+        if (this._itemSocket && this._itemSocket.readyState === 1) {
             this._itemSocket.close();
+            this._itemSocket = null;
         }
     }
 
@@ -35,11 +37,6 @@ class ItemTextValue extends Component {
 
     _openItemNotify() {
         let that = this;
-
-        this._itemSocket.onopen = function () {
-            console.log('Websocket onopen');
-            that._itemSocket.send('NaN');
-        };
 
         this._itemSocket.onmessage = function (event) {
             console.log('Websocket onmessage', event.data);
