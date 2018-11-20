@@ -6,7 +6,9 @@ import { removeItem, updateItem, getItems, saveItems, saveNewItems } from '../..
 import Interact, { RESIZE_HORIZONTAL, RESIZE_VERTICAL } from '../../wrappers/interactWrapper';
 import ModalItem from '../modal/modalItemComponent';
 import ModalMessage from '../modal/modalMessageComponent';
+import ItemTextValue from './itemTextValueComponent';
 import { controlPanelExecuteCommand, COMMAND_RUN_SWITCH } from '../../actions/controlPanelAction';
+import { userGetDetails } from '../../actions/userAction';
 
 const NOT_SELECTED_ITEM = -1;
 export const ITEM_TYPE = {
@@ -38,6 +40,7 @@ class Item extends Component {
 
     componentDidMount() {
         this.props.getItems(this.props.userAuth.id);
+        this.props.userGetDetails(this.props.userAuth.id);
     }
 
     renderItems() {
@@ -71,13 +74,14 @@ class Item extends Component {
             } else if (item.type === ITEM_TYPE.TEMPERATURE) {
                 return (
                     <Interact key={item.id}
-                        itemType={ITEM_TYPE.TEMPERATURE}
                         itemData={item}
                         classNameItem="drag-element"
                         onTap={() => this.toggleModal(item.id, ITEM_TYPE.ELEMENT)}
                         updateItem={(arg) => this.updateItem(item.id, arg)}
-                        isEditable={this.props.isEditable}
-                        text={this.state.textItem}>
+                        isEditable={this.props.isEditable}>
+                        <ItemTextValue
+                            ip={this.props.userDetails ? this.props.userDetails.raspHost : null}
+                            socketPort={item.socketPort}/>
                     </Interact>
                 )
             }
@@ -171,7 +175,6 @@ class Item extends Component {
                 showConnectionModal: true,
                 message: payload.data
             });
-            this.notifyItem();
         }).catch((error) => {
             this.setState({
                 showConnectionModal: true,
@@ -192,23 +195,6 @@ class Item extends Component {
         this.setState({
             showSaveButton: true
         });
-    }
-
-    notifyItem() {
-        var itemSocket = new WebSocket("ws://192.168.100.10:8765/");
-        var that = this;
-
-        itemSocket.onmessage = function (event) {
-            console.log(event.data);
-            that.setState({
-                textItem: event.data
-            })
-        }
-
-        itemSocket.onopen = function (event) {
-            itemSocket.send("Here's some text that the server is urgently awaiting!");
-        };
-
     }
 
     saveChanges() {
@@ -243,8 +229,8 @@ class Item extends Component {
     }
 }
 
-function mapStateToProps({ itemList, userAuth }) {
-    return { itemList, userAuth };
+function mapStateToProps({ itemList, userAuth, userList }) {
+    return { itemList, userAuth, userDetails: userList[userAuth.id] };
 }
 
-export default connect(mapStateToProps, { removeItem, updateItem, getItems, saveItems, saveNewItems, controlPanelExecuteCommand })(Item);
+export default connect(mapStateToProps, { removeItem, updateItem, getItems, saveItems, saveNewItems, controlPanelExecuteCommand, userGetDetails })(Item);

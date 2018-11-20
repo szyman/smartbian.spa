@@ -14,11 +14,7 @@ class Interact extends Component {
     }
 
     shouldComponentUpdate() {
-        if (this.props.itemType === ITEM_TYPE.TEMPERATURE) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     componentDidMount() {
@@ -52,7 +48,7 @@ class Interact extends Component {
         return (
             <div className={`drag-1 ${this.props.classNameItem}`} ref="draggable">
                 <i className={this.props.classNameIcon}></i>
-                {this.props.text}
+                {this.props.children}
             </div>
         );
     }

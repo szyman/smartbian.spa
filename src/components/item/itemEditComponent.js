@@ -36,6 +36,10 @@ class ItemEdit extends Component {
                                     <Field className="form-control" name="gpio" component="input" type="number" />
                                 </div>
                                 <div>
+                                    <h4>SocketPort: {initialValues.socketPort}</h4>
+                                    <Field className="form-control" name="socketPort" component="input" type="number" />
+                                </div>
+                                <div>
                                     <h4>Script file name: {initialValues.scriptFileName}</h4>
                                     <Field className="form-control" name="scriptFileName" component="input" type="text" />
                                 </div>
@@ -64,7 +68,8 @@ function mapStateToProps({ itemList, userAuth }, ownProps) {
         values = {
             title: item.title,
             gpio: item.gpio,
-            scriptFileName: item.scriptFileName
+            scriptFileName: item.scriptFileName,
+            socketPort: item.socketPort
         }
     }
     return { initialValues: values, userAuth }
