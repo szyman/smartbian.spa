@@ -9,7 +9,9 @@ import reducers from './reducers';
 import App from './components/appComponent';
 import UserRegister from './components/user/userRegisterComponent';
 import Home from './components/home/homeComponent';
-import Setup from './components/setup/setupComponent';
+import WikiLamp from './components/wiki/wikiLampComponent';
+import WikiHome from './components/wiki/wikiHomeComponent';
+import WikiTemperature from './components/wiki/wikiTemperatureComponent';
 import ControlPanel from './components/controlPanel/controlPanelComponent';
 import UserList from './components/user/userListComponent';
 import UserDetail from './components/user/userDetailComponent';
@@ -30,7 +32,9 @@ ReactDOM.render(
           <App></App>
           <div>
             <Switch>
-              <PrivateRoute path='/setup' component={Setup}/>
+              <PrivateRoute path='/wiki/lamp' component={WikiLamp}/>
+              <PrivateRoute path='/wiki/temperature' component={WikiTemperature}/>
+              <PrivateRoute path='/wiki' component={WikiHome}/>
               <PrivateRoute path='/controlPanel/items/:id/script' component={ItemScript} />
               <PrivateRoute path='/controlPanel/items/:id' component={ItemEdit} />
               <PrivateRoute path='/controlPanel' component={ControlPanel} />
