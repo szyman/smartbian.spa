@@ -26,7 +26,7 @@ class UserLogin extends Component {
 
     renderField(field) {
         return (
-            <div>
+            <div className="mr-1">
                 <input
                     className="form-control mr-sm-2"
                     type={field.type}
@@ -60,7 +60,7 @@ class UserLogin extends Component {
         } else {
             const { handleSubmit } = this.props;
             return (
-                <form className="form-inline my-2 my-lg-0"
+                <form className="d-flex"
                     onSubmit={handleSubmit(this.login.bind(this))}>
                     <Field
                         type="text"

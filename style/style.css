@@ -135,7 +135,7 @@ body {
     }
 } */
 
-@media all and (max-width: 700px) {
+@media all and (max-width: 600px) {
     .playground {
         display: none;
     }
@@ -149,7 +149,7 @@ body {
     }
 }
 
-@media all and (orientation:landscape) and (min-width: 700px) {
+@media all and (min-width: 600px) {
     .playground {
         display: block;
     }
@@ -160,7 +160,7 @@ body {
 }
 
 /* https://github.com/taye/interact.js/issues/137 */
-@media all and (min-width: 701px) and (max-width: 768px) {
+@media all and (min-width: 601px) and (max-width: 768px) {
     .playground {
         display: block;
         transform: scale(0.75, 0.75);

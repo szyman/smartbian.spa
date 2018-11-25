@@ -48,6 +48,7 @@ class ControlPanel extends Component {
                         title={"Connection info"}
                         message={this.state.message}>
                     </ModalMessage>
+                    <br />
                 </div>
             </div>
         );
