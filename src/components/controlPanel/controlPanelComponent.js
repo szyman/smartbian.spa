@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 
-import { addItem } from '../../actions/itemAction';
+import { addItem, saveItems, saveNewItems, getItems } from '../../actions/itemAction';
 import { controlPanelExecuteCommand, COMMAND_TEST_CONNECTION } from '../../actions/controlPanelAction';
 import Item from '../item/itemComponent';
 import ModalMessage from '../modal/modalMessageComponent';
@@ -13,12 +13,19 @@ class ControlPanel extends Component {
         this.testConnection = this.testConnection.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.toggleEditable = this.toggleEditable.bind(this);
+        this.showSaveButton = this.showSaveButton.bind(this);
+        this.saveChanges = this.saveChanges.bind(this);
 
         this.state = {
             showConnectionModal: false,
             message: '',
-            isEditable: false
+            isEditable: false,
+            showSaveButton: false
         };
+    }
+
+    componentDidMount() {
+        this.props.getItems(this.props.userAuth.id);
     }
 
     render() {
@@ -40,8 +47,15 @@ class ControlPanel extends Component {
                                 <i className="fas fa-temperature-high"></i>
                             </Button><br />
                         </div>
+                        <div className={`row mb-1 ml-2 ${this.state.showSaveButton ? 'visible' : 'invisible'}`}>
+                            <Button color="primary" onClick={this.saveChanges}>Save changes</Button>
+                        </div>
                     </div>
-                    <Item isEditable={this.state.isEditable}></Item>
+                    <Item
+                        itemList={this.props.itemList}
+                        isEditable={this.state.isEditable}
+                        showSaveButton={this.showSaveButton}>
+                    </Item>
                     <ModalMessage
                         modal={this.state.showConnectionModal}
                         toggle={this.hideModal}
@@ -56,6 +70,7 @@ class ControlPanel extends Component {
 
     addItem(type) {
         this.props.addItem(type);
+        this.showSaveButton(true);
     }
 
     testConnection() {
@@ -84,10 +99,43 @@ class ControlPanel extends Component {
             isEditable: !this.state.isEditable
         });
     }
+
+    showSaveButton(setVisible) {
+        this.setState({
+            showSaveButton: setVisible
+        });
+    }
+
+    saveChanges() {
+        const filteredExistItems = _.filter(this.props.itemList, ((i) => i.id >= 0));
+        const filteredNewItems = _.filter(this.props.itemList, ((i) => i.id < 0));
+
+        if (filteredExistItems.length > 0) {
+            this.props.saveItems(this.props.userAuth.id, filteredExistItems).then(() => {
+                this.showSaveButton(false);
+            }).catch((error) => {
+                this.setState({
+                    showConnectionModal: true,
+                    message: error
+                })
+            });
+        }
+
+        if (filteredNewItems.length > 0) {
+            this.props.saveNewItems(this.props.userAuth.id, filteredNewItems).then(() => {
+                this.showSaveButton(false);
+            }).catch((error) => {
+                this.setState({
+                    showConnectionModal: true,
+                    message: error
+                })
+            });
+        }
+    }
 }
 
-function mapStateToProps({ userAuth }) {
-    return { userAuth };
+function mapStateToProps({ itemList, userAuth }) {
+    return { itemList, userAuth };
 }
 
-export default connect(mapStateToProps, { addItem, controlPanelExecuteCommand })(ControlPanel);
+export default connect(mapStateToProps, { addItem, controlPanelExecuteCommand, saveItems, saveNewItems, getItems })(ControlPanel);
