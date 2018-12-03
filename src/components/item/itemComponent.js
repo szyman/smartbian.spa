@@ -10,7 +10,7 @@ import { controlPanelExecuteCommand, COMMAND_RUN_SWITCH } from '../../actions/co
 import { userGetDetails } from '../../actions/userAction';
 import ItemList from './itemListComponent';
 
-const NOT_SELECTED_ITEM = -1;
+const NOT_SELECTED_ITEM = null;
 export const ITEM_TYPE = {
     HORIZONTAL_WALL: 0,
     VERTICALL_WALL: 1,

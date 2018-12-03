@@ -10,9 +10,9 @@ class ModalItem extends Component {
                 <ModalHeader toggle={this.props.toggleModal}>Modal title</ModalHeader>
                 <ModalBody>Press any action</ModalBody>
                 <ModalFooter>
-                    <div className="d-block">
+                    <div className="d-flex flex-wrap justify-content-end">
                         <Button color="primary" onClick={this.props.removeItem}>Remove</Button>
-                        <Link to={`/controlPanel/items/${this.props.itemId}`} className={`btn btn-primary ml-2 ${this.props.itemId < 0 ? 'd-none' : ''}`}>
+                        <Link to={`/controlPanel/items/${this.props.itemId}`} className={`btn btn-primary ml-2 mr-2 ${this.props.itemId < 0 ? 'd-none' : ''}`}>
                             Edit
                         </Link>
                         {this.renderExtraButtons()}
@@ -26,13 +26,13 @@ class ModalItem extends Component {
         if (this.props.itemId < 0) {
             return (
                 <div className="alert alert-info mt-2">
-                    <strong>Information:</strong> You have not save changes. Additional functionality was blocked.
+                    <strong>Information:</strong> You have not saved changes. Additional functionality was blocked.
                 </div>
             );
         }
         if (this.props.type > ITEM_TYPE.VERTICALL_WALL) {
             return (
-                <div className="mt-2">
+                <div>
                     <Button color="info" onClick={this.props.switchItem}>Run Script</Button>
                     <Link to={`/controlPanel/items/${this.props.itemId}/script`} className="btn btn-info ml-2">
                         Edit Script
