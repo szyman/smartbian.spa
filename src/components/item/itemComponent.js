@@ -9,6 +9,7 @@ import ModalMessage from '../modal/modalMessageComponent';
 import ItemTextValue from './itemTextValueComponent';
 import { controlPanelExecuteCommand, COMMAND_RUN_SWITCH } from '../../actions/controlPanelAction';
 import { userGetDetails } from '../../actions/userAction';
+import ItemList from './itemListComponent';
 
 const NOT_SELECTED_ITEM = -1;
 export const ITEM_TYPE = {
@@ -99,21 +100,6 @@ class Item extends Component {
         });
     }
 
-    renderListItems() {
-        if (_.isEmpty(this.props.itemList)) {
-            return;
-        }
-
-        return _.map(this.props.itemList, item => {
-            return (
-                <li className="list-group-item" key={item.id}>
-                    {item.type}
-                    <a onClick={() => this.toggleModal(item.id)}>Show</a>
-                </li>
-            );
-        });
-    }
-
     render() {
         return (
             <div>
@@ -123,11 +109,11 @@ class Item extends Component {
                 <div className="playground">
                     {this.renderItems()}
                 </div>
-                <div className="items-list mx-auto">
-                    <ul className="list-group">
-                        {this.renderListItems()}
-                    </ul>
-                </div>
+                <ItemList
+                    itemList={this.props.itemList}
+                    userDetails={this.props.userDetails}
+                    toggleModal={this.toggleModal}>
+                </ItemList>
                 <ModalItem
                     itemId={this.state.selectedItem}
                     modal={this.state.modal}

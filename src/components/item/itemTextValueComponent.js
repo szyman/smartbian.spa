@@ -37,6 +37,9 @@ class ItemTextValue extends Component {
 
     _openItemNotify() {
         let that = this;
+        this._itemSocket.onopen = function (ev) {
+            that._itemSocket.send('Trigger websocket');
+        }
 
         this._itemSocket.onmessage = function (event) {
             console.log('Websocket onmessage', event.data);
