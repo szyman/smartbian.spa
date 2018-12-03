@@ -10,28 +10,33 @@ class ModalItem extends Component {
                 <ModalHeader toggle={this.props.toggleModal}>Modal title</ModalHeader>
                 <ModalBody>Press any action</ModalBody>
                 <ModalFooter>
-                    {this.renderButtons()}
+                    <div className="d-block">
+                        <Button color="primary" onClick={this.props.removeItem}>Remove</Button>
+                        <Link to={`/controlPanel/items/${this.props.itemId}`} className={`btn btn-primary ml-2 ${this.props.itemId < 0 ? 'd-none' : ''}`}>
+                            Edit
+                        </Link>
+                        {this.renderExtraButtons()}
+                    </div>
                 </ModalFooter>
             </Modal>
         );
     }
 
-    renderButtons() {
-        if (this.props.type === ITEM_TYPE.ELEMENT) {
+    renderExtraButtons() {
+        if (this.props.itemId < 0) {
             return (
-                <div>
-                    <div className="d-block mb-2">
-                        <Button color="primary" onClick={this.props.removeItem}>Remove</Button>
-                        <Link to={`/controlPanel/items/${this.props.itemId}`} className="btn btn-primary ml-2">
-                            Edit
-                        </Link>
-                    </div>
-                    <div className="d-block">
-                        <Button color="info" onClick={this.props.switchItem}>Run Script</Button>
-                        <Link to={`/controlPanel/items/${this.props.itemId}/script`} className="btn btn-info ml-2">
-                            Edit Script
-                        </Link>
-                    </div>
+                <div className="alert alert-info mt-2">
+                    <strong>Information:</strong> You have not save changes. Additional functionality was blocked.
+                </div>
+            );
+        }
+        if (this.props.type > ITEM_TYPE.VERTICALL_WALL) {
+            return (
+                <div className="mt-2">
+                    <Button color="info" onClick={this.props.switchItem}>Run Script</Button>
+                    <Link to={`/controlPanel/items/${this.props.itemId}/script`} className="btn btn-info ml-2">
+                        Edit Script
+                    </Link>
                 </div>
             );
         }
