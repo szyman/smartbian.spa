@@ -100,7 +100,6 @@ body {
 
 .items-list {
     display: none;
-    width: 90px;
 }
 
 .editScriptArea {
@@ -130,10 +129,6 @@ body {
         display: none;
     }
 
-    .items-list {
-        display: block;
-    }
-
     .editScriptArea {
         width: 20em;
     }
@@ -145,7 +140,7 @@ body {
     }
 
     .items-list {
-        display: none;
+        display: none !important;
     }
 }
 
@@ -155,10 +150,6 @@ body {
         display: block;
         transform: scale(0.75, 0.75);
         transform-origin: 0 top;
-    }
-
-    .items-list {
-        display: none;
     }
 }
 

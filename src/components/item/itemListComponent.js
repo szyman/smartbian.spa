@@ -16,7 +16,7 @@ class ItemList extends Component {
     render() {
         return (
             <div>
-                <ul className="list-group">
+                <ul className="list-group items-list">
                     {this.renderListItems()}
                 </ul>
             </div>
