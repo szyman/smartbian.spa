@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import interact from 'interactjs';
-import { ITEM_TYPE } from '../components/item/itemComponent';
 
 export const RESIZE_HORIZONTAL = 0;
 export const RESIZE_VERTICAL = 1;
