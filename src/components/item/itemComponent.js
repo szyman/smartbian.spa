@@ -142,11 +142,6 @@ class Item extends Component {
     removeItem() {
         this.props.removeItem(this.state.selectedItem).then(() => {
             this.toggleModal(NOT_SELECTED_ITEM);
-        }).catch((error) => {
-            this.setState({
-                showConnectionModal: true,
-                message: error
-            });
         });
     }
 

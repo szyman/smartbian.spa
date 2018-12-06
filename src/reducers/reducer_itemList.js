@@ -19,7 +19,10 @@ export default function(state={}, action) {
             }
         case REMOVE_ITEM:
             if (action.payload) {
-                return _.omit(state, action.payload.data);
+                if (action.payload.data.error) {
+                    console.warn('REMOVE_ITEM', action.payload.data.error);
+                }
+                return _.omit(state, action.payload.data.id);
             }
             return _.omit(state, action.id);
         case UPDATE_ITEM:
