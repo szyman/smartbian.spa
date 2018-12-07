@@ -26,9 +26,9 @@ class UserSsh extends Component {
         return (
             <div className="background-content">
                 <div className="container content-background">
-                    <div className="align-self-center">
-                        <h3 className="text-center">SSH key</h3>
-                        <textarea className="editScriptArea" value={this.state.sshValue} onChange={this.handleChange}></textarea>
+                    <div className="d-flex flex-column align-items-center">
+                        <h3>SSH key</h3>
+                        <textarea className="editScriptArea mb-2" value={this.state.sshValue} onChange={this.handleChange}></textarea>
                         <button className={`btn btn-success btn-block mx-auto w-50 ${this.state.showSaveButton ? 'visible' : 'invisible'}`} onClick={this.saveChanges}>
                             Save Changes
                         </button>

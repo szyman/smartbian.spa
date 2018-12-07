@@ -5,3 +5,12 @@ export function getApiUrl() {
 
     return 'http://localhost:5000/api';
 }
+
+export function getAuthHeader() {
+    return {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json'
+        }
+    };
+}

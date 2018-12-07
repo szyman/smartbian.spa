@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getApiUrl } from '../helpers/apiHelper';
+import { getApiUrl, getAuthHeader } from '../helpers/apiHelper';
 
 export const REGISTER_USER = 'register_user';
 export const LOGIN_USER = 'login_user';
@@ -42,7 +42,7 @@ export function userRestore() {
 }
 
 export function userGetDetails(id) {
-    const request = axios.get(`${BASE_URL}/users/${id}`, _getAuthHeader());
+    const request = axios.get(`${BASE_URL}/users/${id}`, getAuthHeader());
 
     return {
         type: USER_DETAILS,
@@ -51,7 +51,7 @@ export function userGetDetails(id) {
 }
 
 export function userGetList() {
-    const request = axios.get(`${BASE_URL}/users`, _getAuthHeader());
+    const request = axios.get(`${BASE_URL}/users`, getAuthHeader());
 
     return {
         type: USER_LIST,
@@ -60,7 +60,7 @@ export function userGetList() {
 }
 
 export function userUpdate(id, updatedValues) {
-    const request = axios.put(`${BASE_URL}/users/${id}`, updatedValues, _getAuthHeader());
+    const request = axios.put(`${BASE_URL}/users/${id}`, updatedValues, getAuthHeader());
 
     return {
         type: USER_UPDATE,
@@ -69,22 +69,14 @@ export function userUpdate(id, updatedValues) {
 }
 
 export function userGetSshKey(id) {
-    const request = axios.get(`${BASE_URL}/users/${id}/getSshKey`, _getAuthHeader());
+    const request = axios.get(`${BASE_URL}/users/${id}/getSshKey`, getAuthHeader());
 
     return request;
 }
 
 export function userSaveSshKey(id, sshKey) {
     sshKey = sshKey.replace(/"/g, "'");
-    const request = axios.put(`${BASE_URL}/users/${id}/uploadSshKey`, `"${sshKey}"`, _getAuthHeader());
+    const request = axios.put(`${BASE_URL}/users/${id}/saveSshKey`, `"${sshKey}"`, getAuthHeader());
 
     return request;
-}
-
-function _getAuthHeader() {
-    return {
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-    };
 }

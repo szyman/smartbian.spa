@@ -1,6 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
-import { getApiUrl } from '../helpers/apiHelper';
+import { getApiUrl, getAuthHeader } from '../helpers/apiHelper';
 
 export const ADD_ITEM = 'add_item';
 export const REMOVE_ITEM = 'remove_item';
@@ -22,7 +22,7 @@ export function addItem(itemType) {
 
 export function removeItem(itemId) {
     if (itemId >= 0) {
-        const request = axios.delete(`${BASE_URL}/blocks/${itemId}`, _getAuthHeader());
+        const request = axios.delete(`${BASE_URL}/blocks/${itemId}`, getAuthHeader());
         return {
             type: REMOVE_ITEM,
             payload: request
@@ -44,7 +44,7 @@ export function updateItem(data) {
 }
 
 export function getItem(itemId) {
-    const request = axios.get(`${BASE_URL}/blocks/${itemId}`, _getAuthHeader());
+    const request = axios.get(`${BASE_URL}/blocks/${itemId}`, getAuthHeader());
 
     return {
         type: GET_ITEM,
@@ -53,7 +53,7 @@ export function getItem(itemId) {
 }
 
 export function getItems(id) {
-    const request = axios.get(`${BASE_URL}/blocks/all/${id}`, _getAuthHeader());
+    const request = axios.get(`${BASE_URL}/blocks/all/${id}`, getAuthHeader());
 
     return {
         type: GET_ITEMS,
@@ -62,7 +62,7 @@ export function getItems(id) {
 }
 
 export function saveItems(userId, filteredItems) {
-    const request = axios.post(`${BASE_URL}/blocks/${userId}`, filteredItems, _getAuthHeader());
+    const request = axios.post(`${BASE_URL}/blocks/${userId}`, filteredItems, getAuthHeader());
 
     return {
         type: SAVE_ITEMS,
@@ -73,7 +73,7 @@ export function saveItems(userId, filteredItems) {
 export function saveNewItems(userId, filteredItems) {
     let itemsWithNoId = [];
     _.forEach(filteredItems, (item) => itemsWithNoId.push(_.omit(item, ['id'])));
-    const request = axios.post(`${BASE_URL}/blocks/addNewItems/${userId}`, itemsWithNoId, _getAuthHeader());
+    const request = axios.post(`${BASE_URL}/blocks/addNewItems/${userId}`, itemsWithNoId, getAuthHeader());
 
     return {
         type: SAVE_NEW_ITEMS,
@@ -82,7 +82,7 @@ export function saveNewItems(userId, filteredItems) {
 }
 
 export function saveItem(itemId, item) {
-    const request = axios.put(`${BASE_URL}/blocks/${itemId}`, item, _getAuthHeader());
+    const request = axios.put(`${BASE_URL}/blocks/${itemId}`, item, getAuthHeader());
 
     return {
         type: SAVE_ITEM,
@@ -91,23 +91,14 @@ export function saveItem(itemId, item) {
 }
 
 export function readScriptItem(itemId) {
-    const request = axios.get(`${BASE_URL}/blocks/getScript/${itemId}`, _getAuthHeader());
+    const request = axios.get(`${BASE_URL}/blocks/getScript/${itemId}`, getAuthHeader());
 
     return request;
 }
 
 export function saveScriptItem(itemId, script) {
     script = script.replace(/"/g, "'");
-    const request = axios.put(`${BASE_URL}/blocks/uploadScript/${itemId}`, `"${script}"`, _getAuthHeader());
+    const request = axios.put(`${BASE_URL}/blocks/uploadScript/${itemId}`, `"${script}"`, getAuthHeader());
 
     return request;
-}
-
-function _getAuthHeader() {
-    return {
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
-            'Content-Type': 'application/json'
-        }
-    };
 }
