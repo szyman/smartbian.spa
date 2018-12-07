@@ -52,6 +52,12 @@ class UserLogin extends Component {
                                 Edit Profile
                             </DropdownItem>
                         </Link>
+                        <Link to={`/users/${this.props.userAuth.id}/ssh`}>
+                            <DropdownItem>
+                                <i className="fas fa-key"></i>
+                                SSH Key
+                            </DropdownItem>
+                        </Link>
                         <div className="dropdown-divider"></div>
                         <DropdownItem onClick={this.logout}><i className="fa fa-sign-out-alt"></i> Logout</DropdownItem>
                     </DropdownMenu>

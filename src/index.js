@@ -17,6 +17,7 @@ import ControlPanel from './components/controlPanel/controlPanelComponent';
 import UserList from './components/user/userListComponent';
 import UserDetail from './components/user/userDetailComponent';
 import UserEdit from './components/user/userEditComponent';
+import UserSsh from './components/user/userSshComponent';
 import ItemEdit from './components/item/itemEditComponent';
 import ItemScript from './components/item/itemScriptComponent';
 
@@ -40,6 +41,7 @@ ReactDOM.render(
                         <PrivateRoute path='/controlPanel/items/:id/script' component={ItemScript} />
                         <PrivateRoute path='/controlPanel/items/:id' component={ItemEdit} />
                         <PrivateRoute path='/controlPanel' component={ControlPanel} />
+                        <PrivateRoute path='/users/:id/ssh' component={UserSsh} />
                         <PrivateRoute path='/users/edit' component={UserEdit} />
                         <PrivateRoute path='/users/:id' component={UserDetail} />
                         <PrivateRoute path='/users' component={UserList} />

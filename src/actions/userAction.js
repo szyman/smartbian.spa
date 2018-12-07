@@ -68,6 +68,19 @@ export function userUpdate(id, updatedValues) {
     }
 }
 
+export function userGetSshKey(id) {
+    const request = axios.get(`${BASE_URL}/users/${id}/getSshKey`, _getAuthHeader());
+
+    return request;
+}
+
+export function userSaveSshKey(id, sshKey) {
+    sshKey = sshKey.replace(/"/g, "'");
+    const request = axios.put(`${BASE_URL}/users/${id}/uploadSshKey`, `"${sshKey}"`, _getAuthHeader());
+
+    return request;
+}
+
 function _getAuthHeader() {
     return {
         headers: {
