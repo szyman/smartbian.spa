@@ -9,7 +9,7 @@ body {
 }
 
 .background-content {
-    background-image: url('/assets/background.jpg');
+    background-image: url('../assets/background.jpg');
     min-height: 100vh;
 }
 
@@ -20,7 +20,7 @@ body {
 
 .home .background-image {
     position: absolute;
-    background-image: url('/assets/background.jpg');
+    background-image: url('../assets/background.jpg');
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -53,7 +53,7 @@ body {
 }
 
 #details .smart-home-img {
-    background-image: url('/assets/smart-home.png');
+    background-image: url('../assets/smart-home.png');
     height: 150px;
     width: 150px;
     background-size: cover;
@@ -65,7 +65,7 @@ body {
 }
 
 #details .cloud-img {
-    background-image: url('/assets/cloud.jpg');
+    background-image: url('../assets/cloud.jpg');
     height: 150px;
     width: 150px;
     background-size: cover;
@@ -77,7 +77,7 @@ body {
 }
 
 #details .raspberry-img {
-    background-image: url('/assets/raspberry-pi.jpg');
+    background-image: url('../assets/raspberry-pi.jpg');
     height: 150px;
     width: 250px;
     background-size: contain;

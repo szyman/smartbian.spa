@@ -24,6 +24,8 @@ import ItemScript from './components/item/itemScriptComponent';
 import { ErrorInterceptor } from './helpers/errorInterceptorHelper';
 import PrivateRoute from './helpers/privateRouteHelper';
 
+import css from '../style/style.css';
+
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 ErrorInterceptor();
 
