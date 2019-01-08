@@ -6,7 +6,7 @@ import { ITEM_TYPE } from '../item/itemComponent';
 class ModalItem extends Component {
     render() {
         return (
-            <Modal isOpen={this.props.modal}>
+            <Modal isOpen={this.props.modal} autoFocus={false}>
                 <ModalHeader toggle={this.props.toggleModal}>Modal title</ModalHeader>
                 <ModalBody>Press any action</ModalBody>
                 <ModalFooter>
