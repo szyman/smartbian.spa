@@ -29,6 +29,15 @@ export function userLogin(values) {
     };
 }
 
+export function userLoginExtProvider(values) {
+    const request = axios.post(`${BASE_URL}/auth/loginExtProvider`, values);
+
+    return {
+        type: LOGIN_USER,
+        payload: request
+    };
+}
+
 export function userLogout() {
     return {
         type: LOGOUT_USER

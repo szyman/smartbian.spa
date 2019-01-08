@@ -42,8 +42,7 @@ class UserLogin extends Component {
             return (
                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle className="text-light" caret>
-                        Welcome
-                        <a className="text-capitalize"> {this.props.userAuth.username}</a>
+                        Welcome {this.props.userAuth.username}
                     </DropdownToggle>
                     <DropdownMenu className="mt-3">
                         <Link to='/users/edit'>
