@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import hljs from 'highlight.js';
+import hljs from 'highlight.js/lib/highlight';
+import python from 'highlight.js/lib/languages/python';
 
 class WikiLamp extends Component {
     componentDidMount() {
+        hljs.registerLanguage('python', python);
         hljs.highlightBlock(this.refs.highlight);
     }
 
@@ -14,24 +16,22 @@ class WikiLamp extends Component {
                     <div ref="highlight">
                         <pre>
                             <code>
-                                <p>
-                                    import RPi.GPIO as GPIO<br />
-                                    GPIOPin = 17
-                                </p>
-                                <p>
-                                    GPIO.setwarnings(False)<br />
-                                    GPIO.setmode(GPIO.BCM)<br />
-                                    GPIO.setup(GPIOPin, GPIO.OUT)<br />
-                                    statePin = GPIO.input(GPIOPin)<br />
-                                </p>
-                                <p>
-                                    if (statePin is 1):<br />
-                                    GPIO.output(GPIOPin, False)<br />
-                                    print('Switched on')<br />
-                                    else:<br />
-                                    GPIO.output(GPIOPin, True)<br />
-                                    print('Switched off')<br />
-                                </p>
+                                {`
+import RPi.GPIO as GPIO
+GPIOPin = 17
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(GPIOPin, GPIO.OUT)
+statePin = GPIO.input(GPIOPin)
+
+if (statePin is 1):
+	GPIO.output(GPIOPin, False)
+	print('Switched on')
+else:
+	GPIO.output(GPIOPin, True)
+	print('Switched off')
+                                `}
                             </code>
                         </pre>
                     </div>

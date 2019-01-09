@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import hljs from 'highlight.js';
+import hljs from 'highlight.js/lib/highlight';
+import python from 'highlight.js/lib/languages/python';
 
 class WikiTemperature extends Component {
     componentDidMount() {
+        hljs.registerLanguage('python', python);
         hljs.highlightBlock(this.refs.highlight);
     }
 
@@ -14,14 +16,13 @@ class WikiTemperature extends Component {
                     <div ref="highlight">
                         <pre>
                             <code>
-                                <p>
-                                    import w1thermsensor
-                                </p>
-                                <p>
-                                    sensor = w1thermsensor.W1ThermSensor()<br/>
-                                    temp = sensor.get_temperature()<br/>
-                                    print(temp)<br/>
-                                </p>
+                                {`
+import w1thermsensor
+
+sensor = w1thermsensor.W1ThermSensor()
+temp = sensor.get_temperature()
+print(temp)
+                                `}
                             </code>
                         </pre>
                     </div>
