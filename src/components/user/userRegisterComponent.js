@@ -9,14 +9,14 @@ class UserRegister extends Component {
         let { touched, error, invalid } = field.meta;
         return (
             <div className={`form-group row justify-content-md-center ${touched && invalid ? 'has-danger' : ''}`}>
-                <label className="col-md-2 text-right">{field.placeholder}</label>
+                <label className="col-md-2 text-center font-weight-bold">{field.placeholder}</label>
                 <input
-                    className="form-control col-md-5"
+                    className="form-control"
                     type={field.type}
                     placeholder={field.placeholder}
                     {...field.input}
                 />
-                <div className="text-help col-md-2">
+                <div className="text-danger">
                     {touched ? error : ''}
                 </div>
             </div>
@@ -42,6 +42,12 @@ class UserRegister extends Component {
                             type="password"
                             placeholder="Password"
                             name="password"
+                            component={this.renderField}
+                        />
+                        <Field
+                            type="password"
+                            placeholder="Confirm password"
+                            name="confirmPassword"
                             component={this.renderField}
                         />
                         <div className="form-group text-center">
@@ -72,6 +78,9 @@ function validate(values) {
     }
     if (!values.password) {
         errors.password = 'Empty field Password';
+    }
+    if (values.password !== values.confirmPassword) {
+        errors.confirmPassword = 'Password doesn\'t match';
     }
 
     return errors;
