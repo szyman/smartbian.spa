@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import axios from 'axios';
 import { getApiUrl, getAuthHeader } from '../helpers/apiHelper';
 
@@ -12,7 +13,8 @@ export const USER_UPDATE = 'user_update';
 const BASE_URL = getApiUrl();
 
 export function userRegister(values) {
-    const request = axios.post(`${BASE_URL}/auth/register`, values);
+    const data = _.omit(values, 'confirmPassword');
+    const request = axios.post(`${BASE_URL}/auth/register`, data);
 
     return {
         type: REGISTER_USER,
@@ -21,7 +23,8 @@ export function userRegister(values) {
 }
 
 export function userLogin(values) {
-    const request = axios.post(`${BASE_URL}/auth/login`, values);
+    const data = _.omit(values, 'confirmPassword');
+    const request = axios.post(`${BASE_URL}/auth/login`, data);
 
     return {
         type: LOGIN_USER,

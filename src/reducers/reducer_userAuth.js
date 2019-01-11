@@ -50,6 +50,7 @@ function _getLoggedUser(decodedToken) {
 
     return {
         id: decodedToken.nameid,
-        username: decodedToken.unique_name
+        username: decodedToken.unique_name,
+        role: decodedToken.role
     };
 }

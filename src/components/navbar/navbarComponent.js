@@ -1,9 +1,11 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import UserLogin from '../user/userLoginComponent';
 import { connect } from 'react-redux';
-import { Collapse, NavbarToggler, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
-import _ from 'lodash';
+import { Collapse, NavbarToggler, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown } from 'reactstrap';
+
+import UserLogin from '../user/userLoginComponent';
+import { isAdminRole } from '../../helpers/authHelper'
 
 class Navbar extends Component {
     constructor(props) {
@@ -48,19 +50,26 @@ class Navbar extends Component {
         );
     }
 
-    renderUserMenu() {
+    renderMenu() {
         if (!_.isEmpty(this.props.userAuth)) {
             return (
                 <ul className="navbar-nav mr-auto">
-
-                        {this.renderWikiMenu()}
+                    {this.renderWikiMenu()}
                     <li className="nav-item">
                         <NavLink className="nav-link" activeClassName='active' to='/controlPanel'>Control Panel</NavLink>
                     </li>
-                    <li className="nav-item">
-                        <NavLink className="nav-link" activeClassName='active' to='/users'>Users</NavLink>
-                    </li>
+                    {this.renderAdminMenu()}
                 </ul>
+            );
+        }
+    }
+
+    renderAdminMenu() {
+        if (isAdminRole(this.props.userAuth)) {
+            return (
+                <li className="nav-item">
+                    <NavLink className="nav-link" activeClassName='active' to='/admin'>Admin</NavLink>
+                </li>
             );
         }
     }
@@ -71,7 +80,7 @@ class Navbar extends Component {
                 <Link className="navbar-brand" to="/">Smartbian</Link>
                 <NavbarToggler onClick={this.toggleNavbar} />
                 <Collapse isOpen={!this.state.collapsed} navbar>
-                    {this.renderUserMenu()}
+                    {this.renderMenu()}
                     <UserLogin></UserLogin>
                 </Collapse>
             </nav>

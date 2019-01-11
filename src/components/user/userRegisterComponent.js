@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { userRegister } from '../../actions/userAction';
+import { userRegister, userLogin } from '../../actions/userAction';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
@@ -62,8 +62,11 @@ class UserRegister extends Component {
     }
 
     register(values) {
+        var that = this;
         this.props.userRegister(values).then(() => {
-            this.props.history.push('/');
+            this.props.userLogin(values).then(() => {
+                that.props.history.push('/');
+            });
         });
     }
 }
@@ -91,5 +94,5 @@ export default withRouter(reduxForm({
     validate,
     form: 'UserRegisterForm'
 })(
-    connect(null, { userRegister })(UserRegister)
+    connect(null, { userRegister, userLogin })(UserRegister)
 ));

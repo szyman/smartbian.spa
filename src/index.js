@@ -14,7 +14,7 @@ import WikiHome from './components/wiki/wikiHomeComponent';
 import WikiTemperature from './components/wiki/wikiTemperatureComponent';
 import WikiPrivatePolicy from './components/wiki/wikiPrivatePolicyComponent';
 import ControlPanel from './components/controlPanel/controlPanelComponent';
-import UserList from './components/user/userListComponent';
+import UserAdmin from './components/user/userAdminComponent';
 import UserDetail from './components/user/userDetailComponent';
 import UserEdit from './components/user/userEditComponent';
 import UserSsh from './components/user/userSshComponent';
@@ -46,8 +46,8 @@ ReactDOM.render(
                         <PrivateRoute path='/users/:id/ssh' component={UserSsh} />
                         <PrivateRoute path='/users/edit' component={UserEdit} />
                         <PrivateRoute path='/users/:id' component={UserDetail} />
-                        <PrivateRoute path='/users' component={UserList} />
                         <Route path='/user/register' component={UserRegister} />
+                        <PrivateRoute path='/admin' component={UserAdmin} adminOnly={true} />
                         <Route path='/' component={Home} />
                     </Switch>
                 </div>
