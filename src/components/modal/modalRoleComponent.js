@@ -4,14 +4,33 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 class ModalRole extends Component {
     constructor(props) {
         super(props);
-        this.state = { roles: [] };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillReceiveProps({roles}) {
+        if (!roles.length) {
+            return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+            this.setState({
+                [roles[i].name]: roles[i]
+            });
+        }
+    }
+
     handleChange(event) {
-        this.setState({ value: event.target.value });
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        let role = Object.assign({}, this.state[name]);
+        role.checked = value;
+
+        this.setState({
+            [name]: role
+        });
     }
 
     handleSubmit(event) {
@@ -23,11 +42,16 @@ class ModalRole extends Component {
         return _.map(this.props.roles, role => {
             return (
                 <div className="form-check" key={role.name}>
-                    <input type="checkbox" className="form-check-input" value={role.name} checked={role.checked} onChange={this.handleChange}></input>
+                    <input type="checkbox"
+                        className="form-check-input"
+                        name={role.name}
+                        checked={this.state[role.name].checked}
+                        onChange={this.handleChange}>
+                    </input>
                     <label>{role.name}</label>
                 </div>
-            )
-        })
+            );
+        });
     }
 
     render() {
