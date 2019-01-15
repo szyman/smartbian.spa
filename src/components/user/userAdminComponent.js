@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 
 import ModalRole from '../modal/modalRoleComponent';
-import { getUsersWithRoles } from '../../actions/adminAction';
+import { getUsersWithRoles, updateUserRoles } from '../../actions/adminAction';
 
 class UserAdmin extends Component {
     constructor(props) {
@@ -10,10 +10,12 @@ class UserAdmin extends Component {
         this.state = {
             users: [],
             roles: [],
-            modal: false
+            modal: false,
+            userName: ''
         };
 
-        this.toggle = this.toggle.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.submitRoles = this.submitRoles.bind(this);
     }
 
     componentDidMount() {
@@ -40,7 +42,7 @@ class UserAdmin extends Component {
                     <td>{user.userName}</td>
                     <td>{user.roles}</td>
                     <td>
-                        <Button color="info" onClick={() => this.toggle({ user })}>Edit Roles</Button>
+                        <Button color="info" onClick={() => this.toggleModal(user)}>Edit Roles</Button>
                     </td>
                 </tr>
             );
@@ -68,22 +70,42 @@ class UserAdmin extends Component {
                     </div>
                 </div>
                 <ModalRole
-                    toggle={this.toggle}
+                    toggleModal={this.toggleModal}
                     modal={this.state.modal}
                     roles={this.state.roles}
+                    userName={this.state.userName}
+                    submitRoles={this.submitRoles}
                 />
             </div>
         );
     }
 
-    toggle({ user }) {
+    toggleModal(user) {
         this.setState({
             modal: !this.state.modal,
-            roles: user ? this.getRolesArray(user) : []
+            roles: user && user.roles ? this._getRolesArray(user) : [],
+            userName: user && user.userName ? user.userName : ''
         });
     }
 
-    getRolesArray(user) {
+    submitRoles(roles) {
+        const that = this;
+        let users = {...this.state.users};
+        const userName = this.state.userName;
+        updateUserRoles(this.state.userName, roles).then(({ data }) => {
+            let modifiedUserKey = _.findKey(users, u => u.userName === userName)
+            users[modifiedUserKey].roles = data;
+            that.setState({
+                users: users
+            });
+        }).catch(err => {
+            console.error(err);
+        });
+
+        this.toggleModal();
+    }
+
+    _getRolesArray(user) {
         const roles = [];
         const userRoles = user.roles;
         const availableRoles = [

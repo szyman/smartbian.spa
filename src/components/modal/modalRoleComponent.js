@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
@@ -9,7 +10,7 @@ class ModalRole extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillReceiveProps({roles}) {
+    componentWillReceiveProps({ roles }) {
         if (!roles.length) {
             return;
         }
@@ -34,7 +35,11 @@ class ModalRole extends Component {
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
+        const rolesArray = _.values(this.state);
+        const rolesToUpdate = {
+            roleNames: [...rolesArray.filter(el => el.checked === true).map(el => el.name)]
+        };
+        this.props.submitRoles(rolesToUpdate);
         event.preventDefault();
     }
 
@@ -46,7 +51,8 @@ class ModalRole extends Component {
                         className="form-check-input"
                         name={role.name}
                         checked={this.state[role.name].checked}
-                        onChange={this.handleChange}>
+                        onChange={this.handleChange}
+                        disabled={role.name === 'Admin' && this.props.userName === 'admin'}>
                     </input>
                     <label>{role.name}</label>
                 </div>
@@ -57,14 +63,17 @@ class ModalRole extends Component {
     render() {
         return (
             <div>
-                <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Edit Roles for</ModalHeader>
-                    <ModalBody>
-                        <form onSubmit={this.handleSubmit}>
+                <Modal isOpen={this.props.modal} toggle={this.props.toggleModal} className={this.props.className}>
+                    <ModalHeader>Edit Roles for {this.props.userName}</ModalHeader>
+                    <form onSubmit={this.handleSubmit}>
+                        <ModalBody>
                             {this.renderRoles()}
-                            <input type="submit" value="Submit" />
-                        </form>
-                    </ModalBody>
+                        </ModalBody>
+                        <ModalFooter>
+                            <input className="btn btn-primary" type="submit" value="Submit" />
+                            <Button color="secondary" onClick={this.props.toggleModal}>Cancel</Button>
+                        </ModalFooter>
+                    </form>
                 </Modal>
             </div>
         );
