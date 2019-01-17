@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import sshEnableImg from '../../../assets/wiki/ssh_enable.png';
+import sshKey from '../../../assets/wiki/ssh_key.png';
 
 class WikiSsh extends Component {
     render() {
@@ -16,8 +17,8 @@ class WikiSsh extends Component {
                         <li>Navigate to the Interfaces tab</li>
                         <li>Select Enabled next to SSH</li>
                         <li>Click OK</li>
+                        <img className="mb-2" style={{ width: 100 + '%' }} src={`../${sshEnableImg}`}/>
                     </ol>
-                    <img className="mb-2" style={{ width: 100 + '%' }} src={`../${sshEnableImg}`}/>
                     <h5>Generate SSH key</h5>
                     <p>Puttygen is the SSH key generation tool for the linux version of PuTTY.</p>
                     <ol>
@@ -42,6 +43,7 @@ class WikiSsh extends Component {
                         <li>
                             Copy the public key to the .ssh/authorized_keys file on the Raspberry.
                         </li>
+                        <img className="mb-2" style={{ width: 100 + '%' }} src={`../${sshKey}`}/>
                         <li>
                             Generate the private key:
                             <ul>

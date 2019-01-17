@@ -42,6 +42,9 @@ class Navbar extends Component {
                     <Link to='/wiki/ssh'>
                         <DropdownItem>Set up SSH connection</DropdownItem>
                     </Link>
+                    <Link to='/wiki/forwarding'>
+                        <DropdownItem>Access Raspberry over internet</DropdownItem>
+                    </Link>
                     <Link to='/wiki/lamp'>
                         <DropdownItem>Remote lamp switcher</DropdownItem>
                     </Link>
