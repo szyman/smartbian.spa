@@ -9,6 +9,7 @@ import reducers from './reducers';
 import App from './components/appComponent';
 import UserRegister from './components/user/userRegisterComponent';
 import Home from './components/home/homeComponent';
+import WikiSsh from './components/wiki/wikiSshComponent';
 import WikiLamp from './components/wiki/wikiLampComponent';
 import WikiHome from './components/wiki/wikiHomeComponent';
 import WikiTemperature from './components/wiki/wikiTemperatureComponent';
@@ -36,6 +37,7 @@ ReactDOM.render(
                 <App></App>
                 <div>
                     <Switch>
+                        <PrivateRoute path='/wiki/ssh' component={WikiSsh} />
                         <PrivateRoute path='/wiki/lamp' component={WikiLamp} />
                         <PrivateRoute path='/wiki/temperature' component={WikiTemperature} />
                         <PrivateRoute path='/wiki/privatePolicy' component={WikiPrivatePolicy} />

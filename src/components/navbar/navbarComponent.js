@@ -39,6 +39,9 @@ class Navbar extends Component {
                         <DropdownItem>Home</DropdownItem>
                     </Link>
                     <DropdownItem divider />
+                    <Link to='/wiki/ssh'>
+                        <DropdownItem>Set up SSH connection</DropdownItem>
+                    </Link>
                     <Link to='/wiki/lamp'>
                         <DropdownItem>Remote lamp switcher</DropdownItem>
                     </Link>
