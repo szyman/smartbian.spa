@@ -45,8 +45,8 @@ class Navbar extends Component {
                     <Link to='/wiki/forwarding'>
                         <DropdownItem>Access Raspberry over internet</DropdownItem>
                     </Link>
-                    <Link to='/wiki/lamp'>
-                        <DropdownItem>Remote lamp switcher</DropdownItem>
+                    <Link to='/wiki/light'>
+                        <DropdownItem>Remote light switcher</DropdownItem>
                     </Link>
                     <Link to='/wiki/temperature'>
                         <DropdownItem>Temperature sensor</DropdownItem>

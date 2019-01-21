@@ -49,7 +49,7 @@ class Home extends Component {
 
                     <h3 className="text-center mt-2">How it works</h3>
                     <p className="mx-2">
-                        You can make completely universal and very cheap Home Automation control panel using a Raspberry Pi 3. The following example describes how to use Smartbian which set on/off lamp by your Raspberry Pi.
+                        You can make completely universal and very cheap Home Automation control panel using a Raspberry Pi 3. The following example describes how to use Smartbian to turn the lamp on/off by your Raspberry Pi.
                     </p>
                     <img className="d-block mx-auto mb-2 mw-100" src={demoGif} alt="Smartbian demo" />
                 </section>
