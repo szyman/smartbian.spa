@@ -36,7 +36,7 @@ class WikiForwarding extends Component {
                                     Internal Host: - ip address of your Raspberry connected to the local network.
                                     You can check in the Raspberry by typing <i className="font-weight-bold"> hostname -I </i> in the terminal
                                 </li>
-                                <li>External Source IP Address: - ip address assigned by DNS hosting</li>
+                                <li>External Source IP Address: - ip address assigned by DNS hosting. You can find a free dns hosting provider (<a href="http://www.google.com/search?q=free+dns">link</a>) and create your own ip address.</li>
                                 <li>Internal port number: - port which will be accessible over the internet. It was set to 22 because this is a default port number for SSH. Do not change it.</li>
                                 <li>External port number: - port which will be mapped to a specified number. Do not change it.</li>
                             </ul>
