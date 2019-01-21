@@ -119,6 +119,7 @@ body {
 }
 
 .playground {
+    display: none;
     position: relative;
     width: 700px;
     height: 700px;
@@ -127,10 +128,6 @@ body {
     left: -6px;
     right: 0;
     margin: auto;
-}
-
-.items-list {
-    display: none;
 }
 
 .editScriptArea {
@@ -156,22 +153,8 @@ body {
 }
 
 @media all and (max-width: 600px) {
-    .playground {
-        display: none;
-    }
-
     .editScriptArea {
         width: 20em;
-    }
-}
-
-@media all and (min-width: 600px) {
-    .playground {
-        display: block;
-    }
-
-    .items-list {
-        display: none !important;
     }
 }
 
@@ -181,6 +164,10 @@ body {
         display: block;
         transform: scale(0.75, 0.75);
         transform-origin: 0 top;
+    }
+
+    .items-list {
+        display: none;
     }
 }
 

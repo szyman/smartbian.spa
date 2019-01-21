@@ -99,7 +99,7 @@ class Item extends Component {
     render() {
         return (
             <div className="mt-2">
-                <div className="playground">
+                <div className="playground d-md-block">
                     {this.renderItems()}
                 </div>
                 <ItemList
