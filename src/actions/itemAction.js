@@ -52,14 +52,11 @@ export function getItem(itemId) {
     }
 }
 
-export function getItems(id) {
-    const request = axios.get(`${BASE_URL}/blocks/all/${id}`, getAuthHeader());
+export const getItems = (id) => async dispatch => {
+    const response = await axios.get(`${BASE_URL}/blocks/all/${id}`, getAuthHeader());
 
-    return {
-        type: GET_ITEMS,
-        payload: request
-    }
-}
+    dispatch({ type: GET_ITEMS, payload: response});
+};
 
 export function saveItems(userId, filteredItems) {
     const request = axios.post(`${BASE_URL}/blocks/${userId}`, filteredItems, getAuthHeader());

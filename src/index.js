@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import promise from 'redux-promise';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
@@ -28,11 +29,11 @@ import PrivateRoute from './helpers/privateRouteHelper';
 
 import css from '../style/style.css';
 
-const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
+const store = createStore(reducers, applyMiddleware(promise, thunk));
 ErrorInterceptor();
 
 ReactDOM.render(
-    <Provider store={createStoreWithMiddleware(reducers)}>
+    <Provider store={store}>
         <BrowserRouter>
             <div>
                 <App></App>

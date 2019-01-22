@@ -41,10 +41,6 @@ class Item extends Component {
     }
 
     renderItems() {
-        if (_.isEmpty(this.props.itemList)) {
-            return <div></div>;
-        }
-
         return _.map(this.props.itemList, item => {
             if (item.type === ITEM_TYPE.HORIZONTAL_WALL) {
                 return (
