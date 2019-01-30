@@ -55,7 +55,7 @@ export function getItem(itemId) {
 export const getItems = (id) => async dispatch => {
     const response = await axios.get(`${BASE_URL}/blocks/all/${id}`, getAuthHeader());
 
-    dispatch({ type: GET_ITEMS, payload: response});
+    dispatch({ type: GET_ITEMS, payload: response.data });
 };
 
 export function saveItems(userId, filteredItems) {

@@ -71,13 +71,10 @@ export function userGetList() {
     };
 }
 
-export function userUpdate(id, updatedValues) {
-    const request = axios.put(`${BASE_URL}/users/${id}`, updatedValues, getAuthHeader());
+export const userUpdate = (id, updatedValues) => async dispatch => {
+    const response = await axios.put(`${BASE_URL}/users/${id}`, updatedValues, getAuthHeader());
 
-    return {
-        type: USER_UPDATE,
-        payload: request
-    }
+    dispatch({ type: USER_UPDATE, payload: response.data });
 }
 
 export function userGetSshKey(id) {

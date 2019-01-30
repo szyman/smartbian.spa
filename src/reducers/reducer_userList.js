@@ -16,11 +16,7 @@ export default function(state = {}, action) {
 
             return { ...state, [action.payload.data.id]: action.payload.data }
         case USER_UPDATE:
-            if (!action.payload) {
-                return state;
-            }
-
-            return { ...state, [action.payload.data.id]: action.payload.data }
+            return { ...state, [action.payload.id]: action.payload }
     }
 
     return state;

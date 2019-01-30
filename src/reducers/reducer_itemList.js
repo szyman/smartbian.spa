@@ -35,11 +35,7 @@ export default function(state={}, action) {
 
             return action.payload.data;
         case GET_ITEMS:
-            if (!action.payload) {
-                return state;
-            }
-
-            return _.mapKeys(action.payload.data, 'id');
+            return _.mapKeys(action.payload, 'id');
         case SAVE_ITEM:
             if (!action.payload) {
                 return state;

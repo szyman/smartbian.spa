@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -26,7 +27,7 @@ class UserEdit extends Component {
                     <div className="align-self-center text-center">
                         <div className="">
                             <h1>Edit profile</h1>
-                            <UserForm initialValues={this.props.userDetails} onSubmit={this.updateUser} />
+                            <UserForm initialValues={_.pick(this.props.userDetails, 'raspHost', 'raspUsername')} onSubmit={this.updateUser} />
                         </div>
                     </div>
                 </div>
