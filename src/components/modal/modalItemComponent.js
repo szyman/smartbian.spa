@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ITEM_TYPE } from '../item/itemComponent';
-
 class ModalItem extends Component {
     render() {
         return (
             <Modal isOpen={this.props.modal} autoFocus={false}>
-                <ModalHeader toggle={this.props.toggleModal}>Modal title</ModalHeader>
+                <ModalHeader toggle={this.props.toggleModal}>{this.props.itemTitle || 'No title'}</ModalHeader>
                 <ModalBody>Press any action</ModalBody>
                 <ModalFooter>
                     <div className="d-flex flex-wrap justify-content-end">

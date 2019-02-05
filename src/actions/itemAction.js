@@ -43,13 +43,13 @@ export function updateItem(data) {
     }
 }
 
-export function getItem(itemId) {
-    const request = axios.get(`${BASE_URL}/blocks/${itemId}`, getAuthHeader());
+export const getItem = (itemId) => async dispatch => {
+    const response = await axios.get(`${BASE_URL}/blocks/${itemId}`, getAuthHeader());
 
-    return {
+    dispatch( {
         type: GET_ITEM,
-        payload: request
-    }
+        payload: response.data
+    });
 }
 
 export const getItems = (id) => async dispatch => {
@@ -78,8 +78,8 @@ export function saveNewItems(userId, filteredItems) {
     }
 }
 
-export function saveItem(itemId, item) {
-    const request = axios.put(`${BASE_URL}/blocks/${itemId}`, item, getAuthHeader());
+export function saveItem(itemId, values) {
+    const request = axios.put(`${BASE_URL}/blocks/${itemId}`, values, getAuthHeader());
 
     return {
         type: SAVE_ITEM,

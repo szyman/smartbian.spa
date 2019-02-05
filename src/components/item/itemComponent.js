@@ -25,6 +25,7 @@ class Item extends Component {
             modal: false,
             type: ITEM_TYPE.HORIZONTAL_WALL,
             selectedItem: NOT_SELECTED_ITEM,
+            itemTitle: '',
             showConnectionModal: false,
             message: '',
             textItem: '--'
@@ -47,7 +48,7 @@ class Item extends Component {
                     <Interact key={item.id}
                         itemData={item}
                         classNameItem="drag-wall-horizontal"
-                        onTap={() => this.toggleModal(item.id)}
+                        onTap={() => this.toggleModal(item.id, ITEM_TYPE.HORIZONTAL_WALL, item.title)}
                         resizeConfig={RESIZE_HORIZONTAL}
                         updateItem={(arg) => this.updateItem(item.id, arg)}
                         isEditable={this.props.isEditable}>
@@ -58,7 +59,7 @@ class Item extends Component {
                     <Interact key={item.id}
                         itemData={item}
                         classNameItem="drag-wall-vertical"
-                        onTap={() => this.toggleModal(item.id)}
+                        onTap={() => this.toggleModal(item.id, ITEM_TYPE.VERTICALL_WALL, item.title)}
                         resizeConfig={RESIZE_VERTICAL}
                         updateItem={(arg) => this.updateItem(item.id, arg)}
                         isEditable={this.props.isEditable}>
@@ -69,7 +70,7 @@ class Item extends Component {
                     <Interact key={item.id}
                         itemData={item}
                         classNameItem="drag-element"
-                        onTap={() => this.toggleModal(item.id, ITEM_TYPE.ELEMENT)}
+                        onTap={() => this.toggleModal(item.id, ITEM_TYPE.ELEMENT, item.title)}
                         updateItem={(arg) => this.updateItem(item.id, arg)}
                         isEditable={this.props.isEditable}>
                         <ItemTextValue
@@ -84,7 +85,7 @@ class Item extends Component {
                     itemData={item}
                     classNameItem="drag-element"
                     classNameIcon="fas fa-lightbulb fa-2x"
-                    onTap={() => this.toggleModal(item.id, ITEM_TYPE.ELEMENT)}
+                    onTap={() => this.toggleModal(item.id, ITEM_TYPE.ELEMENT, item.title)}
                     updateItem={(arg) => this.updateItem(item.id, arg)}
                     isEditable={this.props.isEditable}>
                 </Interact>
@@ -107,6 +108,7 @@ class Item extends Component {
                     itemId={this.state.selectedItem}
                     modal={this.state.modal}
                     type={this.state.type}
+                    itemTitle={this.state.itemTitle}
                     toggleModal={this.toggleModal}
                     removeItem={this.removeItem}
                     switchItem={this.switchItem}>
@@ -114,14 +116,14 @@ class Item extends Component {
                 <ModalMessage
                     modal={this.state.showConnectionModal}
                     toggle={this.toggleModal}
-                    title={"Switching error"}
+                    title={"Item message"}
                     message={this.state.message}>
                 </ModalMessage>
             </div>
         );
     }
 
-    toggleModal(id, type) {
+    toggleModal(id, type, title) {
         if (!_.isNumber(id)) {
             id = NOT_SELECTED_ITEM;
         }
@@ -129,6 +131,7 @@ class Item extends Component {
         this.setState({
             modal: !this.state.modal,
             type: type,
+            itemTitle: title,
             selectedItem: id,
             showConnectionModal: false,
             message: ''

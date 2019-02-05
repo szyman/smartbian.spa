@@ -29,11 +29,7 @@ export default function(state={}, action) {
             _.assignIn(state[action.itemData.id], action.itemData)
             return state;
         case GET_ITEM:
-            if (!action.payload) {
-                return state;
-            }
-
-            return action.payload.data;
+            return action.payload;
         case GET_ITEMS:
             return _.mapKeys(action.payload, 'id');
         case SAVE_ITEM:
