@@ -3,6 +3,8 @@ import hljs from 'highlight.js/lib/highlight';
 import python from 'highlight.js/lib/languages/python';
 
 import gpioLight from '../../../assets/wiki/gpio_light.png';
+import lightRelay from '../../../assets/wiki/light_relay.jpg';
+import lightComplete from "../../../assets/wiki/light_complete.jpg";
 
 class WikiLight extends Component {
     componentDidMount() {
@@ -53,6 +55,27 @@ class WikiLight extends Component {
                             </tr>
                         </tbody>
                     </table>
+
+                    <h5>Wiring up the lamp</h5>
+                    <p>
+                        When you wired up the relay with Raspberry then you can prepare your lamp.
+                        You can use cables from light swticher to wire up with the relay.
+                    </p>
+
+                    You will have two wires inside the switcher:
+                    <ul>
+                        <li>Blue(Neutral) - don't cut this cable. Leave it connected.</li>
+                        <li>
+                            Brown(Live) - it should be cut and connected to light switcher. Pull it out.
+                            Connect the brown wire to the relay channel using the middle and left side of one relay switch. Fasten this down with the screw and make sure it's secure. Ensure that the wires cannot short out
+                        </li>
+                    </ul>
+                    <img className="mb-2" style={{ width: 100 + '%' }} src={`../${lightRelay}`} />
+
+                    <p>
+                        Take a look at the final image to make sure you have everything setup correctly.
+                    </p>
+                    <img className="mb-2" style={{ width: 100 + '%' }} src={`../${lightComplete}`} />
 
                     <h5>Configure the Smartbian</h5>
                     <p>You can write any script to control the relay switch or you can use the following script. Please make sure if assigned number to the variable <span className="font-weight-bold">GPIOPin</span> is the same as you used to wire up GPIO with relay switch</p>
