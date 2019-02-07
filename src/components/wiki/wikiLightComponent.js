@@ -2,11 +2,25 @@ import React, { Component } from 'react';
 import hljs from 'highlight.js/lib/highlight';
 import python from 'highlight.js/lib/languages/python';
 
+import ModalImage from '../modal/modalImageComponent';
+
 import gpioLight from '../../../assets/wiki/gpio_light.png';
 import lightRelay from '../../../assets/wiki/light_relay.jpg';
 import lightComplete from "../../../assets/wiki/light_complete.jpg";
 
 class WikiLight extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modal: false,
+            title: '',
+            image: ''
+        }
+
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
+    }
+
     componentDidMount() {
         hljs.registerLanguage('python', python);
         hljs.highlightBlock(this.refs.highlight);
@@ -18,7 +32,7 @@ class WikiLight extends Component {
                 <div className="container content-background">
                     <h3 className="text-center">Remote light switcher</h3>
                     <h5>Wiring up</h5>
-                    <p>Important Components:</p>
+                    <p>Important components:</p>
                     <ul>
                         <li>Raspberry Pi Model 3</li>
                         <li>
@@ -32,7 +46,12 @@ class WikiLight extends Component {
                     <p>
                         The following image shows you how to wire up your Raspberry Pi to the 2 Channel Relay board using the Jumper cables. I recommend using Red for Positive and Black for Negative just to keep things simple.
                     </p>
-                    <img className="mb-2" style={{ width: 100 + '%' }} src={`../${gpioLight}`} />
+                    <img
+                        className="d-flex mb-2 mx-auto"
+                        style={{ width: 50 + '%' }}
+                        src={`../${gpioLight}`}
+                        onClick={() => this.showModal(gpioLight, "Wired up your Raspberry Pi to the 2 Channel Relay board using the Jumper cables")}
+                    />
                     <table className="table w-80 text-center mt-2">
                         <thead>
                             <tr>
@@ -70,12 +89,22 @@ class WikiLight extends Component {
                             Connect the brown wire to the relay channel using the middle and left side of one relay switch. Fasten this down with the screw and make sure it's secure. Ensure that the wires cannot short out
                         </li>
                     </ul>
-                    <img className="mb-2" style={{ width: 100 + '%' }} src={`../${lightRelay}`} />
+                    <img
+                        className="d-flex mb-2 mx-auto"
+                        style={{ width: 50 + '%' }}
+                        src={`../${lightRelay}`}
+                        onClick={() => this.showModal(lightRelay, "Wired up the lamp")}
+                    />
 
                     <p>
                         Take a look at the final image to make sure you have everything setup correctly.
                     </p>
-                    <img className="mb-2" style={{ width: 100 + '%' }} src={`../${lightComplete}`} />
+                    <img
+                        className="d-flex mb-2 mx-auto"
+                        style={{ width: 50 + '%' }}
+                        src={`../${lightComplete}`}
+                        onClick={() => this.showModal(lightComplete, "Final setup")}
+                    />
 
                     <h5>Configure the Smartbian</h5>
                     <p>You can write any script to control the relay switch or you can use the following script. Please make sure if assigned number to the variable <span className="font-weight-bold">GPIOPin</span> is the same as you used to wire up GPIO with relay switch</p>
@@ -114,8 +143,30 @@ else:
                     <br />
                 </div>
                 <br />
+                <ModalImage
+                    modal={this.state.modal}
+                    hide={this.hideModal}
+                    title={this.state.title}
+                    image={this.state.image}>
+                </ModalImage>
             </div>
         );
+    }
+
+    showModal(image, title) {
+        this.setState({
+            modal: true,
+            image: image,
+            title: title
+        });
+    }
+
+    hideModal() {
+        this.setState({
+            modal: false,
+            image: '',
+            title: ''
+        });
     }
 }
 
