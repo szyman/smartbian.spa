@@ -24,7 +24,7 @@ class Home extends Component {
                     </div>
                 </section>
 
-                <section id="details">
+                <section className="container" id="details">
                     <h3 className="text-center">Features and services</h3>
                     <div className="d-flex flex-column flex-md-row">
                         <div className="d-flex flex-column align-items-center mx-2">
