@@ -36,7 +36,7 @@ class Navbar extends Component {
                 <DropdownToggle nav caret>Wiki</DropdownToggle>
                 <DropdownMenu>
                     <Link to='/wiki'>
-                        <DropdownItem>Home</DropdownItem>
+                        <DropdownItem>How to start</DropdownItem>
                     </Link>
                     <DropdownItem divider />
                     <Link to='/wiki/ssh'>
