@@ -31,7 +31,7 @@ class Home extends Component {
                             <div className="smart-home-img">
                                 <a href="http://www.freepik.com">Designed by Freepik</a>
                             </div>
-                            <p className="text-center">Using this application alows remote control your home automation.</p>
+                            <p className="text-center">With this application you can remotely control home automation.</p>
                         </div>
 
                         <div className="d-flex flex-column align-items-center mx-2">
