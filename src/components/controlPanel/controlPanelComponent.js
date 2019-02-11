@@ -74,14 +74,17 @@ class ControlPanel extends Component {
     }
 
     testConnection() {
+        this.setState({
+            showConnectionModal: true,
+            message: 'Please wait! Testing...'
+        });
+
         this.props.controlPanelExecuteCommand(COMMAND_TEST_CONNECTION, this.props.userAuth.id).then(({ payload }) => {
             this.setState({
-                showConnectionModal: true,
                 message: `Test connetion result: ${payload.data}`
             });
         }).catch((error) => {
             this.setState({
-                showConnectionModal: true,
                 message: error
             });
         });
