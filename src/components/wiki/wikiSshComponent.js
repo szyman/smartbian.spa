@@ -2,10 +2,24 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import ModalImage from '../modal/modalImageComponent';
+
 import sshEnableImg from '../../../assets/wiki/ssh_enable.png';
 import sshKey from '../../../assets/wiki/ssh_key.png';
 
 class WikiSsh extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modal: false,
+            title: '',
+            image: ''
+        }
+
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
+    }
+
     render() {
         return (
             <div className="background-content">
@@ -17,7 +31,12 @@ class WikiSsh extends Component {
                         <li>Navigate to the Interfaces tab</li>
                         <li>Select Enabled next to SSH</li>
                         <li>Click OK</li>
-                        <img className="mb-2" style={{ width: 100 + '%' }} src={`../${sshEnableImg}`}/>
+                        <img
+                            className="d-flex mb-2 mx-auto"
+                            style={{ width: 50 + '%' }}
+                            src={`../${sshEnableImg}`}
+                            onClick={() => this.showModal(sshEnableImg, "Enable ssh in Raspbian")}
+                        />
                     </ol>
                     <h5>Generate SSH key</h5>
                     <p>Puttygen is the SSH key generation tool for the linux version of PuTTY.</p>
@@ -43,7 +62,12 @@ class WikiSsh extends Component {
                         <li>
                             Copy the public key to the .ssh/authorized_keys file on the Raspberry.
                         </li>
-                        <img className="mb-2" style={{ width: 100 + '%' }} src={`../${sshKey}`}/>
+                        <img
+                            className="d-flex mb-2 mx-auto"
+                            style={{ width: 50 + '%' }}
+                            src={`../${sshKey}`}
+                            onClick={() => this.showModal(sshKey, "File authorized_keys in Raspbian")}
+                        />
                         <li>
                             Generate the private key:
                             <ul>
@@ -60,11 +84,33 @@ class WikiSsh extends Component {
                             Copy the private key (including heading i.e. ----- ) to user settings in the Smartbian page located <Link to={`/users/${this.props.userAuth.id}/ssh`}>here</Link>.
                         </li>
                     </ol>
-                    <h5></h5>
-                    <br/>
+                    <br />
                 </div>
+                <br />
+                <ModalImage
+                    modal={this.state.modal}
+                    hide={this.hideModal}
+                    title={this.state.title}
+                    image={this.state.image}>
+                </ModalImage>
             </div>
         );
+    }
+
+    showModal(image, title) {
+        this.setState({
+            modal: true,
+            image: image,
+            title: title
+        });
+    }
+
+    hideModal() {
+        this.setState({
+            modal: false,
+            image: '',
+            title: ''
+        });
     }
 }
 
