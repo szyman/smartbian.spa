@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
 
-import forwarding1 from '../../../assets/wiki/forwarding1.jpg';
+import ModalImage from '../modal/modalImageComponent';
+
+import forwarding1 from '../../../assets/wiki/forwarding1.png';
 import forwarding2 from '../../../assets/wiki/forwarding2.png';
 
 class WikiForwarding extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modal: false,
+            title: '',
+            image: ''
+        }
+
+        this.showModal = this.showModal.bind(this);
+        this.hideModal = this.hideModal.bind(this);
+    }
+
     render() {
         return (
             <div className="background-content">
@@ -22,7 +36,12 @@ class WikiForwarding extends Component {
                             Login to your router. Your router has a web interface, so you will login to it using your web browser. By default the IP address for Huawei router is set to: 192.168.100.1.
                             After entering the IP address of your router you can simply login to your router configuration page.
                         </li>
-                        <img className="mb-2" style={{ width: 100 + '%' }} src={`../${forwarding1}`}/>
+                        <img
+                            className="d-flex mb-2 mx-auto"
+                            style={{ width: 50 + '%' }}
+                            src={`../${forwarding1}`}
+                            onClick={() => this.showModal(forwarding1, "Huawei welcome page")}
+                        />
                         <li>
                             Now we need to find the port forwarding section in your router web page. Click the Forward Rules link near the top of the page.
                         </li>
@@ -41,12 +60,39 @@ class WikiForwarding extends Component {
                                 <li>External port number: - port which will be mapped to a specified number. Do not change it.</li>
                             </ul>
                         </li>
-                        <img className="mb-2" style={{ width: 100 + '%' }} src={`../${forwarding2}`}/>
+                        <img
+                            className="d-flex mb-2 mx-auto"
+                            style={{ width: 50 + '%' }}
+                            src={`../${forwarding2}`}
+                            onClick={() => this.showModal(forwarding2, "Setup forward rules")}
+                        />
                     </ol>
                     <br />
                 </div>
+                <ModalImage
+                    modal={this.state.modal}
+                    hide={this.hideModal}
+                    title={this.state.title}
+                    image={this.state.image}>
+                </ModalImage>
             </div>
         );
+    }
+
+    showModal(image, title) {
+        this.setState({
+            modal: true,
+            image: image,
+            title: title
+        });
+    }
+
+    hideModal() {
+        this.setState({
+            modal: false,
+            image: '',
+            title: ''
+        });
     }
 }
 
