@@ -53,7 +53,7 @@ class UserAdmin extends Component {
         return (
             <div className="background-content">
                 <div className="container content-background">
-                    <div className="row">
+                    <div className="row table-responsive">
                         <table className="table">
                             <thead>
                                 <tr>

@@ -33,7 +33,7 @@ class ItemList extends Component {
                 <li className="list-group-item d-flex justify-content-between align-items-center" key={item.id}>
                     {item.title ? item.title : `${this.itemTypes[item.type]} ${item.id}`}
                     {this.renderItemTextValue(item)}
-                    <span className="badge badge-primary badge-pill" onClick={() => this.props.toggleModal(item.id, item.type)}>Show</span>
+                    <span className="badge badge-primary badge-pill" onClick={() => this.props.toggleModal(item.id, item.type, item.title)}>Show</span>
                 </li>
             );
         });
