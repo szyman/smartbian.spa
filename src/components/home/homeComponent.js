@@ -11,7 +11,9 @@ class Home extends Component {
         return (
             <div>
                 <section className="home">
-                    <div className="background-image"></div>
+                    <div className="background-image">
+                        <a className="link" href="http://www.freepik.com">Designed by kjpargeter / Freepik</a>
+                    </div>
                     <div className="home-content-area text-center">
                         <h1>Smartbian</h1>
                         <p>Control your smart modules working on Raspberry Pi from one place...</p>

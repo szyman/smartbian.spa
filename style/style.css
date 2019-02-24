@@ -40,6 +40,13 @@ body {
     opacity: 0.5;
 }
 
+.home .background-image .link {
+    position: absolute;
+    bottom: 0;
+    color: black;
+    font-size: 7pt;
+}
+
 .home .home-content-area {
     display: flex;
     flex-wrap: wrap;
