@@ -1,3 +1,9 @@
+@keyframes fadeIn {
+    100% {
+        opacity: 1;
+    }
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -57,6 +63,8 @@ body {
     height: 100vh;
     justify-content: center;
     font-size: 20px;
+    opacity: 0;
+    animation: 3s fadeIn 0.5s forwards;
 }
 
 #details .smart-home-img {
