@@ -57,7 +57,7 @@ ReactDOM.render(
                     </Switch>
                 </div>
                 <footer className="card-footer text-muted">
-                    &copy; Marek Szymanski
+                    &copy; <a className="mr-2" href="mailto:smartbian.automation@outlook.com">Marek Szymanski</a>
                     <Link to='/wiki/privatePolicy'> Private policy</Link>
                 </footer>
             </div>
