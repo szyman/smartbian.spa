@@ -44,11 +44,10 @@ class UserFacebook extends Component {
 
     fbLoginData() {
         const that = this;
-        FB.api('/me', { fields: 'id, name, email' }, (response) => {
+        FB.api('/me', { fields: 'id, name' }, (response) => {
             console.log('Good to see you', response.name);
-            var userName = response.email.match(/^([^@]*)@/)[1];
             that.props.userLoginExtProvider({
-                username: userName,
+                username: response.name,
                 password: response.id
             });
         });
