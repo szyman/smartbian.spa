@@ -139,9 +139,14 @@ class Item extends Component {
     }
 
     removeItem() {
-        this.props.removeItem(this.state.selectedItem).then(() => {
+        if (this.state.selectedItem >= 0) {
+            this.props.removeItem(this.state.selectedItem).then(() => {
+                this.toggleModal(NOT_SELECTED_ITEM);
+            });
+        } else {
+            this.props.removeItem(this.state.selectedItem);
             this.toggleModal(NOT_SELECTED_ITEM);
-        });
+        }
     }
 
     switchItem() {

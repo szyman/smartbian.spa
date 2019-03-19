@@ -24,7 +24,6 @@ class ModalItem extends Component {
                     <h5>Press any action</h5>
                     <ButtonGroup>
                         <Button color="primary" onClick={() => this.onRadioBtnClick(0)} active={this.state.rSelected === 0}>Remove</Button>
-                        <Button color="primary" onClick={() => this.onRadioBtnClick(1)} active={this.state.rSelected === 1}>Edit</Button>
                         {this.renderExtraButtons()}
                     </ButtonGroup>
                 </ModalBody>
@@ -53,7 +52,8 @@ class ModalItem extends Component {
 
         return (
             <>
-                <Button  color="primary" onClick={() => this.onRadioBtnClick(2)} active={this.state.rSelected === 2}>Edit script</Button>
+                <Button color="primary" onClick={() => this.onRadioBtnClick(1)} active={this.state.rSelected === 1}>Edit</Button>
+                <Button color="primary" onClick={() => this.onRadioBtnClick(2)} active={this.state.rSelected === 2}>Edit script</Button>
                 <Button color="primary" onClick={() => this.onRadioBtnClick(3)} active={this.state.rSelected === 3}>Run script</Button>
             </>
         );
