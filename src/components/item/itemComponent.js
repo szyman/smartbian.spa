@@ -74,8 +74,8 @@ class Item extends Component {
                         updateItem={(arg) => this.updateItem(item.id, arg)}
                         isEditable={this.props.isEditable}>
                         <ItemTextValue
-                            ip={this.props.userDetails ? this.props.userDetails.raspHost : null}
-                            socketPort={item.socketPort}/>
+                            userId={this.props.userAuth.id}
+                            itemId={item.id}/>
                     </Interact>
                 )
             }

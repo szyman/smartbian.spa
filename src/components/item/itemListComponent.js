@@ -43,8 +43,8 @@ class ItemList extends Component {
         if (item.type === ITEM_TYPE.TEMPERATURE) {
             return (
                 <ItemTextValue
-                    ip={this.props.userDetails ? this.props.userDetails.raspHost : null}
-                    socketPort={item.socketPort} />
+                    userId={this.props.userDetails ? this.props.userDetails.id : null}
+                    itemId={item.id} />
             );
         }
     }

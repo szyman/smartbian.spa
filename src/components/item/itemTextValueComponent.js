@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { controlPanelExecuteCommand, COMMAND_RUN_SWITCH } from '../../actions/controlPanelAction';
 
 class ItemTextValue extends Component {
-    _itemSocket = null;
+    _interval = null;
 
     constructor(props) {
         super(props)
@@ -10,23 +12,22 @@ class ItemTextValue extends Component {
         };
     }
 
-    componentWillReceiveProps({ip, socketPort}) {
-        if (!this._itemSocket && ip && socketPort) {
-            try {
-                this._itemSocket = new WebSocket(`ws://${ip}:${socketPort}/`);
-                this._openItemNotify();
-            } catch(error) {
-                console.warn('Websocket new', error);
-            }
+    componentDidMount() {
+        if (this.props.itemId < 0) {
+            return;
         }
+
+        this._interval = setInterval(() => {
+            this.props.controlPanelExecuteCommand(COMMAND_RUN_SWITCH, this.props.userId, this.props.itemId).then(({ payload }) => {
+                this.setState({ textValue: payload.data });
+            }).catch((error) => {
+                console.warn('ItemTextValue', error);
+            });
+        }, 5000);
     }
 
     componentWillUnmount() {
-        //1 - Open
-        if (this._itemSocket && this._itemSocket.readyState === 1) {
-            this._itemSocket.close();
-            this._itemSocket = null;
-        }
+        clearInterval(this._interval);
     }
 
     render() {
@@ -34,20 +35,6 @@ class ItemTextValue extends Component {
             <div>{this.state.textValue}</div>
         );
     }
-
-    _openItemNotify() {
-        let that = this;
-        this._itemSocket.onopen = function (ev) {
-            that._itemSocket.send('Trigger websocket');
-        }
-
-        this._itemSocket.onmessage = function (event) {
-            console.log('Websocket onmessage', event.data);
-            that.setState({
-                textValue: event.data
-            });
-        }
-    }
 }
 
-export default ItemTextValue;
+export default connect(null, { controlPanelExecuteCommand })(ItemTextValue);
