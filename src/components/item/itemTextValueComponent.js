@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { controlPanelExecuteCommand, COMMAND_RUN_SWITCH } from '../../actions/controlPanelAction';
+import { getSocketUrl } from '../../helpers/apiHelper';
 
 class ItemTextValue extends Component {
     _interval = null;
+    _socket = null;
+    _isSocketClosed = false;
 
     constructor(props) {
         super(props)
@@ -17,17 +20,44 @@ class ItemTextValue extends Component {
             return;
         }
 
+        const socketUrl = getSocketUrl();
+        this._socket = new WebSocket(socketUrl);
+
+        this._socket.onopen = ((event) => this.onOpen(event));
+        this._socket.onclose = ((event) => this.onAction(event, "--"));
+        this._socket.onerror = ((event) => this.onAction(event, "Err"));
+        this._socket.onmessage = ((event) => this.onAction(event));
+    }
+
+    onOpen(event) {
+        console.log(event.type, event);
         this._interval = setInterval(() => {
-            this.props.controlPanelExecuteCommand(COMMAND_RUN_SWITCH, this.props.userId, this.props.itemId).then(({ payload }) => {
-                this.setState({ textValue: payload.data });
-            }).catch((error) => {
-                console.warn('ItemTextValue', error);
-            });
+            this._socket.send(`${this.props.userAuth.id}/${this.props.itemId}`);
         }, 5000);
     }
 
+    onAction(event, text) {
+        console.log(event.type, event);
+        if (this._isSocketClosed) {
+            return;
+        }
+
+        if (text) {
+            this.setState({textValue: text})
+            clearInterval(this._interval);
+        } else if (event.data) {
+            this.setState({textValue: event.data});
+        }
+    }
+
     componentWillUnmount() {
+        if (this.props.itemId < 0) {
+            return;
+        }
+
         clearInterval(this._interval);
+        this._socket.close();
+        this._isSocketClosed = true;
     }
 
     render() {
@@ -37,4 +67,8 @@ class ItemTextValue extends Component {
     }
 }
 
-export default connect(null, { controlPanelExecuteCommand })(ItemTextValue);
+function mapStateToProps({ userAuth }) {
+    return { userAuth };
+}
+
+export default connect(mapStateToProps, { controlPanelExecuteCommand })(ItemTextValue);

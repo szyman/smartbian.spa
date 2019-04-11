@@ -40,13 +40,14 @@ class ItemList extends Component {
     }
 
     renderItemTextValue(item) {
-        if (item.type === ITEM_TYPE.TEMPERATURE) {
-            return (
-                <ItemTextValue
-                    userId={this.props.userDetails ? this.props.userDetails.id : null}
-                    itemId={item.id} />
-            );
-        }
+        return null;
+        // if (item.type === ITEM_TYPE.TEMPERATURE) {
+        //     return (
+        //         <ItemTextValue
+        //             userId={this.props.userDetails ? this.props.userDetails.id : null}
+        //             itemId={item.id} />
+        //     );
+        // }
     }
 }
 
