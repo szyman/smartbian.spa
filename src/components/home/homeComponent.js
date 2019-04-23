@@ -16,7 +16,7 @@ class Home extends Component {
                     </div>
                     <div className="home-content-area text-center">
                         <h1>Smartbian</h1>
-                        <p>Control your smart modules working on Raspberry Pi from one place...</p>
+                        <p>Create your home automation based on Raspberry Pi and control it from one place...</p>
                         <p className={`${this.props.userAuth.id ? 'd-none' : 'd-block'}`}>All you need to do is sign up!</p>
                         <div className={`text-center mb-2 ${this.props.userAuth.id ? 'd-none' : 'd-inline-block'}`}>
                             <Link to="/user/register" className="btn btn-primary btn-lg mr-2">Register</Link>
