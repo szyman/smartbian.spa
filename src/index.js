@@ -16,6 +16,7 @@ import WikiLight from './components/wiki/wikiLightComponent';
 import WikiHome from './components/wiki/wikiHomeComponent';
 import WikiTemperature from './components/wiki/wikiTemperatureComponent';
 import WikiPrivatePolicy from './components/wiki/wikiPrivatePolicyComponent';
+import WikiMontion from "./components/wiki/wikiMotionComponent";
 import ControlPanel from './components/controlPanel/controlPanelComponent';
 import UserAdmin from './components/user/userAdminComponent';
 import UserDetail from './components/user/userDetailComponent';
@@ -43,6 +44,7 @@ ReactDOM.render(
                         <PrivateRoute path='/wiki/forwarding' component={WikiForwarding} />
                         <PrivateRoute path='/wiki/light' component={WikiLight} />
                         <PrivateRoute path='/wiki/temperature' component={WikiTemperature} />
+                        <PrivateRoute path='/wiki/motion' component={WikiMontion} />
                         <PrivateRoute path='/wiki/privatePolicy' component={WikiPrivatePolicy} />
                         <PrivateRoute path='/wiki' component={WikiHome} />
                         <PrivateRoute path='/controlPanel/items/:id/script' component={ItemScript} />

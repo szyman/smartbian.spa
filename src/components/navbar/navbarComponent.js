@@ -51,6 +51,9 @@ class Navbar extends Component {
                     <Link to='/wiki/temperature'>
                         <DropdownItem>Temperature sensor</DropdownItem>
                     </Link>
+                    <Link to='/wiki/motion'>
+                        <DropdownItem>Montion sensor</DropdownItem>
+                    </Link>
                 </DropdownMenu>
             </UncontrolledDropdown>
         );
