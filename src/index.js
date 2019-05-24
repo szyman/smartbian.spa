@@ -24,6 +24,7 @@ import UserEdit from './components/user/userEditComponent';
 import UserSsh from './components/user/userSshComponent';
 import ItemEdit from './components/item/itemEditComponent';
 import ItemScript from './components/item/itemScriptComponent';
+import ItemStreamShow from './components/item/itemStreamShowComponent';
 
 import { ErrorInterceptor } from './helpers/errorInterceptorHelper';
 import PrivateRoute from './helpers/privateRouteHelper';
@@ -48,6 +49,7 @@ ReactDOM.render(
                         <PrivateRoute path='/wiki/privatePolicy' component={WikiPrivatePolicy} />
                         <PrivateRoute path='/wiki' component={WikiHome} />
                         <PrivateRoute path='/controlPanel/items/:id/script' component={ItemScript} />
+                        <PrivateRoute path='/controlPanel/items/:id/stream' component={ItemStreamShow} />
                         <PrivateRoute path='/controlPanel/items/:id' component={ItemEdit} />
                         <PrivateRoute path='/controlPanel' component={ControlPanel} />
                         <PrivateRoute path='/users/:id/ssh' component={UserSsh} />

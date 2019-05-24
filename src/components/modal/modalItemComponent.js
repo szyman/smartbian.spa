@@ -50,6 +50,14 @@ class ModalItem extends Component {
             return;
         }
 
+        if (this.props.type === ITEM_TYPE.CAMERA) {
+            return (
+                <>
+                <Button color="primary" onClick={() => this.onRadioBtnClick(4)} active={this.state.rSelected === 4}>Show stream</Button>
+                </>
+            )
+        }
+
         return (
             <>
                 <Button color="primary" onClick={() => this.onRadioBtnClick(1)} active={this.state.rSelected === 1}>Edit</Button>
@@ -77,6 +85,12 @@ class ModalItem extends Component {
                 );
             case 3:
                 return <Button color="secondary" onClick={this.props.switchItem}>Run Script</Button>
+            case 4:
+                return (
+                    <Link to={`/controlPanel/items/${this.props.itemId}/stream`} className="btn btn-secondary">
+                    Show stream
+                </Link>
+                );
         }
     }
 

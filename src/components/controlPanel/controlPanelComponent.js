@@ -6,6 +6,7 @@ import { addItem, saveItems, saveNewItems, getItems } from '../../actions/itemAc
 import { controlPanelExecuteCommand, COMMAND_TEST_CONNECTION } from '../../actions/controlPanelAction';
 import Item from '../item/itemComponent';
 import ModalMessage from '../modal/modalMessageComponent';
+import { ITEM_TYPE } from '../item/itemComponent'
 
 class ControlPanel extends Component {
     constructor(props) {
@@ -38,13 +39,16 @@ class ControlPanel extends Component {
                             <Button color="primary" className="mr-1" onClick={this.testConnection}>Test connection</Button>
                         </div>
                         <div className="row mb-1 ml-2">
-                            <Button color="secondary" className="mr-1" onClick={() => this.addItem(0)}>Horizontal</Button>
-                            <Button color="secondary" className="mr-1" onClick={() => this.addItem(1)}>Vertical</Button>
-                            <Button color="warning" className="mr-1" onClick={() => this.addItem(2)}>
+                            <Button color="secondary" className="mr-1" onClick={() => this.addItem(ITEM_TYPE.HORIZONTAL_WALL)}>Horizontal</Button>
+                            <Button color="secondary" className="mr-1" onClick={() => this.addItem(ITEM_TYPE.VERTICALL_WALL)}>Vertical</Button>
+                            <Button color="warning" className="mr-1" onClick={() => this.addItem(ITEM_TYPE.ELEMENT)}>
                                 <i className="fas fa-lightbulb"></i>
-                            </Button><br />
-                            <Button color="warning" className="mr-1" onClick={() => this.addItem(3)}>
+                            </Button>
+                            <Button color="warning" className="mr-1" onClick={() => this.addItem(ITEM_TYPE.TEMPERATURE)}>
                                 <i className="fas fa-temperature-high"></i>
+                            </Button>
+                            <Button color="warning" className="mr-1" onClick={() => this.addItem(ITEM_TYPE.CAMERA)}>
+                                <i className="fas fa-video"></i>
                             </Button><br />
                         </div>
                         <div className={`row mb-1 ml-2 ${this.state.showSaveButton ? 'visible' : 'invisible'}`}>

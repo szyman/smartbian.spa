@@ -15,7 +15,8 @@ export const ITEM_TYPE = {
     HORIZONTAL_WALL: 0,
     VERTICALL_WALL: 1,
     ELEMENT: 2,
-    TEMPERATURE: 3
+    TEMPERATURE: 3,
+    CAMERA: 4
 }
 
 class Item extends Component {
@@ -75,7 +76,18 @@ class Item extends Component {
                         isEditable={this.props.isEditable}>
                         <ItemTextValue
                             userId={this.props.userAuth.id}
-                            itemId={item.id}/>
+                            itemId={item.id} />
+                    </Interact>
+                )
+            } else if (item.type === ITEM_TYPE.CAMERA) {
+                return (
+                    <Interact key={item.id}
+                        itemData={item}
+                        classNameItem="drag-element"
+                        classNameIcon="fas fa-video fa-2x"
+                        onTap={() => this.toggleModal(item.id, ITEM_TYPE.CAMERA, item.title)}
+                        updateItem={(arg) => this.updateItem(item.id, arg)}
+                        isEditable={this.props.isEditable}>
                     </Interact>
                 )
             }
