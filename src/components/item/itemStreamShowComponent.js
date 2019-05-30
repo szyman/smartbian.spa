@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import flv from 'flv.js'
+import { connect } from 'react-redux';
+import { controlPanelExecuteCommand, VIDEO_STREAMING } from '../../actions/controlPanelAction';
 
 class ItemStreamShow extends Component {
     constructor(props) {
@@ -9,6 +11,7 @@ class ItemStreamShow extends Component {
     }
 
     componentDidMount() {
+        this.props.controlPanelExecuteCommand(VIDEO_STREAMING, this.props.userAuth.id);
         if (flv.isSupported()) {
             var flvPlayer = flv.createPlayer({
                 type: 'flv',
@@ -26,4 +29,8 @@ class ItemStreamShow extends Component {
     }
 }
 
-export default ItemStreamShow;
+function mapStateToProps({ userAuth }) {
+    return { userAuth };
+}
+
+export default connect(mapStateToProps, { controlPanelExecuteCommand })(ItemStreamShow);
