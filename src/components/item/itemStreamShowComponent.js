@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import flv from 'flv.js'
+import flv from 'flv.js';
 import { connect } from 'react-redux';
-import { controlPanelExecuteCommand, VIDEO_STREAMING } from '../../actions/controlPanelAction';
+import { controlPanelExecuteCommand, VIDEO_STREAMING, VIDEO_STATUS, VIDEO_STOP } from '../../actions/controlPanelAction';
 
 class ItemStreamShow extends Component {
     constructor(props) {
@@ -11,7 +11,12 @@ class ItemStreamShow extends Component {
     }
 
     componentDidMount() {
-        this.props.controlPanelExecuteCommand(VIDEO_STREAMING, this.props.userAuth.id);
+        this.props.controlPanelExecuteCommand(VIDEO_STATUS, this.props.userAuth.id).then(({ payload }) => {
+            if (!payload.data) {
+                this.props.controlPanelExecuteCommand(VIDEO_STREAMING, this.props.userAuth.id);
+            }
+        });
+
         if (flv.isSupported()) {
             var flvPlayer = flv.createPlayer({
                 type: 'flv',
@@ -21,6 +26,10 @@ class ItemStreamShow extends Component {
             flvPlayer.attachMediaElement(this.videoRef.current);
             flvPlayer.load();
         }
+    }
+
+    componentWillUnmount() {
+        this.props.controlPanelExecuteCommand(VIDEO_STOP, this.props.userAuth.id);
     }
 
     render() {
