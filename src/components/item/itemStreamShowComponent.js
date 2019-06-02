@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import flv from 'flv.js';
 import { connect } from 'react-redux';
-import { controlPanelExecuteCommand, VIDEO_STREAMING, VIDEO_STATUS, VIDEO_STOP } from '../../actions/controlPanelAction';
+import { controlPanelExecuteCommand, controlPanelGetVideoLink, VIDEO_STREAMING, VIDEO_STATUS, VIDEO_STOP } from '../../actions/controlPanelAction';
 
 class ItemStreamShow extends Component {
+    flvPlayer = null;
+
     constructor(props) {
         super(props)
 
@@ -11,25 +13,30 @@ class ItemStreamShow extends Component {
     }
 
     componentDidMount() {
-        this.props.controlPanelExecuteCommand(VIDEO_STATUS, this.props.userAuth.id).then(({ payload }) => {
+        this.props.controlPanelExecuteCommand(VIDEO_STATUS, this.props.userAuth.id, this.props.match.params.id).then(({ payload }) => {
             if (!payload.data) {
-                this.props.controlPanelExecuteCommand(VIDEO_STREAMING, this.props.userAuth.id);
+                this.props.controlPanelExecuteCommand(VIDEO_STREAMING, this.props.userAuth.id, this.props.match.params.id).then(() => {
+                    return Promise.reject();
+                });
             }
         });
 
         if (flv.isSupported()) {
-            var flvPlayer = flv.createPlayer({
-                type: 'flv',
-                url: 'http://localhost:8000/live/stream.flv',
-
+            this.props.controlPanelGetVideoLink(this.props.userAuth.id, this.props.match.params.id).then(({ payload }) => {
+                this.flvPlayer = flv.createPlayer({
+                    type: 'flv',
+                    url: payload.data
+                });
+                this.flvPlayer.attachMediaElement(this.videoRef.current);
+                this.flvPlayer.load();
+                this.flvPlayer.play();
             });
-            flvPlayer.attachMediaElement(this.videoRef.current);
-            flvPlayer.load();
         }
     }
 
     componentWillUnmount() {
         this.props.controlPanelExecuteCommand(VIDEO_STOP, this.props.userAuth.id);
+        this.flvPlayer.destroy();
     }
 
     render() {
@@ -42,4 +49,4 @@ function mapStateToProps({ userAuth }) {
     return { userAuth };
 }
 
-export default connect(mapStateToProps, { controlPanelExecuteCommand })(ItemStreamShow);
+export default connect(mapStateToProps, { controlPanelExecuteCommand, controlPanelGetVideoLink })(ItemStreamShow);

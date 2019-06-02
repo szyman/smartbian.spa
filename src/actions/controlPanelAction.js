@@ -12,14 +12,27 @@ const BASE_URL = getApiUrl();
 
 export function controlPanelExecuteCommand(command, userId, itemId) {
     var values = {
-        userId: userId,
+        userId,
         commandType: command,
-        itemId: itemId
+        itemId
     };
     const request = axios.post(`${BASE_URL}/controlpanel/executeCommand`, values, _getAuthHeader());
 
     return {
         type: values.commandType,
+        payload: request
+    }
+}
+
+export function controlPanelGetVideoLink(userId, itemId) {
+    var values = {
+        userId,
+        itemId,
+    };
+    const request = axios.post(`${BASE_URL}/controlpanel/getVideoLink`, values, _getAuthHeader());
+
+    return {
+        type: "GetVideoLink",
         payload: request
     }
 }
