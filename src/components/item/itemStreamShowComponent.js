@@ -15,9 +15,7 @@ class ItemStreamShow extends Component {
     componentDidMount() {
         this.props.controlPanelExecuteCommand(VIDEO_STATUS, this.props.userAuth.id, this.props.match.params.id).then(({ payload }) => {
             if (!payload.data) {
-                this.props.controlPanelExecuteCommand(VIDEO_STREAMING, this.props.userAuth.id, this.props.match.params.id).then(() => {
-                    return Promise.reject();
-                });
+                this.props.controlPanelExecuteCommand(VIDEO_STREAMING, this.props.userAuth.id, this.props.match.params.id);
             }
         });
 
@@ -25,6 +23,7 @@ class ItemStreamShow extends Component {
             this.props.controlPanelGetVideoLink(this.props.userAuth.id, this.props.match.params.id).then(({ payload }) => {
                 this.flvPlayer = flv.createPlayer({
                     type: 'flv',
+                    cors: true,
                     url: payload.data
                 });
                 this.flvPlayer.attachMediaElement(this.videoRef.current);
