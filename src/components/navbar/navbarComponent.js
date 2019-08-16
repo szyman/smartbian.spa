@@ -86,12 +86,14 @@ class Navbar extends Component {
     render() {
         return (
             <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+                <div className="container">
                 <Link className="navbar-brand" to="/">Smartbian</Link>
                 <NavbarToggler onClick={this.toggleNavbar} />
                 <Collapse isOpen={!this.state.collapsed} navbar>
                     {this.renderMenu()}
                     <UserLogin></UserLogin>
                 </Collapse>
+                </div>
             </nav>
         );
     }
