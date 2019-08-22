@@ -113,30 +113,32 @@ class ControlPanel extends Component {
         });
     }
 
-    saveChanges() {
+    async saveChanges() {
         const filteredExistItems = _.filter(this.props.itemList, ((i) => i.id >= 0));
         const filteredNewItems = _.filter(this.props.itemList, ((i) => i.id < 0));
 
         if (filteredExistItems.length > 0) {
-            this.props.saveItems(this.props.userAuth.id, filteredExistItems).then(() => {
+            try {
+                await this.props.saveItems(this.props.userAuth.id, filteredExistItems);
                 this.showSaveButton(false);
-            }).catch((error) => {
+            } catch (error) {
                 this.setState({
                     showConnectionModal: true,
                     message: error
-                })
-            });
+                });
+            }
         }
 
         if (filteredNewItems.length > 0) {
-            this.props.saveNewItems(this.props.userAuth.id, filteredNewItems).then(() => {
+            try {
+                await this.props.saveNewItems(this.props.userAuth.id, filteredNewItems)
                 this.showSaveButton(false);
-            }).catch((error) => {
+            } catch (error) {
                 this.setState({
                     showConnectionModal: true,
                     message: error
-                })
-            });
+                });
+            };
         }
     }
 }
