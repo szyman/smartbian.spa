@@ -114,7 +114,8 @@ class Item extends Component {
                 <ItemList
                     itemList={this.props.itemList}
                     userDetails={this.props.userDetails}
-                    toggleModal={this.toggleModal}>
+                    toggleModal={this.toggleModal}
+                    switchItem={this.switchItem}>
                 </ItemList>
                 <ModalItem
                     itemId={this.state.selectedItem}
@@ -136,12 +137,17 @@ class Item extends Component {
     }
 
     toggleModal(id, type, title) {
+        var modalState;
+
         if (!_.isNumber(id)) {
             id = NOT_SELECTED_ITEM;
+            modalState = false;
+        } else {
+            modalState = !this.state.modal;
         }
 
         this.setState({
-            modal: !this.state.modal,
+            modal: modalState,
             type: type,
             itemTitle: title,
             selectedItem: id,
@@ -161,19 +167,22 @@ class Item extends Component {
         }
     }
 
-    switchItem() {
-        this.props.controlPanelExecuteCommand(COMMAND_RUN_SWITCH, this.props.userAuth.id, this.state.selectedItem).then(({ payload }) => {
+    switchItem(itemId) {
+        this.setState({
+            showConnectionModal: true,
+            message: 'Please wait! Running...'
+        });
+
+        this.props.controlPanelExecuteCommand(COMMAND_RUN_SWITCH, this.props.userAuth.id, this.state.selectedItem || itemId).then(({ payload }) => {
             //this.toggleModal(NOT_SELECTED_ITEM);
             if (!payload.data) {
                 return;
             }
             this.setState({
-                showConnectionModal: true,
                 message: payload.data
             });
         }).catch((error) => {
             this.setState({
-                showConnectionModal: true,
                 message: error
             });
         });
