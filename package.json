@@ -16,6 +16,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@aspnet/signalr": "^1.1.4",
     "@babel/polyfill": "^7.2.5",
     "@babel/runtime": "^7.3.1",
     "axios": "^0.18.0",

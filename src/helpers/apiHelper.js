@@ -8,10 +8,10 @@ export function getApiUrl() {
 
 export function getSocketUrl() {
     if (process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
-        return 'wss://smartbian.azurewebsites.net/ws';
+        return '/blockStatusHub';
     }
 
-    return 'ws://localhost:5000/ws';
+    return 'http://localhost:5000/blockStatusHub';
 }
 
 export function getAuthHeader() {

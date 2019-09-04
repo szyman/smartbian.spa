@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { controlPanelExecuteCommand, COMMAND_RUN_SWITCH } from '../../actions/controlPanelAction';
+import * as signalR from '@aspnet/signalr';
+import { controlPanelExecuteCommand } from '../../actions/controlPanelAction';
 import { getSocketUrl } from '../../helpers/apiHelper';
 
 class ItemTextValue extends Component {
     _interval = null;
-    _socket = null;
     _isSocketClosed = false;
+    _connection = null;
 
     constructor(props) {
         super(props)
@@ -15,38 +16,41 @@ class ItemTextValue extends Component {
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         if (this.props.itemId < 0) {
             return;
         }
 
         const socketUrl = getSocketUrl();
-        this._socket = new WebSocket(socketUrl);
+        this._connection = new signalR.HubConnectionBuilder()
+            .withUrl(socketUrl)
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
 
-        this._socket.onopen = ((event) => this.onOpen(event));
-        this._socket.onclose = ((event) => this.onAction(event, "--"));
-        this._socket.onerror = ((event) => this.onAction(event, "Err"));
-        this._socket.onmessage = ((event) => this.onAction(event));
-    }
+        this._connection.on("ReceiveBlockStatus", (result) => {
+            if (this._isSocketClosed) {
+                return;
+            }
+            console.log("HUB result" + result);
+            this.setState({ textValue: result })
+        });
 
-    onOpen(event) {
-        console.log(event.type, event);
-        this._interval = setInterval(() => {
-            this._socket.send(`${this.props.userAuth.id}/${this.props.itemId}`);
-        }, 5000);
-    }
+        this._connection.on("ReceiveBlockStatusError", (result) => {
+            if (this._isSocketClosed) {
+                return;
+            }
+            console.error(result);
+            this.setState({ textValue: "Err" });
+        });
 
-    onAction(event, text) {
-        console.log(event.type, event);
-        if (this._isSocketClosed) {
-            return;
-        }
-
-        if (text) {
-            this.setState({textValue: text})
-            clearInterval(this._interval);
-        } else if (event.data) {
-            this.setState({textValue: event.data});
+        try {
+            await this._connection.start();
+            this._connection.invoke("GetBlockStatus", this.props.userAuth.id, this.props.itemId);
+            this._interval = setInterval(() => {
+                this._connection.invoke("GetBlockStatus", this.props.userAuth.id, this.props.itemId);
+            }, 5000);
+        } catch(err) {
+            console.error(err);
         }
     }
 
@@ -56,7 +60,6 @@ class ItemTextValue extends Component {
         }
 
         clearInterval(this._interval);
-        this._socket.close();
         this._isSocketClosed = true;
     }
 
