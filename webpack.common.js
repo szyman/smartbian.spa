@@ -24,7 +24,8 @@ module.exports = {
                     src: path.resolve('public/smartbian512.png'),
                     sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
                 }
-            ]
+            ],
+            orientation: "any"
         })
     ],
     output: {
