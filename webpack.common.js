@@ -33,8 +33,21 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/'
     },
+    resolve: {
+        // Add '.ts' and '.tsx' as resolvable extensions.
+        extensions: [".ts", ".tsx", ".js"]
+    },
     module: {
         rules: [
+            {
+                test: /\.ts(x?)$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: "ts-loader"
+                    }
+                ]
+            },
             { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
             {
                 test: /\.css$/,
