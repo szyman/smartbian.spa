@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import UserFacebook from '../user/userFacebookComponent';
 
-import demoGif from '../../../assets/demo.gif'
+import demoGif from '../../../assets/demo.gif';
 
 class Home extends Component {
     render() {

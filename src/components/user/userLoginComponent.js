@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { withRouter, Link } from 'react-router-dom';
 import ModalMessage from '../modal/modalMessageComponent';
+import NavbarNotification from "../navbar/navbarNotificationComponent"
 
 class UserLogin extends Component {
     constructor(props) {
@@ -57,6 +58,7 @@ class UserLogin extends Component {
                                 SSH Key
                             </DropdownItem>
                         </Link>
+                        <NavbarNotification />
                         <div className="dropdown-divider"></div>
                         <DropdownItem onClick={this.logout}><i className="fa fa-sign-out-alt"></i> Logout</DropdownItem>
                     </DropdownMenu>
@@ -79,7 +81,7 @@ class UserLogin extends Component {
                         name="password"
                         component={this.renderField}
                     />
-                    <button className={`btn btn-success my-2 my-sm-0 ${this.props.invalid ? 'disabled': ''}`} type="submit">Login</button>
+                    <button className={`btn btn-success my-2 my-sm-0 ${this.props.invalid ? 'disabled' : ''}`} type="submit">Login</button>
                 </form>
             );
         }
@@ -88,7 +90,7 @@ class UserLogin extends Component {
     render() {
         return (
             <div>
-                { this.renderForm() }
+                {this.renderForm()}
                 <ModalMessage
                     modal={this.state.showLoginModal}
                     toggle={this.hideModal}
@@ -105,21 +107,21 @@ class UserLogin extends Component {
             showLoginModal: false,
             errorMessage: ''
         }
-      );
+        );
     }
 
     login(values) {
         const { userLogin, reset } = this.props;
         userLogin(values).then(() => {
             reset();
-          }).catch((error) => {
-              this.setState({
-                    dropdownOpen: false,
-                    showLoginModal: true,
-                    errorMessage: error
-                }
-              );
-          });
+        }).catch((error) => {
+            this.setState({
+                dropdownOpen: false,
+                showLoginModal: true,
+                errorMessage: error
+            }
+            );
+        });
     }
 
     loggedIn() {
