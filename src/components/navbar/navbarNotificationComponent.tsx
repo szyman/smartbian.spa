@@ -18,10 +18,31 @@ class NavbarNotification extends React.Component<Props, State> {
     }
 
     toggle() {
+        if (!this.state.isEnabled) {
+            this.askForNotificationPermission();
+        }
         this.setState({
             isEnabled: !this.state.isEnabled
         });
-        this.forceUpdate();
+    }
+
+    displayConfirmNotification() {
+        var options = {
+            body: 'You successfully subscribed to our Notification service!'
+        };
+        new Notification('Successfully subscribed!', options);
+    }
+
+    askForNotificationPermission() {
+        const that = this;
+        Notification.requestPermission(function (result) {
+            console.log('User Choice', result);
+            if (result !== 'granted') {
+                console.log('No notification permission granted!');
+            } else {
+                that.displayConfirmNotification();
+            }
+        });
     }
 
     render() {
