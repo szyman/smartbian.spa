@@ -55,8 +55,8 @@ ReactDOM.render(
                         <PrivateRoute path='/users/:id/ssh' component={UserSsh} />
                         <PrivateRoute path='/users/edit' component={UserEdit} />
                         <PrivateRoute path='/users/:id' component={UserDetail} />
-                        <Route path='/user/register' component={UserRegister} />
-                        <PrivateRoute path='/admin' component={UserAdmin} adminOnly={true} />
+                        <PrivateRoute path='/user/register' component={UserRegister} adminOnly />
+                        <PrivateRoute path='/admin' component={UserAdmin} adminOnly />
                         <Route path='/' component={Home} />
                     </Switch>
                 </div>

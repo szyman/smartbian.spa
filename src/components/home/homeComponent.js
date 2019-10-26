@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import UserFacebook from '../user/userFacebookComponent';
+import { isAdminRole } from '../../helpers/authHelper'
 
 import demoGif from '../../../assets/demo.gif';
 
@@ -18,7 +18,7 @@ class Home extends Component {
                         <h1>Smartbian</h1>
                         <p>Create your home automation based on Raspberry Pi and control it from one place...</p>
                         <p className={`${this.props.userAuth.id ? 'd-none' : 'd-block'}`}>All you need to do is sign up!</p>
-                        <div className={`text-center mb-2 ${this.props.userAuth.id ? 'd-none' : 'd-inline-block'}`}>
+                        <div className={`text-center mb-2 ${isAdminRole(this.props.userAuth) ? 'd-inline-block' : 'd-none'}`}>
                             <Link to="/user/register" className="btn btn-primary btn-lg mr-2">Register</Link>
                             <UserFacebook />
                         </div>
