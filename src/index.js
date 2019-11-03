@@ -30,6 +30,7 @@ import { ErrorInterceptor } from './helpers/errorInterceptorHelper';
 import PrivateRoute from './helpers/privateRouteHelper';
 
 import css from '../style/style.css';
+import { WikiEsp8266Light } from './components/wiki/wikiEsp8266LightComponent';
 
 const store = createStore(reducers, applyMiddleware(promise, thunk));
 ErrorInterceptor();
@@ -44,6 +45,7 @@ ReactDOM.render(
                         <PrivateRoute path='/wiki/ssh' component={WikiSsh} />
                         <PrivateRoute path='/wiki/forwarding' component={WikiForwarding} />
                         <PrivateRoute path='/wiki/light' component={WikiLight} />
+                        <PrivateRoute path='/wiki/esp8266-light' component={WikiEsp8266Light} />
                         <PrivateRoute path='/wiki/temperature' component={WikiTemperature} />
                         <PrivateRoute path='/wiki/motion' component={WikiMontion} />
                         <PrivateRoute path='/wiki/privatePolicy' component={WikiPrivatePolicy} />

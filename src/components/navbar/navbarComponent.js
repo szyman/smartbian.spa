@@ -48,6 +48,9 @@ class Navbar extends Component {
                     <Link to='/wiki/light'>
                         <DropdownItem>Remote light switcher</DropdownItem>
                     </Link>
+                    <Link to='/wiki/esp8266-light'>
+                        <DropdownItem>ESP8266 light switcher</DropdownItem>
+                    </Link>
                     <Link to='/wiki/temperature'>
                         <DropdownItem>Temperature sensor</DropdownItem>
                     </Link>
@@ -87,12 +90,12 @@ class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
                 <div className="container">
-                <Link className="navbar-brand" to="/">Smartbian</Link>
-                <NavbarToggler onClick={this.toggleNavbar} />
-                <Collapse isOpen={!this.state.collapsed} navbar>
-                    {this.renderMenu()}
-                    <UserLogin></UserLogin>
-                </Collapse>
+                    <Link className="navbar-brand" to="/">Smartbian</Link>
+                    <NavbarToggler onClick={this.toggleNavbar} />
+                    <Collapse isOpen={!this.state.collapsed} navbar>
+                        {this.renderMenu()}
+                        <UserLogin></UserLogin>
+                    </Collapse>
                 </div>
             </nav>
         );
