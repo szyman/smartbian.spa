@@ -10,11 +10,12 @@ export const VIDEO_STOP = 'video_stop';
 
 const BASE_URL = getApiUrl();
 
-export function controlPanelExecuteCommand(command, userId, itemId) {
+export function controlPanelExecuteCommand(command, userId, itemId, isRequireScript = true) {
     var values = {
         userId,
         commandType: command,
-        itemId
+        itemId,
+        isRequireScript
     };
     const request = axios.post(`${BASE_URL}/controlpanel/executeCommand`, values, _getAuthHeader());
 

@@ -13,9 +13,9 @@ class ItemStreamShow extends Component {
     }
 
     componentDidMount() {
-        this.props.controlPanelExecuteCommand(VIDEO_STATUS, this.props.userAuth.id, this.props.match.params.id).then(({ payload }) => {
+        this.props.controlPanelExecuteCommand(VIDEO_STATUS, this.props.userAuth.id, this.props.match.params.id, false).then(({ payload }) => {
             if (!payload.data) {
-                this.props.controlPanelExecuteCommand(VIDEO_STREAMING, this.props.userAuth.id, this.props.match.params.id);
+                this.props.controlPanelExecuteCommand(VIDEO_STREAMING, this.props.userAuth.id, this.props.match.params.id, false);
             }
         });
 
@@ -34,7 +34,7 @@ class ItemStreamShow extends Component {
     }
 
     componentWillUnmount() {
-        this.props.controlPanelExecuteCommand(VIDEO_STOP, this.props.userAuth.id);
+        this.props.controlPanelExecuteCommand(VIDEO_STOP, this.props.userAuth.id, this.props.match.params.id, false);
         this.flvPlayer.destroy();
     }
 
