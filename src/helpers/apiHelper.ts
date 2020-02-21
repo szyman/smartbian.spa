@@ -8,10 +8,10 @@ export function getApiUrl() {
 
 export function getSocketUrl() {
     if (process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
-        return '/blockStatusHub';
+        return '/ioTQueueHub';
     }
 
-    return 'http://localhost:5000/blockStatusHub';
+    return 'http://localhost:5000/ioTQueueHub';
 }
 
 export function getAuthHeader() {

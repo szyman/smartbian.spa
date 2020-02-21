@@ -6,7 +6,7 @@ import { addItem, saveItems, saveNewItems, getItems } from '../../actions/itemAc
 import { controlPanelExecuteCommand, COMMAND_TEST_CONNECTION } from '../../actions/controlPanelAction';
 import Item from '../item/itemComponent';
 import ModalMessage from '../modal/modalMessageComponent';
-import { ITEM_TYPE } from '../item/itemComponent'
+import { ITEM_TYPE } from '../item/itemComponent';
 
 class ControlPanel extends Component {
     constructor(props) {

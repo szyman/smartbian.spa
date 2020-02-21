@@ -5,7 +5,7 @@ import { removeItem, updateItem } from '../../actions/itemAction';
 import Interact, { RESIZE_HORIZONTAL, RESIZE_VERTICAL } from '../../wrappers/interactWrapper';
 import ModalItem from '../modal/modalItemComponent';
 import ModalMessage from '../modal/modalMessageComponent';
-import ItemTextValue from './itemTextValueComponent';
+import { ItemTextValue } from './itemTextValueComponent';
 import { controlPanelExecuteCommand, COMMAND_RUN_SWITCH } from '../../actions/controlPanelAction';
 import { userGetDetails } from '../../actions/userAction';
 import ItemList from './itemListComponent';
@@ -76,7 +76,9 @@ class Item extends Component {
                         isEditable={this.props.isEditable}>
                         <ItemTextValue
                             userId={this.props.userAuth.id}
-                            itemId={item.id} />
+                            itemId={item.id}
+                            itemTitle={item.title} />
+
                     </Interact>
                 )
             } else if (item.type === ITEM_TYPE.CAMERA) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ItemTextValue from './itemTextValueComponent';
+import { ItemTextValue } from './itemTextValueComponent';
 import { ITEM_TYPE } from './itemComponent';
 
 class ItemList extends Component {
@@ -34,10 +34,10 @@ class ItemList extends Component {
                     {item.title ? item.title : `${this.itemTypes[item.type]} ${item.id}`}
                     {this.renderItemTextValue(item)}
                     <div className="d-flex align-items-right">
-                    {item.type === ITEM_TYPE.ELEMENT ?
-                        <span className="badge badge-primary badge-pill" onClick={() => this.props.switchItem(item.id)}>Switch</span>
-                        : null}
-                    <span className="badge badge-primary badge-pill" onClick={() => this.props.toggleModal(item.id, item.type, item.title)}>Show</span>
+                        {item.type === ITEM_TYPE.ELEMENT ?
+                            <span className="badge badge-primary badge-pill" onClick={() => this.props.switchItem(item.id)}>Switch</span>
+                            : null}
+                        <span className="badge badge-primary badge-pill" onClick={() => this.props.toggleModal(item.id, item.type, item.title)}>Show</span>
                     </div>
                 </li>
             );
@@ -49,7 +49,8 @@ class ItemList extends Component {
             return (
                 <ItemTextValue
                     userId={this.props.userDetails ? this.props.userDetails.id : null}
-                    itemId={item.id} />
+                    itemId={item.id}
+                    itemTitle={item.title} />
             );
         }
         return null;
