@@ -46,14 +46,14 @@ export function updateItem(data) {
 export const getItem = (itemId) => async dispatch => {
     const response = await axios.get(`${BASE_URL}/blocks/${itemId}`, getAuthHeader());
 
-    dispatch( {
+    dispatch({
         type: GET_ITEM,
         payload: response.data
     });
 }
 
-export const getItems = (id) => async dispatch => {
-    const response = await axios.get(`${BASE_URL}/blocks/all/${id}`, getAuthHeader());
+export const getItems = (userId) => async dispatch => {
+    const response = await axios.get(`${BASE_URL}/blocks/allForUser`, { params: { userId }, ...getAuthHeader() });
 
     dispatch({ type: GET_ITEMS, payload: response.data });
 };
@@ -70,7 +70,7 @@ export function saveItems(userId, filteredItems) {
 export function saveNewItems(userId, filteredItems) {
     let itemsWithNoId = [];
     _.forEach(filteredItems, (item) => itemsWithNoId.push(_.omit(item, ['id'])));
-    const request = axios.post(`${BASE_URL}/blocks/addNewItems/${userId}`, itemsWithNoId, getAuthHeader());
+    const request = axios.post(`${BASE_URL}/blocks/addNewItems`, itemsWithNoId, { params: { userId }, ...getAuthHeader() });
 
     return {
         type: SAVE_NEW_ITEMS,
